@@ -16,6 +16,9 @@ function Layout(){
     this.yAxisTitleFontSize = this.xAxisTitleFontSize = 15;
     this.xAxisHeight = 20;
     this.yAxisWidth = 30;
+    this.chartDisplayleftEdgeX = 0; //可以用于画线的区域的左边际，主要用于参考看提示框是否需要往右移动
+    this.chartDisplayRightEdgeX = 0; //可以用于画线的区域的右边际
+    this.chartDisplayTopEdgeY = 0;
     this.areas = null;
     this.svg = document.querySelector("#svg-playground");
 }
@@ -154,13 +157,16 @@ Layout.prototype.analyze = function(){
     var layout = this;
     var outerAreas = this.calculateOuterAreasSizes();
     var origin = calculateOriginPosition(outerAreas);
-    var yLength = outerAreas.leftArea.height;
-    var xLength = outerAreas.topArea.width - this.yAxisWidth;
+    var yAxisLength = outerAreas.leftArea.height;
+    var xAxisLength = outerAreas.topArea.width - this.yAxisWidth;
+    this.chartDisplayleftEdgeX = this.origin[0];
+    this.chartDisplayRightEdgeX = this.origin[0] + xAxisLength;
+    this.chartDisplayTopEdgeY = this.origin[1] + yAxisLength;
 
     return {
         originPosition: origin,
-        xAxisLength: xLength,
-        yAxisLength: yLength
+        xAxisLength: xAxisLength,
+        yAxisLength: yAxisLength
     };
 
 
@@ -214,20 +220,24 @@ Layout.prototype.drawTitles = function(){
 
 Layout.prototype.drawLegend = function(){
     var areas = this.calculateOuterAreasSizes();
+    //center of the left legend
     if(this.legend.positionRelativeToLayout === "left"){
         this.legend.draw(areas.leftArea.origin[0] + this.legend.width / 2,
                 areas.leftArea.origin[1] + areas.leftArea.height / 2);
     }
+    //center of the right legend
     if(this.legend.positionRelativeToLayout === "right"){
         this.legend.draw(areas.rightArea.origin[0] + this.legend.width / 2,
                 areas.rightArea.origin[1] + areas.rightArea.height / 2);
     }
+    //center of the top legend
     if(this.legend.positionRelativeToLayout === "top"){
         var x = areas.topArea.origin[0] + areas.topArea.width / 2;
         var y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent()
             + this.calculateHeightOfSubTitleComponent() + this.legend.height / 2;
         this.legend.draw(x, y);
     }
+    //center of the bottom legend
     if(this.legend.positionRelativeToLayout === "bottom"){
         var x = areas.bottomArea.origin[0] + areas.bottomArea.width / 2;
         var y = areas.bottomArea.origin[1] + this.calculateHeightOfXAxisTitleComponent()

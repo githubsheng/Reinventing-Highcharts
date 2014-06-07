@@ -35,6 +35,9 @@ Data.prototype.showTip = function(dataX, dataY, pixelX, pixelY, seriesName, colo
     var d = "M" + dArray.join(" ") + "Z";
     this.tip.talkBubble.setAttributeNS(null, "d", d);
 
+    //shift the talk bubble left or right if there is not enough room to display it.
+    //TODO
+
     //change the outline color of the talk bubble.
     draw.setStrokeFill(this.tip.talkBubble, colors[color].nodeStrokeColor, false, false);
 

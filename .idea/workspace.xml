@@ -46,8 +46,8 @@
       <file leaf-file-name="Layout.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Layout/Layout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.859813" vertical-offset="0" max-vertical-offset="3750">
-              <caret line="208" column="109" selection-start-line="208" selection-start-column="109" selection-end-line="208" selection-end-column="109" />
+            <state vertical-scroll-proportion="0.20610687" vertical-offset="2310" max-vertical-offset="3900">
+              <caret line="163" column="61" selection-start-line="163" selection-start-column="61" selection-end-line="163" selection-end-column="61" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -90,8 +90,8 @@
       <file leaf-file-name="Data.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Data/Data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="665" max-vertical-offset="1650">
-              <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="1695">
+              <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -160,7 +160,6 @@
         <option value="$PROJECT_DIR$/Axis/Axis.js" />
         <option value="$PROJECT_DIR$/Data/RandomColorPicker.js" />
         <option value="$PROJECT_DIR$/Data/VisualNode.js" />
-        <option value="$PROJECT_DIR$/Data/Data.js" />
         <option value="$PROJECT_DIR$/Data/LineData.js" />
         <option value="$PROJECT_DIR$/Data/BasicLineData.js" />
         <option value="$PROJECT_DIR$/Data/RandomPicker.js" />
@@ -172,6 +171,7 @@
         <option value="$PROJECT_DIR$/Legend/Legend.js" />
         <option value="$PROJECT_DIR$/Chart.html" />
         <option value="$PROJECT_DIR$/Layout/Layout.js" />
+        <option value="$PROJECT_DIR$/Data/Data.js" />
       </list>
     </option>
   </component>
@@ -716,14 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Data/Data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1650">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Data/RandomPicker.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
@@ -794,10 +786,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Data/Data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="1695">
+          <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Layout/Layout.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.859813" vertical-offset="0" max-vertical-offset="3750">
-          <caret line="208" column="109" selection-start-line="208" selection-start-column="109" selection-end-line="208" selection-end-column="109" />
+        <state vertical-scroll-proportion="0.20610687" vertical-offset="2310" max-vertical-offset="3900">
+          <caret line="163" column="61" selection-start-line="163" selection-start-column="61" selection-end-line="163" selection-end-column="61" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
