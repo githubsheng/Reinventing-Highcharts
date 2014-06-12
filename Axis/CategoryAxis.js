@@ -72,11 +72,20 @@ X_CategoryAxis.prototype.analyzeReturn = function() {
     var categoryBasePositions = [];
     for(var i = 0; i < this.labelPositions.length; i = i + 2){
         categoryBasePositions.push(this.labelPositions[i]);
-        categoryBasePositions.push(this.labelPositions[i + 1]);
+        categoryBasePositions.push(this.labelPositions[i + 1] - 5);//because when calculating the label positions i shift them 5 px down from the origin Y
+    }
+
+    //adjust the column width.based on the mark interval
+    var columnWidth;
+    if(this.markPixelInterval < 8){
+        columnWidth = 4;
+    } else {
+        columnWidth = this.markPixelInterval / 2;
     }
 
     return {
-        categoryBasePositions: categoryBasePositions
+        categoryBasePositions: categoryBasePositions,
+        columnWidth: columnWidth
     };
 };
 

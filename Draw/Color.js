@@ -4,26 +4,22 @@
 
 var colors = {
     blue: {
-        lineColor: "#0090DB",
-        nodeFillColor: "#3FBDFE",
-        nodeStrokeColor: "#0090DB"
+        strokeColor: "#0090DB",
+        fillColor: "#3FBDFE"
     },
 
     red: {
-        lineColor: "#AD2000",
-        nodeFillColor: "#F22D00",
-        nodeStrokeColor: "#AD2000"
+        strokeColor: "#AD2000",
+        fillColor: "#F22D00"
     },
 
     green: {
-        lineColor: "#008D3D",
-        nodeFillColor: "#00B34D",
-        nodeStrokeColor: "#008D3D"
+        strokeColor: "#008D3D",
+        fillColor: "#00B34D"
     },
 
     orange: {
-        lineColor: "#D67B00",
-        nodeFillColor: "#FF9300",
-        nodeStrokeColor: "#D67B00"
+        strokeColor: "#D67B00",
+        fillColor: "#FF9300"
     }
 }

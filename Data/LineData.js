@@ -18,6 +18,6 @@ LineData.prototype.constructor = LineData;
  */
 LineData.prototype.drawLines = function(nodes, color){
     var lines = draw.createStraightLines(nodes, 4, 0);
-    draw.setStrokeFill(lines, colors[color].lineColor, 2, "none");
+    draw.setStrokeFill(lines, color.strokeColor, 2, "none");
     this.svg.appendChild(lines);
 };

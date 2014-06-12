@@ -21,7 +21,7 @@ RandomPicker.prototype.pickSeriesColor = function(){
     } else {
         this.currentSeriesColorIndex ++;
     }
-    return color;
+    return colors[color];
 };
 
 /**

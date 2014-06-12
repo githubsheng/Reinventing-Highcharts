@@ -24,7 +24,7 @@ var visualNodeDrawer = {
      */
     drawCircleNode: function (nodeColor, x, y) {
         var vn = draw.createCircle(x, y, 4);
-        draw.setStrokeFill(vn, colors[nodeColor].nodeStrokeColor, 1, colors[nodeColor].nodeFillColor);
+        draw.setStrokeFill(vn, nodeColor.strokeColor, 1, nodeColor.fillColor);
         return vn;
     },
 
@@ -39,7 +39,7 @@ var visualNodeDrawer = {
         var y = y - 4;
         var d = "M" + x + " " + y + " " + (x + 8) + " " + y + " " + (x + 8) + " " + (y + 8) + " " + x + " " + (y + 8) + "Z";
         var vn = draw.createPath(d);
-        draw.setStrokeFill(vn, colors[nodeColor].nodeStrokeColor, 1, colors[nodeColor].nodeFillColor);
+        draw.setStrokeFill(vn, nodeColor.strokeColor, 1, nodeColor.fillColor);
         return vn;
     },
 
@@ -56,7 +56,7 @@ var visualNodeDrawer = {
         var v = (l + h)/2;
         var d = "M" + x + " " + (y-v) + " " + (x-w) + " " + (y+v) + " " + (x+w) + " " + (y+v) + "Z";
         var vn = draw.createPath(d);
-        draw.setStrokeFill(vn, colors[nodeColor].nodeStrokeColor, 1, colors[nodeColor].nodeFillColor);
+        draw.setStrokeFill(vn, nodeColor.strokeColor, 1, nodeColor.fillColor);
         return vn;
     },
 
@@ -67,7 +67,7 @@ var visualNodeDrawer = {
         var v = (l + h)/2;
         var d = "M" + (x-w) + " " + (y-v) + " " + (x+w) + " " + (y-v) + " " + x + " " + (y+v) + "Z";
         var vn = draw.createPath(d);
-        draw.setStrokeFill(vn, colors[nodeColor].nodeStrokeColor, 1, colors[nodeColor].nodeFillColor);
+        draw.setStrokeFill(vn, nodeColor.strokeColor, 1, nodeColor.fillColor);
         return vn;
     },
 

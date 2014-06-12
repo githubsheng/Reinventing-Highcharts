@@ -11,7 +11,7 @@ function Data(){
 }
 
 /**
- * show the tip.
+ * show the tip. This type of tip is the typical type that a basic line linear chart uses.
  * @param dataX
  * @param dataY
  * @param pixelX
@@ -53,7 +53,7 @@ Data.prototype.showTip = function(dataX, dataY, pixelX, pixelY, seriesName, colo
     this.tip.talkBubble.setAttributeNS(null, "d", d);
 
     //change the outline color of the talk bubble.
-    draw.setStrokeFill(this.tip.talkBubble, colors[color].nodeStrokeColor, false, false);
+    draw.setStrokeFill(this.tip.talkBubble, color.strokeColor, false, false);
 
     //translate the whole group so that it sits above the target node.
     draw.translate(this.tip.group, pixelX, pixelY);
@@ -68,7 +68,7 @@ Data.prototype.hideTip = function(){
 };
 
 /**
- * draw the tip template
+ * draw the tip template. This type of tip is the typical type that a basic line linear chart uses
  */
 Data.prototype.drawTipTemplate = function(){
     var group = draw.createGroup();
