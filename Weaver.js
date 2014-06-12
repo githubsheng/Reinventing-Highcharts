@@ -40,7 +40,7 @@ var weaver = {
     },
 
     weaveBasicCategory: function(input){
-        var dar = new BasicCateogryDataAnalyst(input).analyze();
+        var dar = new BasicCategoryDataAnalyst(input).analyze();
 
         var legend = new Legend(input.series, input.legend);
         legend.analyze();
@@ -54,12 +54,14 @@ var weaver = {
         var xAxis = new X_CategoryAxis(lar.xAxisLength - xLeftPadding - xRightPadding, lar.originPosition, dar.seriesNames);
         var yAxis = new Y_LinearAxis(lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
 
-        xAxis.analyze();
-        yAxis.analyze();
+        var xDrawInfo = xAxis.analyze();
+        var yDrawInfo = yAxis.analyze();
+
+        var d = new BasicCategoryData(input.series, xDrawInfo, yDrawInfo);
 
         layout.draw();
         xAxis.draw();
         yAxis.draw();
-
+        d.draw();
     }
 };

@@ -69,6 +69,14 @@ X_CategoryAxis.prototype.drawLabels = function(){
 };
 
 X_CategoryAxis.prototype.analyzeReturn = function() {
+    var categoryBasePositions = [];
+    for(var i = 0; i < this.labelPositions.length; i = i + 2){
+        categoryBasePositions.push(this.labelPositions[i]);
+        categoryBasePositions.push(this.labelPositions[i + 1]);
+    }
 
+    return {
+        categoryBasePositions: categoryBasePositions
+    };
 };
 

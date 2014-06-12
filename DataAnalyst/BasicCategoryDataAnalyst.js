@@ -2,12 +2,12 @@
  * Created by wangsheng on 11/6/14.
  */
 
-function BasicCateogryDataAnalyst(input){
+function BasicCategoryDataAnalyst(input){
     this.input = input;
     this.results = null;
 }
 
-BasicCateogryDataAnalyst.prototype.analyze = function(){
+BasicCategoryDataAnalyst.prototype.analyze = function(){
     if(this.results !== null){
         return this.results;
     }
