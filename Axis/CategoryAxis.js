@@ -79,6 +79,8 @@ X_CategoryAxis.prototype.analyzeReturn = function() {
     var columnWidth;
     if(this.markPixelInterval < 8){
         columnWidth = 4;
+    } else if (this.markPixelInterval > 40){
+        columnWidth = 40;
     } else {
         columnWidth = this.markPixelInterval / 2;
     }
