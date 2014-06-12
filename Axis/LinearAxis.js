@@ -4,7 +4,7 @@
 /**
  * construct a linear x axis.
  *
- * @param length
+ * @param length the length here does not include padding. That is, this is the part that is associated with data.
  * @param min
  * @param max
  * @param originPosition

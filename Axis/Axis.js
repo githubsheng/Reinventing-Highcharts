@@ -13,6 +13,14 @@ function Axis(){
 }
 
 /**
+ * draw the whole axis, this method should only be called AFTER the axis is analyzed.
+ */
+Axis.prototype.draw = function(){
+    this.drawMarks();
+    this.drawLabels();
+};
+
+/**
  * assume the axis is linear and calculate the interval based on min, max, preferred pixel and length values. This method
  * does not adjust min max value.
  */
@@ -52,24 +60,27 @@ X_Axis.prototype.analyze = function(){
     this.calculateMarkPositions();
     this.calculateLabelPositions();
 
+    return this.analyzeReturn();
+};
+
+X_Axis.prototype.analyzeReturn = function(){
     var startPoint = this.originPosition[0] + this.leftPadding;
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
 
+
+    var chartDisplayRightEdgeX = this.originPosition[0] + this.leftPadding + this.length + this.rightPadding;
+    var chartDisplayleftEdgeX = this.originPosition[0];
+
     return {
         startPoint: startPoint,
         pixelPerPoint: pixelPerData,
-        min: min
+        min: min,
+        chartDisplayLeftEdgeX : chartDisplayleftEdgeX,
+        chartDisplayRightEdgeX: chartDisplayRightEdgeX
     };
 };
 
-/**
- * draw the whole axis, this method should only be called AFTER the axis is analyzed.
- */
-X_Axis.prototype.draw = function(){
-    this.drawMarks();
-    this.drawLabels();
-};
 
 /**
  * draw the marks of the axis based on the calculated mark position
@@ -146,23 +157,15 @@ Y_Axis.prototype.analyze = function(){
     var startPoint = this.originPosition[1];
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
-    var max = this.max;
+
+    var chartDisplayTopEdgeY = this.originPosition[1] + this.length;
 
     return {
         startPoint: startPoint,
         pixelPerPoint: pixelPerData,
-        min: min
+        min: min,
+        chartDisplayTopEdgeY: chartDisplayTopEdgeY
     };
-};
-
-/**
- * draw the Y axis. This implementation draws a linear Y axis and if you are drawing some other type of axises then you should
- * either ovveride this method or override the methods it calls. This method needs to be called AFTER analyze();
- */
-Y_Axis.prototype.draw = function(){
-    this.drawAxisBone();
-    this.drawMarks();
-    this.drawLabels();
 };
 
 /**
@@ -209,7 +212,7 @@ Y_Axis.prototype.calculateLabelPositions = function(){
     for(var i = 0; i < this.markPositions.length; i = i + 2){
         this.labelPositions.push(this.markPositions[i]);
         //font size = 11 and therefore moving the font downwards by 5.5 (11/2) vertically centers the text.
-        this.labelPositions.push(this.markPositions[i + 1] + 5.5);
+        this.labelPositions.push(this.markPositions[i + 1]);
     }
 };
 
@@ -237,7 +240,7 @@ Y_Axis.prototype.drawLabels = function(){
     var text = this.min;
     for(var i = 0; i < this.labelPositions.length; i = i + 2){
         text = this.min + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
-        this.svg.appendChild(draw.createText(this.labelPositions[i] - 10, this.labelPositions[i+1], text, "11", "end"));
+        this.svg.appendChild(draw.createText(this.labelPositions[i] - 10, this.labelPositions[i+1], text, "11", "end", "middle"));
     }
 };
 

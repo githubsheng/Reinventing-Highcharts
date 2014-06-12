@@ -20,27 +20,40 @@ function Data(){
 Data.prototype.showTip = function(dataX, dataY, pixelX, pixelY, seriesName, color){
     //change the text content accordingly.
     this.tip.text.ws_seriesName.textContent = seriesName;
-    this.tip.text.ws_valuesLabel.textContent = dataX + ": ";
+    this.tip.text.ws_valuesLabel.textContent = dataX + " - ";
     this.tip.text.ws_valuesData.textContent = dataY;
 
     //center the text.
     var width = this.tip.text.getBBox().width;
     this.tip.text.setAttributeNS(null, "x", -width/2);
-    this.tip.text.ws_valuesLabel.setAttributeNS(null, "x", -width/2);
+    this.tip.text.ws_valuesLabel.setAttributeNS(null, "x", -width/2); //value lable needs to be aligned to the left.
 
     //change the size of the talk bubble.
     var dArray = this.tip.talkBubble.dArray;
-    dArray[4] = dArray[6] = -10 - (width / 2);
-    dArray[8] = dArray[10] = 10 + (width / 2);
+    dArray[4] = dArray[6] = -10 - (width / 2); //adjust the coordinates of the left edge.
+    dArray[8] = dArray[10] = 10 + (width / 2); //adjust the coordinates of the right edge.
+
+    //shift the talk bubble left or right if there is not enough room to display it.
+    var distance = dArray[4] + pixelX - this.xDrawInfo.chartDisplayLeftEdgeX;
+    if(distance < 0) {
+        dArray[4] = dArray[6] = dArray[4] - distance; //distance is negative...
+        dArray[8] = dArray[10] = dArray[8] - distance;
+        this.tip.text.setAttributeNS(null, "x", -width/2 - distance);
+        this.tip.text.ws_valuesLabel.setAttributeNS(null, "x", -width/2 - distance);
+    }
+    distance = dArray[8] + pixelX - this.xDrawInfo.chartDisplayRightEdgeX;
+    if(distance > 0){
+        dArray[4] = dArray[6] = dArray[4] - distance;
+        dArray[8] = dArray[10] = dArray[8] - distance;
+        this.tip.text.setAttributeNS(null, "x", -width/2 - distance);
+        this.tip.text.ws_valuesLabel.setAttributeNS(null, "x", -width/2 - distance);
+    }
+
     var d = "M" + dArray.join(" ") + "Z";
     this.tip.talkBubble.setAttributeNS(null, "d", d);
 
-    //shift the talk bubble left or right if there is not enough room to display it.
-    //TODO
-
     //change the outline color of the talk bubble.
     draw.setStrokeFill(this.tip.talkBubble, colors[color].nodeStrokeColor, false, false);
-
 
     //translate the whole group so that it sits above the target node.
     draw.translate(this.tip.group, pixelX, pixelY);

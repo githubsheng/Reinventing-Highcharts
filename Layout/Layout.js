@@ -159,9 +159,6 @@ Layout.prototype.analyze = function(){
     var origin = calculateOriginPosition(outerAreas);
     var yAxisLength = outerAreas.leftArea.height;
     var xAxisLength = outerAreas.topArea.width - this.yAxisWidth;
-    this.chartDisplayleftEdgeX = this.origin[0];
-    this.chartDisplayRightEdgeX = this.origin[0] + xAxisLength;
-    this.chartDisplayTopEdgeY = this.origin[1] + yAxisLength;
 
     return {
         originPosition: origin,

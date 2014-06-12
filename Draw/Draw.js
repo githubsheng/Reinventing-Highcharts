@@ -86,6 +86,8 @@ var draw = {
         }
         if(verticalAlign === "middle"){
             t.setAttributeNS(null, "dy", "0.3em");
+        } else if (verticalAlign === "top"){
+            t.setAttributeNS(null, "dy", "1em");
         }
         if(text !== false){
             t.textContent = text;

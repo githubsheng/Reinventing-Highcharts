@@ -8,17 +8,18 @@ var weaver = {
             case "basicLineLinear":
                 this.weaveBasicLineLinear(input);
                 break;
+            case "basicCategory":
+                this.weaveBasicCategory(input);
         }
 
     },
     weaveBasicLineLinear: function (input) {
-        var dataAnalyst = new BasicLineLinearDataAnalyst(input);
-        var dar = dataAnalyst.analyze(); //data analyze result.
+        var dar = new BasicLineLinearDataAnalyst(input).analyze(); //data analyze result.
 
         var legend = new Legend(input.series, input.legend);
         legend.analyze();
 
-        var layout = new BasicLineLayout(input.mainTitle, input.subTitle, input.yAxisTitle,
+        var layout = new GeneralLayout(input.mainTitle, input.subTitle, input.yAxisTitle,
             input.xAxisTitle, legend);
 
         var xLeftPadding = xRightPadding = 10;
@@ -30,11 +31,35 @@ var weaver = {
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
 
-        var d = new BasicLineData(input, xDrawInfo, yDrawInfo);
+        var d = new BasicLineLinearData(input, xDrawInfo, yDrawInfo);
 
         layout.draw();
         xAxis.draw();
         yAxis.draw();
         d.draw();
+    },
+
+    weaveBasicCategory: function(input){
+        var dar = new BasicCateogryDataAnalyst(input).analyze();
+
+        var legend = new Legend(input.series, input.legend);
+        legend.analyze();
+
+        var layout = new GeneralLayout(input.mainTitle, input.subTitle, input.yAxisTitle,
+            input.xAxisTitle, legend);
+
+        var xLeftPadding = xRightPadding = 10;
+        var lar = layout.analyze(); //layout analyze result.
+
+        var xAxis = new X_CategoryAxis(lar.xAxisLength - xLeftPadding - xRightPadding, lar.originPosition, dar.seriesNames);
+        var yAxis = new Y_LinearAxis(lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
+
+        xAxis.analyze();
+        yAxis.analyze();
+
+        layout.draw();
+        xAxis.draw();
+        yAxis.draw();
+
     }
 };

@@ -9,21 +9,21 @@
  * @param yDrawInfo
  * @constructor
  */
-function BasicLineData(input, xDrawInfo, yDrawInfo) {
+function BasicLineLinearData(input, xDrawInfo, yDrawInfo) {
     this.input = input;
     this.xDrawInfo = xDrawInfo;
     this.yDrawInfo = yDrawInfo;
     this.tip = null;
 }
 
-BasicLineData.prototype = new LineData();
-BasicLineData.constructor = BasicLineData;
+BasicLineLinearData.prototype = new LineData();
+BasicLineLinearData.constructor = BasicLineLinearData;
 
 
 /**
  * need not be called after analyze() because there is no such method in this class.
  */
-BasicLineData.prototype.draw = function () {
+BasicLineLinearData.prototype.draw = function () {
     //loop through different series
     var series = this.input.series;
     var randomPicker = new RandomPicker();
@@ -47,7 +47,7 @@ BasicLineData.prototype.draw = function () {
  * @param singleSeriesName
  * @param nodes
  */
-BasicLineData.prototype.drawNodesAndConfigureTip = function(nodeShape, nodeColor, singleSeriesName, nodes){
+BasicLineLinearData.prototype.drawNodesAndConfigureTip = function(nodeShape, nodeColor, singleSeriesName, nodes){
     var basicLineData = this;
 
     for (var i = 0; i < nodes.length; i = i + 4) {
@@ -82,7 +82,7 @@ BasicLineData.prototype.drawNodesAndConfigureTip = function(nodeShape, nodeColor
  * @param singleSeriesData
  * @returns {Array}
  */
-BasicLineData.prototype.analyzeSingleSeriersData = function(singleSeriesData){
+BasicLineLinearData.prototype.analyzeSingleSeriersData = function(singleSeriesData){
     var nodes = []; //reset it to empty array.
 
     for (var ii = 0; ii < singleSeriesData.length; ii++) {

@@ -27,8 +27,8 @@ BasicLineLinearDataAnalyst.prototype.analyze = function(){
     var series = this.input.series;
     for(var i = 0; i < series.length; i++){
         var seriesData = series[i][1];
-        for(var i = 0; i < seriesData.length; i++){
-            var point = seriesData[i];
+        for(var ii = 0; ii < seriesData.length; ii++){
+            var point = seriesData[ii];
             if(point[0] < minX){
                 minX = point[0];
             }

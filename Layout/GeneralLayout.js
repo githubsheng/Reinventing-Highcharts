@@ -2,7 +2,7 @@
  * Created by wangsheng on 4/6/14.
  */
 
-function BasicLineLayout(mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
+function GeneralLayout(mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
     this.mainTitle = mainTitle;
     this.subTitle = subTitle;
     this.yAxisTitle = yAxisTitle;
@@ -10,5 +10,5 @@ function BasicLineLayout(mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
     this.legend = legend;
 }
 
-BasicLineLayout.prototype = new Layout();
-BasicLineLayout.prototype.constructor = BasicLineLayout;
+GeneralLayout.prototype = new Layout();
+GeneralLayout.prototype.constructor = GeneralLayout;
