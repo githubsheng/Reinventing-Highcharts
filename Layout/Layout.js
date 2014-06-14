@@ -20,7 +20,6 @@ function Layout(){
     this.chartDisplayRightEdgeX = 0; //可以用于画线的区域的右边际
     this.chartDisplayTopEdgeY = 0;
     this.areas = null;
-    this.svg = document.querySelector("#svg-playground");
 }
 
 /**

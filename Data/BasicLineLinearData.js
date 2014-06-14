@@ -9,11 +9,12 @@
  * @param yDrawInfo
  * @constructor
  */
-function BasicLineLinearData(input, xDrawInfo, yDrawInfo) {
+function BasicLineLinearData(svg, input, xDrawInfo, yDrawInfo) {
+    this.svg = svg;
     this.input = input;
     this.xDrawInfo = xDrawInfo;
     this.yDrawInfo = yDrawInfo;
-    this.tip = null;
+    this.topTip = null;
 }
 
 BasicLineLinearData.prototype = new LineData();
@@ -37,7 +38,7 @@ BasicLineLinearData.prototype.draw = function () {
         this.drawLines(nodes, color);
         this.drawNodesAndConfigureTip(nodeShape, color, singleSeriesName, nodes);
     }
-    this.drawTipTemplate();
+    this.drawTipTemplate(10, false);
 };
 
 /**
@@ -61,19 +62,39 @@ BasicLineLinearData.prototype.drawNodesAndConfigureTip = function(nodeShape, nod
         nodeMouseoverSection.ws_pixelY = nodes[i + 1];
         nodeMouseoverSection.ws_dataX = nodes[i + 2];
         nodeMouseoverSection.ws_dataY = nodes[i + 3];
+        nodeMouseoverSection.ws_seriesName = singleSeriesName;
         nodeMouseoverSection.ws_nodeShape = nodeShape;
-        nodeMouseoverSection.addEventListener("mouseover", function () {
-            visualNodeDrawer.highlightNode(this.ws_visualNode, this.ws_nodeShape, this.ws_pixelX, this.ws_pixelY);
-            basicLineData.showTip(this.ws_dataX, this.ws_dataY, this.ws_pixelX, this.ws_pixelY, singleSeriesName, nodeColor);
-        });
-
-        nodeMouseoverSection.addEventListener("mouseout", function () {
-            visualNodeDrawer.deHighLightNode(this.ws_visualNode, this.ws_nodeShape, this.ws_pixelX, this.ws_pixelY);
-            basicLineData.hideTip();
-        });
+        nodeMouseoverSection.ws_nodeColor = nodeColor;
+//        nodeMouseoverSection.addEventListener("mouseover", function () {
+//            visualNodeDrawer.highlightNode(this.ws_visualNode, this.ws_nodeShape, this.ws_pixelX, this.ws_pixelY);
+//            basicLineData.showTip(this.ws_dataX, this.ws_dataY, this.ws_pixelX, this.ws_pixelY, singleSeriesName, nodeColor);
+//        });
+//
+//        nodeMouseoverSection.addEventListener("mouseout", function () {
+//            visualNodeDrawer.deHighLightNode(this.ws_visualNode, this.ws_nodeShape, this.ws_pixelX, this.ws_pixelY);
+//            basicLineData.hideTip();
+//        });
         this.svg.appendChild(visualNode);
         this.svg.appendChild(nodeMouseoverSection);
     }
+
+    this.svg.addEventListener("mouseover", function (event) {
+        visualNodeDrawer.highlightNode(event.target.ws_visualNode, event.target.ws_nodeShape,
+            event.target.ws_pixelX, event.target.ws_pixelY);
+
+        basicLineData.showTip(event.target.ws_dataX, event.target.ws_dataY, event.target.ws_pixelX,
+            event.target.ws_pixelY, event.target.ws_seriesName, event.target.ws_nodeColor);
+        event.stopPropagation();
+    });
+
+    this.svg.addEventListener("mouseout", function (event) {
+        visualNodeDrawer.deHighLightNode(event.target.ws_visualNode, event.target.ws_nodeShape,
+            event.target.ws_pixelX, event.target.ws_pixelY);
+
+        basicLineData.hideTip();
+
+        event.stopPropagation();
+    });
 };
 
 /**

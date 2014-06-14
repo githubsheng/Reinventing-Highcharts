@@ -20,7 +20,7 @@ BasicCategoryDataAnalyst.prototype.analyze = function(){
     var seriesNames = [];
     for(var i = 0; i < series.length; i++){
         seriesNames.push(series[i][0]);
-        var seriesData = series[i][1];
+        var seriesData = series[i][1][0];
 
         if(seriesData < minY){
             minY = seriesData;

@@ -12,13 +12,10 @@
  * @param rightPadding
  * @constructor
  */
-function X_CategoryAxis(length, originPosition, categoriesNames){
+function X_CategoryAxis(svg, length, originPosition, categoriesNames){
+    this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;
-    //this.min = min;
-    //this.max = max;
-    //this.preferredMarkPixelInterval = 100;
-    //this.markDataInterval = 0;
     this.markPixelInterval = 0;
     this.markPositions = [];
     this.labelPositions = [];
@@ -85,9 +82,17 @@ X_CategoryAxis.prototype.analyzeReturn = function() {
         columnWidth = this.markPixelInterval / 2;
     }
 
+    var chartDisplayLeftEdgeX = this.originPosition[0];
+    var chartDisplayRightEdgeX = this.originPosition[0] + this.leftPadding + this.length + this.rightPadding;
+
+    var chartMiddleLineX = (chartDisplayLeftEdgeX + chartDisplayRightEdgeX)/2;
+
     return {
         categoryBasePositions: categoryBasePositions,
-        columnWidth: columnWidth
+        columnWidth: columnWidth,
+        chartDisplayLeftEdgeX: chartDisplayLeftEdgeX,
+        chartDisplayRightEdgeX: chartDisplayRightEdgeX,
+        chartMiddleLineX: chartMiddleLineX
     };
 };
 

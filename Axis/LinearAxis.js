@@ -11,7 +11,8 @@
  * @param leftPadding
  * @constructor
  */
-function X_LinearAxis(length, min, max, originPosition, leftPadding, rightPadding){
+function X_LinearAxis(svg, length, min, max, originPosition, leftPadding, rightPadding){
+    this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;
     this.min = min;
@@ -40,7 +41,8 @@ X_LinearAxis.prototype.constructor = X_LinearAxis;
  * @param x_axis
  * @constructor
  */
-function Y_LinearAxis(length, min, max, originPosition, x_axis){
+function Y_LinearAxis(svg, length, min, max, originPosition, x_axis){
+    this.svg = svg;
     this.originPosition;
     this.length = length;
     this.min = min;

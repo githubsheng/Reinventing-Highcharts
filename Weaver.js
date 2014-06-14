@@ -3,35 +3,35 @@
  */
 
 var weaver = {
-    weave: function (type, input /* in the future also various kinds of options */) {
+    weave: function (type, input /* in the future also various kinds of options */, svg) {
         switch (type) {
             case "basicLineLinear":
-                this.weaveBasicLineLinear(input);
+                this.weaveBasicLineLinear(input, svg);
                 break;
             case "basicCategory":
-                this.weaveBasicCategory(input);
+                this.weaveBasicCategory(input, svg);
         }
 
     },
-    weaveBasicLineLinear: function (input) {
+    weaveBasicLineLinear: function (input, svg) {
         var dar = new BasicLineLinearDataAnalyst(input).analyze(); //data analyze result.
 
-        var legend = new Legend(input.series, input.legend);
+        var legend = new Legend(svg, input.series, input.legend);
         legend.analyze();
 
-        var layout = new GeneralLayout(input.mainTitle, input.subTitle, input.yAxisTitle,
+        var layout = new GeneralLayout(svg, input.mainTitle, input.subTitle, input.yAxisTitle,
             input.xAxisTitle, legend);
 
         var xLeftPadding = xRightPadding = 10;
         var lar = layout.analyze(); //layout analyze result.
 
-        var xAxis = new X_LinearAxis(lar.xAxisLength - xLeftPadding - xRightPadding, dar.minX, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
-        var yAxis = new Y_LinearAxis(lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
+        var xAxis = new X_LinearAxis(svg, lar.xAxisLength - xLeftPadding - xRightPadding, dar.minX, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
 
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
 
-        var d = new BasicLineLinearData(input, xDrawInfo, yDrawInfo);
+        var d = new BasicLineLinearData(svg, input, xDrawInfo, yDrawInfo);
 
         layout.draw();
         xAxis.draw();
@@ -39,25 +39,25 @@ var weaver = {
         d.draw();
     },
 
-    weaveBasicCategory: function(input){
+    weaveBasicCategory: function(input, svg){
         var dar = new BasicCategoryDataAnalyst(input).analyze();
 
-        var legend = new Legend(input.series, input.legend);
-        legend.analyze();
+        var legend = new Legend(svg, input.series, input.legend);
+        legend.analyze("rectangular");
 
-        var layout = new GeneralLayout(input.mainTitle, input.subTitle, input.yAxisTitle,
+        var layout = new GeneralLayout(svg, input.mainTitle, input.subTitle, input.yAxisTitle,
             input.xAxisTitle, legend);
 
         var xLeftPadding = xRightPadding = 10;
         var lar = layout.analyze(); //layout analyze result.
 
-        var xAxis = new X_CategoryAxis(lar.xAxisLength - xLeftPadding - xRightPadding, lar.originPosition, dar.seriesNames);
-        var yAxis = new Y_LinearAxis(lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
+        var xAxis = new X_CategoryAxis(svg, lar.xAxisLength - xLeftPadding - xRightPadding, lar.originPosition, dar.seriesNames);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
 
         var xDrawInfo = xAxis.analyze();
         var yDrawInfo = yAxis.analyze();
 
-        var d = new BasicCategoryData(input.series, xDrawInfo, yDrawInfo);
+        var d = new BasicCategoryData(svg, input.series, xDrawInfo, yDrawInfo);
 
         layout.draw();
         xAxis.draw();

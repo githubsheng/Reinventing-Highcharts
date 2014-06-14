@@ -5,8 +5,9 @@
     <title></title>
 </head>
 <body>
-<svg id="svg-playground" xmlns="http://www.w3.org/2000/svg" width="900" height="500">
-</svg>
+<svg id="svg1" xmlns="http://www.w3.org/2000/svg" width="900" height="500"></svg>
+<svg id="svg2" xmlns="http://www.w3.org/2000/svg" width="900" height="500"></svg>
+
 <script type="text/javascript" src="Draw/Draw.js"></script>
 <script type="text/javascript" src="Draw/Color.js"></script>
 <script type="text/javascript" src="Util/Util.js"></script>
@@ -26,104 +27,110 @@
 <script type="text/javascript" src="Data/BasicCategoryData.js"></script>
 <script type="text/javascript" src="Weaver.js"></script>
 <script type="text/javascript">
-//    var seriesName1 = "Pencil sales";
-//    var data1 = [
-//        [2, 3],
-//        [10, 50],
-//        [12, 65],
-//        [23, 43],
-//        [31, 140],
-//        [52, 69],
-//        [63, 73],
-//        [87, 77]
-//    ];
-//
-//    var seriesName2 = "Pen sales";
-//    var data2 = [
-//        [2, 32],
-//        [10, 21],
-//        [12, 42],
-//        [23, 35],
-//        [31, 111],
-//        [52, 98],
-//        [63, 65],
-//        [87, 72]
-//    ];
-//
-//    var seriesName3 = "Eraser sales";
-//    var data3 = [
-//        [2, 22],
-//        [10, 29],
-//        [12, 53],
-//        [23, 46],
-//        [31, 93],
-//        [52, 78],
-//        [63, 93],
-//        [87, 65]
-//    ];
-//
-//    var seriesName4 = "Ruler sales";
-//    var data4 = [
-//        [2, 12],
-//        [10, 23],
-//        [12, 46],
-//        [23, 57],
-//        [31, 83],
-//        [52, 65],
-//        [63, 100],
-//        [87, 88]
-//    ];
-//
-//    var input = {
-//        mainTitle: "Sales of our company in 2013",
-//        subTitle: "Data from sales department",
-//        yAxisTitle: "number of items sold",
-//        xAxisTitle: "now I can't find a title for this axis",
-//        series: [
-//            [seriesName1, data1],
-//            [seriesName2, data2],
-//            [seriesName3, data3],
-//            [seriesName4, data4]
-//        ],
-//        legend: "left"
-//    };
-//    weaver.weave("basicLineLinear", input);
+    (function(){
+        var seriesName1 = "Pencil sales";
+        var data1 = [
+            [2, 3],
+            [10, 50],
+            [12, 65],
+            [23, 43],
+            [31, 140],
+            [52, 69],
+            [63, 73],
+            [87, 77]
+        ];
 
-    var seriesName1 = "Pencil sales";
-    var data1 = [
-        2
-    ];
+        var seriesName2 = "Pen sales";
+        var data2 = [
+            [2, 32],
+            [10, 21],
+            [12, 42],
+            [23, 35],
+            [31, 111],
+            [52, 142],
+            [63, 65],
+            [87, 72]
+        ];
 
-    var seriesName2 = "Pen sales";
-    var data2 = [
-        3
-    ];
+        var seriesName3 = "Eraser sales";
+        var data3 = [
+            [2, 22],
+            [10, 29],
+            [12, 53],
+            [23, 46],
+            [31, 93],
+            [52, 78],
+            [63, 93],
+            [87, 65]
+        ];
 
-    var seriesName3 = "Eraser sales";
-    var data3 = [
-            5
-    ];
+        var seriesName4 = "Ruler sales";
+        var data4 = [
+            [2, 12],
+            [10, 23],
+            [12, 46],
+            [23, 57],
+            [31, 83],
+            [52, 65],
+            [63, 100],
+            [87, 88]
+        ];
 
-    var seriesName4 = "Ruler sales";
-    var data4 = [
-      3
-    ];
+        var input = {
+            mainTitle: "Sales of our company in 2013",
+            subTitle: "Data from sales department",
+            yAxisTitle: "number of items sold",
+            xAxisTitle: "now I can't find a title for this axis",
+            series: [
+                [seriesName1, data1],
+                [seriesName2, data2],
+                [seriesName3, data3],
+                [seriesName4, data4]
+            ],
+            legend: "left"
+        };
+        weaver.weave("basicLineLinear", input, document.getElementById("svg1"));
+    })();
 
-    var input = {
-        mainTitle: "Sales of our company in 2013",
-        subTitle: "Data from sales department",
-        yAxisTitle: "number of items sold",
-        xAxisTitle: "now I can't find a title for this axis",
-        series: [
-            [seriesName1, data1],
-            [seriesName2, data2],
-            [seriesName3, data3],
-            [seriesName4, data4]
-        ],
-        legend: "left"
-    };
+    (function(){
+        var seriesName1 = "Pencil sales";
+        var data1 = [
+            2
+        ];
 
-    weaver.weave("basicCategory", input);
+        var seriesName2 = "Pen sales";
+        var data2 = [
+            3
+        ];
+
+        var seriesName3 = "Eraser sales";
+        var data3 = [
+            4.5
+        ];
+
+        var seriesName4 = "Ruler sales";
+        var data4 = [
+            3
+        ];
+
+        var input = {
+            mainTitle: "Sales of our company in 2013",
+            subTitle: "Data from sales department",
+            yAxisTitle: "number of items sold",
+            xAxisTitle: "now I can't find a title for this axis",
+            series: [
+                [seriesName1, data1],
+                [seriesName2, data2],
+                [seriesName3, data3],
+                [seriesName4, data4]
+            ],
+            legend: "right"
+        };
+
+        weaver.weave("basicCategory", input, document.getElementById("svg2"));
+    })();
+
+
 
 </script>
 </body>

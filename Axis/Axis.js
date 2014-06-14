@@ -9,7 +9,6 @@
  */
 function Axis(){
     this.preferredMarkDataIntervals = [1, 2, 2.5, 5, 10];
-    this.svg = document.querySelector("#svg-playground");
 }
 
 /**
@@ -68,16 +67,18 @@ X_Axis.prototype.analyzeReturn = function(){
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
 
-
+    var chartDisplayLeftEdgeX = this.originPosition[0];
     var chartDisplayRightEdgeX = this.originPosition[0] + this.leftPadding + this.length + this.rightPadding;
-    var chartDisplayleftEdgeX = this.originPosition[0];
+
+    var chartMiddleLineX = (chartDisplayLeftEdgeX + chartDisplayRightEdgeX)/2;
 
     return {
         startPoint: startPoint,
         pixelPerPoint: pixelPerData,
         min: min,
-        chartDisplayLeftEdgeX : chartDisplayleftEdgeX,
-        chartDisplayRightEdgeX: chartDisplayRightEdgeX
+        chartDisplayLeftEdgeX: chartDisplayLeftEdgeX,
+        chartDisplayRightEdgeX: chartDisplayRightEdgeX,
+        chartMiddleLineX: chartMiddleLineX
     };
 };
 
@@ -158,7 +159,7 @@ Y_Axis.prototype.analyze = function(){
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
 
-    var chartDisplayTopEdgeY = this.originPosition[1] + this.length;
+    var chartDisplayTopEdgeY = this.originPosition[1] - this.length;
 
     return {
         startPoint: startPoint,
@@ -174,21 +175,16 @@ Y_Axis.prototype.analyze = function(){
 Y_Axis.prototype.adjustMarkInterval = function(){
     Axis.prototype.adjustMarkInterval.apply(this);
     this.min = this.markDataInterval * Math.floor(this.min / this.markDataInterval);
-    this.max = this.markDataInterval * Math.ceil(this.max / this.markDataInterval);
+    var max2 = this.markDataInterval * Math.ceil(this.max / this.markDataInterval);
+    if(this.max === max2){
+        this.max = this.max + this.markDataInterval; //so that there is always some room unoccupied at the top.
+    } else {
+        this.max = max2;
+    }
     var numOfIntervals = (this.max - this.min) / this.markDataInterval;
     this.markPixelInterval = this.length / numOfIntervals;
 };
 
-/**
- * draws the backbone of the axis, that is, the long long vertical line where marks reside.
- */
-Y_Axis.prototype.drawAxisBone = function(){
-    var x1 = this.originPosition[0];
-    var y1 = this.originPosition[1];
-    var x2 = x1;
-    var y2 = y1 - this.length;
-    this.svg.appendChild(draw.createStraightLine(x1, y1, x2, y2));
-};
 
 /**
  * calculate the mark positions assuming its a linear axis.

@@ -2,7 +2,8 @@
  * Created by wangsheng on 4/6/14.
  */
 
-function GeneralLayout(mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
+function GeneralLayout(svg, mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
+    this.svg = svg;
     this.mainTitle = mainTitle;
     this.subTitle = subTitle;
     this.yAxisTitle = yAxisTitle;

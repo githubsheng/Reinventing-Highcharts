@@ -1,7 +1,8 @@
 /**
  * Created by wangsheng on 29/5/14.
  */
-function Legend(mulitpleSeries, positionRelativeToLayout){
+function Legend(svg, mulitpleSeries, positionRelativeToLayout){
+    this.svg = svg;
     this.height = 0;
     this.width = 0;
     this.rowHeight = 25;
@@ -9,10 +10,9 @@ function Legend(mulitpleSeries, positionRelativeToLayout){
     this.mulitpleSeries = mulitpleSeries;
     this.positionRelativeToLayout = positionRelativeToLayout;
     this.legendSVG_Group = draw.createGroup();
-    this.svg = document.getElementById("svg-playground");
 }
 
-Legend.prototype.analyze = function(){
+Legend.prototype.analyze = function(shape, color){
     if(this.positionRelativeToLayout === "none") return;
 
     this.svg.appendChild(this.legendSVG_Group);
@@ -23,7 +23,8 @@ Legend.prototype.analyze = function(){
         for(var i = 0; i < this.mulitpleSeries.length; i++){
             var singleSeries = this.mulitpleSeries[i];
             var singleSeriesName = singleSeries[0];
-            var singleSeriesNode = visualNodeDrawer.draw(randomPicker.pickNodeShape(), randomPicker.pickSeriesColor(),
+            var singleSeriesNode = visualNodeDrawer.draw(util.pickFirstAvailable(shape, randomPicker.pickNodeShape()),
+                util.pickFirstAvailable(color, randomPicker.pickSeriesColor()),
                 10, this.rowHeight * i + this.rowHeight/2);
             var legendText = draw.createText(20, this.rowHeight * i + this.rowHeight/2, singleSeriesName, this.fontSize, "start", "middle");
             this.legendSVG_Group.appendChild(singleSeriesNode);
