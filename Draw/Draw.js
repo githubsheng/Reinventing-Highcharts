@@ -27,9 +27,10 @@ var draw = {
     /**
      * create a path composed by only straight lines.
      *
-     * @param x
-     * @param y
-     * @param coordinates an array containing those coordinates [1,2,2,1,3,4] for examples means three points. first point is 1, 2 and second is 2,1.
+     * @param coordinates       an array that contains information of coordinates. However, this array may also contain information of other stuffs.
+     * @param stride            stride....
+     * @param offset            Example: if the stride is 4 and the offset is 1, then it means in each 4 elements, the 2nd element will be x, and the 3rd
+     *                          will be y.
      * @returns {SVGElement}   the path that is created
      */
     createStraightLines: function(coordinates, stride, offset){
@@ -37,6 +38,21 @@ var draw = {
         for(var i = stride; i < coordinates.length; i = i + stride){
             d = d + " " + coordinates[i] + " " + coordinates[i + 1];
         }
+        return this.createPath(d);
+    },
+
+    /**
+     * see create straight lines.
+     * @param coordinates
+     * @param stride
+     * @param offset
+     */
+    createStackWithStraightLines: function(coordinates, stride, offset, rightBottomCorner, leftBottomCorner){
+        var d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
+        for(var i = stride; i < coordinates.length; i = i + stride){
+            d = d + " " + coordinates[i] + " " + coordinates[i + 1];
+        }
+        d = d + " " + rightBottomCorner[0] + " " + rightBottomCorner[1] + " " + leftBottomCorner[0] + " " + leftBottomCorner[1] + " " + "Z";
         return this.createPath(d);
     },
 
@@ -179,6 +195,14 @@ var draw = {
         return g;
     },
 
+    /**
+     * create a <defs> tag.
+     */
+    createDefs: function(){
+        var d = document.createElementNS(this.xml_namespace, "defs");
+        return d;
+    },
+
 
     /*-----transforms-----*/
 
@@ -272,6 +296,39 @@ var draw = {
         if(fill){
             svgElement.setAttributeNS(null, "fill", fill);
         }
+    },
+
+    /**
+     * this function creates a svg linear gradient. it should be used together with addLinearGradientStop
+     * @param startPosition     needs to be [percentage, percentage]
+     * @param endPosition       needs to be [percentage, percentage]
+     */
+    createLinearGradient: function(startPosition, endPosition){
+        var linearGraident = document.createElementNS(this.xml_namespace, "linearGradient");
+        linearGraident.setAttributeNS(null, "x1", startPosition[0]);
+        linearGraident.setAttributeNS(null, "y1", startPosition[1]);
+        linearGraident.setAttributeNS(null, "x2", endPosition[0]);
+        linearGraident.setAttributeNS(null, "y2", endPosition[1]);
+        return linearGraident;
+    },
+
+    /**
+     * add a linear stop color.
+     * @param linearGradient
+     * @param stopPosition
+     * @param stopRawColor
+     * @param stopOpacity
+     */
+    addLinearGradientStop: function(linearGradient, stopPosition, stopRawColor, stopOpacity){
+        //<stop offset=".8" stop-color="black" stop-opacity="0.5"/>
+        var stop = document.createElementNS(this.xml_namespace, "stop");
+        stop.setAttributeNS(null, "offset", stopPosition);
+        stop.setAttributeNS(null, "stop-color", stopRawColor);
+        if(stopOpacity){
+            stop.setAttributeNS(null, "stop-opacity", stopOpacity);
+        }
+
+        linearGradient.appendChild(stop);
     },
 
     /**

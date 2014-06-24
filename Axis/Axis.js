@@ -1,5 +1,9 @@
 /**
  * Created by wangsheng on 26/5/14.
+ *
+ * The methods defined in these parent class uses the following properties from a child:
+ * min, max, length, preferredMarkPixelInterval, markDataInterval, markPixelInterval, originPosition, leftPadding, rightPadding,
+ * labelPositions, markPositions and svg
  */
 
 /**
@@ -74,7 +78,7 @@ X_Axis.prototype.analyzeReturn = function(){
 
     return {
         startPoint: startPoint,
-        pixelPerPoint: pixelPerData,
+        pixelPerData: pixelPerData,
         min: min,
         chartDisplayLeftEdgeX: chartDisplayLeftEdgeX,
         chartDisplayRightEdgeX: chartDisplayRightEdgeX,
@@ -105,11 +109,13 @@ X_Axis.prototype.drawMarks = function(){
  * draw the labels of the axis based on the calculated label position
  */
 X_Axis.prototype.drawLabels = function(){
+    var labelGroup = draw.createGroup();
     var text = this.min;
     for(var i = 0; i < this.labelPositions.length; i = i + 2){
-        text = this.min + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
-        this.svg.appendChild(draw.createText(this.labelPositions[i], this.labelPositions[i+1], text, 11, "middle"));
+        text = util.perfectNumber(this.min + this.markDataInterval * i / 2); //divide i by 2 because i = i + 2 in the loop
+        labelGroup.appendChild(draw.createText(this.labelPositions[i], this.labelPositions[i+1], text, 11, "middle", false));
     }
+    this.svg.appendChild(labelGroup);
 };
 
 /**
@@ -123,7 +129,7 @@ X_Axis.prototype.calculateMarkPositions = function(){
         this.markPositions.push(x);
         this.markPositions.push(y);
         x = x + this.markPixelInterval;
-        currentDataPoint = currentDataPoint + this.markDataInterval;
+        currentDataPoint = util.perfectNumber(currentDataPoint + this.markDataInterval);
     }
 };
 
@@ -163,7 +169,7 @@ Y_Axis.prototype.analyze = function(){
 
     return {
         startPoint: startPoint,
-        pixelPerPoint: pixelPerData,
+        pixelPerData: pixelPerData,
         min: min,
         chartDisplayTopEdgeY: chartDisplayTopEdgeY
     };
@@ -174,10 +180,10 @@ Y_Axis.prototype.analyze = function(){
  */
 Y_Axis.prototype.adjustMarkInterval = function(){
     Axis.prototype.adjustMarkInterval.apply(this);
-    this.min = this.markDataInterval * Math.floor(this.min / this.markDataInterval);
-    var max2 = this.markDataInterval * Math.ceil(this.max / this.markDataInterval);
+    this.min = util.perfectNumber(this.markDataInterval * Math.floor(this.min / this.markDataInterval));
+    var max2 = util.perfectNumber(this.markDataInterval * Math.ceil(this.max / this.markDataInterval));
     if(this.max === max2){
-        this.max = this.max + this.markDataInterval; //so that there is always some room unoccupied at the top.
+        this.max = util.perfectNumber(this.max + this.markDataInterval); //so that there is always some room unoccupied at the top.
     } else {
         this.max = max2;
     }
@@ -197,7 +203,7 @@ Y_Axis.prototype.calculateMarkPositions = function(){
         this.markPositions.push(x);
         this.markPositions.push(y);
         y = y - this.markPixelInterval;
-        currentDataPoint = currentDataPoint + this.markDataInterval;
+        currentDataPoint = util.perfectNumber(currentDataPoint + this.markDataInterval);
     }
 };
 
@@ -235,7 +241,7 @@ Y_Axis.prototype.drawMarks = function(){
 Y_Axis.prototype.drawLabels = function(){
     var text = this.min;
     for(var i = 0; i < this.labelPositions.length; i = i + 2){
-        text = this.min + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
+        text = util.perfectNumber(this.min + this.markDataInterval * i / 2); //divide i by 2 because i = i + 2 in the loop
         this.svg.appendChild(draw.createText(this.labelPositions[i] - 10, this.labelPositions[i+1], text, "11", "end", "middle"));
     }
 };

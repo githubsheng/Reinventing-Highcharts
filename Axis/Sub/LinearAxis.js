@@ -12,9 +12,11 @@
  * @constructor
  */
 function X_LinearAxis(svg, length, min, max, originPosition, leftPadding, rightPadding){
+    this.leftPadding = leftPadding;
+    this.rightPadding = rightPadding;
     this.svg = svg;
     this.originPosition = originPosition;
-    this.length = length;
+    this.length = length - leftPadding - rightPadding;
     this.min = min;
     this.max = max;
     this.preferredMarkPixelInterval = 100;
@@ -23,8 +25,7 @@ function X_LinearAxis(svg, length, min, max, originPosition, leftPadding, rightP
     this.markPositions = [];
     this.labelPositions = [];
     this.originPosition = originPosition;
-    this.leftPadding = leftPadding;
-    this.rightPadding = rightPadding;
+
 }
 
 

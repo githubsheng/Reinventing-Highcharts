@@ -24,6 +24,7 @@ function X_CategoryAxis(svg, length, originPosition, categoriesNames){
     //category axis has fixed left and right padding.
     this.leftPadding = 5;
     this.rightPadding = 5;
+
 }
 
 X_CategoryAxis.prototype = new X_Axis();

@@ -3,17 +3,17 @@
  */
 
 /**
- * Implements some methods that are shared across many different Data types.
+ * Implements some methods that are shared across many different DataViewer types.
  * @constructor
  */
-function Data(){
+function DataViewer(){
 }
 
 /**
  * @param isSingleLine      if this is true then the series name, x lable, and y value will are be displayed in the same line.
  * draw the topTip template.
  */
-Data.prototype.drawTopTipTemplate = function(topTipShift, isSingleLine){
+DataViewer.prototype.drawTopTipTemplate = function(topTipShift, isSingleLine){
     var group = draw.createGroup();
     draw.setVisibility(group, false);
     var talkBubble = this.drawTopTipTemplate_talkBubble(topTipShift, group);
@@ -34,7 +34,7 @@ Data.prototype.drawTopTipTemplate = function(topTipShift, isSingleLine){
  * @param group
  * @returns {SVGElement}
  */
-Data.prototype.drawTopTipTemplate_talkBubble = function (shift, group){
+DataViewer.prototype.drawTopTipTemplate_talkBubble = function (shift, group){
     //catw = change according to width
     var dArray = [0, -shift, -5, -5-shift, -10/*catw*/, -5-shift, -10/*catw*/, -40-shift, 10/*catw*/, -40-shift, 10/*catw*/, -5-shift, 5, -5-shift, 5, -5-shift];
     var d = "M" + dArray.join(" ") + "Z";
@@ -53,7 +53,7 @@ Data.prototype.drawTopTipTemplate_talkBubble = function (shift, group){
  * @param isSingleLine      if this is true then the series name, x lable, and y value will are be displayed in the same line.
  * @returns {SVGELement}
  */
-Data.prototype.drawTopTipTemplate_text = function (shift, group, isSingleLine){
+DataViewer.prototype.drawTopTipTemplate_text = function (shift, group, isSingleLine){
     var text;
 
     if(isSingleLine){
@@ -91,10 +91,10 @@ Data.prototype.drawTopTipTemplate_text = function (shift, group, isSingleLine){
  * @param seriesName
  * @returns width of the text.
  */
-Data.prototype.showTopTip_configureText = function(dataX, dataY, seriesName){
+DataViewer.prototype.showTopTip_configureText = function(dataX, dataY, seriesName){
     //change the text content accordingly.
     this.topTip.text.ws_seriesName.textContent = seriesName;
-    if(dataX){
+    if(dataX !== false || dataX !== undefined || data !== null){
         this.topTip.text.ws_valuesLabel.textContent = dataX + " - ";
     } else {
         this.topTip.text.ws_valuesLabel.textContent = " - ";
@@ -111,7 +111,7 @@ Data.prototype.showTopTip_configureText = function(dataX, dataY, seriesName){
     return width;
 };
 
-Data.prototype.showTopTip = function(dataX, dataY, pixelX, pixelY, seriesName){
+DataViewer.prototype.showTopTip = function(dataX, dataY, pixelX, pixelY, seriesName){
     var width = this.showTopTip_configureText(dataX, dataY, seriesName);
 
     //change the size of the talk bubble.
@@ -122,17 +122,17 @@ Data.prototype.showTopTip = function(dataX, dataY, pixelX, pixelY, seriesName){
     //shift the talk bubble left or right if there is not enough room to display it.
     var distance = dArray[4] + pixelX - this.xDrawInfo.chartDisplayLeftEdgeX;
     if(distance < 0) {
-        dArray[4] = dArray[6] = dArray[4] - distance; //distance is negative...
-        dArray[8] = dArray[10] = dArray[8] - distance;
-        this.topTip.text.setAttributeNS(null, "x", (-width/2 - distance).toString());
-        this.topTip.text.ws_valuesLabel.setAttributeNS(null, "x", (-width/2 - distance).toString());
+        dArray[4] = dArray[6] = dArray[4] - distance - 5; //distance is negative... so here it shifts right
+        dArray[8] = dArray[10] = dArray[8] - distance - 5;
+        this.topTip.text.setAttributeNS(null, "x", (-width/2 - distance - 5).toString());
+        this.topTip.text.ws_valuesLabel.setAttributeNS(null, "x", (-width/2 - distance - 5).toString());
     }
     distance = dArray[8] + pixelX - this.xDrawInfo.chartDisplayRightEdgeX;
     if(distance > 0){
-        dArray[4] = dArray[6] = dArray[4] - distance;
-        dArray[8] = dArray[10] = dArray[8] - distance;
-        this.topTip.text.setAttributeNS(null, "x", (-width/2 - distance).toString());
-        this.topTip.text.ws_valuesLabel.setAttributeNS(null, "x", (-width/2 - distance).toString());
+        dArray[4] = dArray[6] = dArray[4] - distance + 5;
+        dArray[8] = dArray[10] = dArray[8] - distance + 5;
+        this.topTip.text.setAttributeNS(null, "x", (-width/2 - distance + 5).toString());
+        this.topTip.text.ws_valuesLabel.setAttributeNS(null, "x", (-width/2 - distance + 5).toString());
     }
 
     var d = "M" + dArray.join(" ") + "Z";
@@ -145,7 +145,7 @@ Data.prototype.showTopTip = function(dataX, dataY, pixelX, pixelY, seriesName){
  *
  * @param isSingleLine      if this is true then the series name, x lable, and y value will are be displayed in the same line.
  */
-Data.prototype.drawLeftTipTemplate = function(isSingleLine){
+DataViewer.prototype.drawLeftTipTemplate = function(isSingleLine){
     var group = draw.createGroup();
     draw.setVisibility(group, false);
 
@@ -194,7 +194,7 @@ Data.prototype.drawLeftTipTemplate = function(isSingleLine){
     };
 };
 
-Data.prototype.showLeftTip = function(dataX, dataY, pixelX, pixelY, seriesName){
+DataViewer.prototype.showLeftTip = function(dataX, dataY, pixelX, pixelY, seriesName){
     this.leftTip.text.ws_seriesName.textContent = seriesName;
     if(dataX){
         this.leftTip.text.ws_valuesLabel.textContent = dataX + " - ";
@@ -212,7 +212,7 @@ Data.prototype.showLeftTip = function(dataX, dataY, pixelX, pixelY, seriesName){
     return this.leftTip;
 };
 
-Data.prototype.drawRightTipTemplate = function(isSingleLine){
+DataViewer.prototype.drawRightTipTemplate = function(isSingleLine){
     var group = draw.createGroup();
     draw.setVisibility(group, false);
 
@@ -262,7 +262,7 @@ Data.prototype.drawRightTipTemplate = function(isSingleLine){
     };
 };
 
-Data.prototype.showRightTip = function(dataX, dataY, pixelX, pixelY, seriesName){
+DataViewer.prototype.showRightTip = function(dataX, dataY, pixelX, pixelY, seriesName){
     this.rightTip.text.ws_seriesName.textContent = seriesName;
     if(dataX){
         this.rightTip.text.ws_valuesLabel.textContent = dataX + " - ";
@@ -285,7 +285,7 @@ Data.prototype.showRightTip = function(dataX, dataY, pixelX, pixelY, seriesName)
  * @param topTipShift       this parameter shift the top tip a little bit.
  * @param isSingleLine      if this is true then the series name, x lable, and y value will are be displayed in the same line.
  */
-Data.prototype.drawTipTemplate = function(topTipShift, isSingleLine){
+DataViewer.prototype.drawTipTemplate = function(topTipShift, isSingleLine){
     this.drawTopTipTemplate(topTipShift, isSingleLine);
     this.drawLeftTipTemplate(isSingleLine);
     this.drawRightTipTemplate(isSingleLine);
@@ -298,18 +298,19 @@ Data.prototype.drawTipTemplate = function(topTipShift, isSingleLine){
  * @param pixelX
  * @param pixelY
  */
-Data.prototype.showTip = function(dataX, dataY, pixelX, pixelY, seriesName, color){
+DataViewer.prototype.showTip = function(dataX, dataY, pixelX, pixelY, seriesName, color, isContinue){
     var tip;
     //test if top tip would work.
     var dArray = this.topTip.talkBubble.dArray;
-    if(dArray[7] + pixelY < this.yDrawInfo.chartDisplayTopEdgeY){
+    if(isContinue){
+        tip = this.showTopTip(dataX, dataY, pixelX, pixelY, seriesName);
+    } else if (dArray[7] + pixelY < this.yDrawInfo.chartDisplayTopEdgeY){
         //switch to left tip or right tip if there is not enough room to display the tip at the top.
         if(pixelX > this.xDrawInfo.chartMiddleLineX){
             tip = this.showRightTip(dataX, dataY, pixelX, pixelY, seriesName);
         } else {
             tip = this.showLeftTip(dataX, dataY, pixelX, pixelY, seriesName);
         }
-
     } else {
         tip = this.showTopTip(dataX, dataY, pixelX, pixelY, seriesName);
     }
@@ -325,8 +326,43 @@ Data.prototype.showTip = function(dataX, dataY, pixelX, pixelY, seriesName, colo
 /**
  * hide the tip.
  */
-Data.prototype.hideTip = function(){
+DataViewer.prototype.hideTip = function(){
     draw.setVisibility(this.topTip.group, false);
     draw.setVisibility(this.leftTip.group, false);
     draw.setVisibility(this.rightTip.group, false);
+};
+
+DataViewer.prototype.hideTopTip = function(){
+    draw.setVisibility(this.topTip.group, false);
+};
+
+/*
+ * draw the nodes along the lines and configure action listeners.
+ */
+/**
+ * called in draw() method. This method draws the nodes and set up proper action listeners for each single series.
+ * @param nodeShape
+ * @param nodeColor
+ * @param singleSeriesName
+ * @param nodes     stride is 4, the 1st is pixel x, 2nd is pixely, 3rd is data x, 4th is data y.
+ */
+DataViewer.prototype.drawNodesAndConfigureTip = function(nodeShape, nodeColor, singleSeriesName, nodes){
+    var dataViewer = this;
+
+    var visualNodeGroup = draw.createGroup();
+    var nodeMouseoverSectionGroup = draw.createGroup();
+    for (var i = 0; i < nodes.length; i = i + 4) {
+
+        var visualNode = nodeDrawer.draw(nodeShape, nodeColor, nodes[i], nodes[i+1]);//this is the one that users see
+        var nodeMouseoverSection = tipTriggerNodeDrawer.draw(visualNode, nodes[i], nodes[i + 1], nodes[i + 2], nodes[i + 3],
+            singleSeriesName, nodeShape, nodeColor);
+
+        visualNodeGroup.appendChild(visualNode);
+        nodeMouseoverSectionGroup.appendChild(nodeMouseoverSection);
+    }
+
+    tipTriggerNodeDrawer.configureEventListener(nodeMouseoverSectionGroup, dataViewer);
+
+    this.svg.appendChild(visualNodeGroup);
+    this.svg.appendChild(nodeMouseoverSectionGroup);
 };

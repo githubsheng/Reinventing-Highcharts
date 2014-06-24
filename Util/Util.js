@@ -30,5 +30,12 @@ var util = {
         } else {
             return chooseWhenFalse;
         }
+    },
+
+    /**
+     * to cope with floating point accuracy issue.
+     */
+    perfectNumber: function strip(number) {
+        return (parseFloat(number.toPrecision(12)));
     }
 };

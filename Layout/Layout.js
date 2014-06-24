@@ -8,6 +8,7 @@
 function Layout(){
     this.smallMargin = 10;
     this.mediumMargin = 20;
+    this.bigMargin = 50;
     this.mainTitleHeight = 30;
     this.mainTitleFontSize = 25;
     this.subTitleHeight = 20;
@@ -16,8 +17,6 @@ function Layout(){
     this.yAxisTitleFontSize = this.xAxisTitleFontSize = 15;
     this.xAxisHeight = 20;
     this.yAxisWidth = 30;
-    this.chartDisplayleftEdgeX = 0; //可以用于画线的区域的左边际，主要用于参考看提示框是否需要往右移动
-    this.chartDisplayRightEdgeX = 0; //可以用于画线的区域的右边际
     this.chartDisplayTopEdgeY = 0;
     this.areas = null;
 }
