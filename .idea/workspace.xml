@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BasicLineLinearDataViewer.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataViewer/Sub/BasicLineLinearDataViewer.js">
+      <file leaf-file-name="BasicSingleTimeDataViewer.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DataViewer/BasicSingleTimeDataViewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
-              <caret line="29" column="57" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1242" max-vertical-offset="1920">
+              <caret line="117" column="40" selection-start-line="117" selection-start-column="40" selection-end-line="117" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -36,50 +36,55 @@
       <file leaf-file-name="SingleLineSeriesViewer.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleLineSeriesViewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5053599" vertical-offset="0" max-vertical-offset="653">
-              <caret line="96" column="41" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="48" />
+            <state vertical-scroll-proportion="-0.89586526" vertical-offset="1065" max-vertical-offset="2145">
+              <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
               <folding>
                 <element signature="n#!!doc;n#SingleLineSeriesViewer#0" expanded="false" />
-                <element signature="n#!!block;n#SingleLineSeriesViewer#0" expanded="false" />
-                <element signature="e#871#965#0" expanded="false" />
-                <element signature="e#1022#1198#0" expanded="false" />
-                <element signature="e#1256#2169#0" expanded="false" />
-                <element signature="e#1282#1305#0" expanded="false" />
-                <element signature="e#1464#1890#0" expanded="false" />
-                <element signature="e#2172#2427#0" expanded="false" />
-                <element signature="e#2493#2675#0" expanded="false" />
-                <element signature="e#2766#3393#0" expanded="false" />
-                <element signature="e#2867#3200#0" expanded="false" />
-                <element signature="e#3280#3389#0" expanded="false" />
-                <element signature="e#3469#3682#0" expanded="false" />
-                <element signature="e#3511#3622#0" expanded="false" />
-                <element signature="e#3746#3932#0" expanded="false" />
-                <element signature="e#3788#3811#0" expanded="false" />
-                <element signature="e#3817#3930#0" expanded="false" />
-                <element signature="e#3999#4003#0" expanded="false" />
+                <element signature="e#1618#1641#0" expanded="false" />
+                <element signature="e#1800#2226#0" expanded="false" />
+                <element signature="e#2508#2763#0" expanded="false" />
+                <element signature="e#2829#3011#0" expanded="false" />
+                <element signature="e#3102#3729#0" expanded="false" />
+                <element signature="e#3203#3536#0" expanded="false" />
+                <element signature="e#3616#3725#0" expanded="false" />
+                <element signature="e#3805#4018#0" expanded="false" />
+                <element signature="e#3847#3958#0" expanded="false" />
+                <element signature="e#4082#4268#0" expanded="false" />
+                <element signature="e#4124#4147#0" expanded="false" />
+                <element signature="e#4153#4266#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NodeDrawer.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Draw/NodeDrawer.js">
+      <file leaf-file-name="TipControl.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DataViewer/Tip/TipControl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1250" max-vertical-offset="1905">
-              <caret line="111" column="70" selection-start-line="111" selection-start-column="70" selection-end-line="111" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="555" max-vertical-offset="1335">
+              <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+              <folding>
+                <element signature="n#!!doc;n#TipControl#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BasicLineIrregularDataViewer.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DataViewer/BasicLineIrregularDataViewer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="1035">
+              <caret line="39" column="97" selection-start-line="39" selection-start-column="97" selection-end-line="39" selection-end-column="97" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Chart.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Chart.html">
+      <file leaf-file-name="Util.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Util/Util.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="4155">
-              <caret line="24" column="66" selection-start-line="24" selection-start-column="66" selection-end-line="24" selection-end-column="66" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="517" max-vertical-offset="1290">
+              <caret line="49" column="52" selection-start-line="49" selection-start-column="52" selection-end-line="49" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,53 +101,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SingleCategorySeriesViewer.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleCategorySeriesViewer.js">
+      <file leaf-file-name="Draw.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Draw/Draw.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4707" max-vertical-offset="5400">
+              <caret line="344" column="6" selection-start-line="344" selection-start-column="6" selection-end-line="344" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BasicLineLinearDataAnalyst.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataAnalyst/BasicLineLinearDataAnalyst.js">
+      <file leaf-file-name="BasicTimeDataAnalyst.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DataAnalyst/BasicTimeDataAnalyst.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1065">
-              <caret line="25" column="34" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TipControl.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataViewer/Tip/TipControl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1335">
-              <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
-              <folding>
-                <element signature="n#!!doc;n#TipControl#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my-chart.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CSS/my-chart.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-              <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="74" max-vertical-offset="750">
+              <caret line="41" column="6" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="BasicTimeDataViewer.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataViewer/Sub/BasicTimeDataViewer.js">
+        <entry file="file://$PROJECT_DIR$/DataViewer/BasicTimeDataViewer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
-              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+              <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
               <folding>
                 <element signature="n#!!doc;n#BasicTimeDataViewer#0" expanded="false" />
               </folding>
@@ -160,21 +143,14 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Layout/BasicLineLinearLayout.js" />
-        <option value="$PROJECT_DIR$/DataAnalyst/BasicCategoryDataAnalyst.js" />
-        <option value="$PROJECT_DIR$/Legend/BasicCategoryLegend.js" />
-        <option value="$PROJECT_DIR$/Data/TipTriggerNodeDrawer.js" />
-        <option value="$PROJECT_DIR$/Data/LineData.js" />
         <option value="$PROJECT_DIR$/DataAnalyst/BasicLineLinearDataAnalyst.js" />
         <option value="$PROJECT_DIR$/Axis/LinearAxis.js" />
         <option value="$PROJECT_DIR$/Axis/CategoryAxis.js" />
         <option value="$PROJECT_DIR$/Data/BasicCategoryData.js" />
-        <option value="$PROJECT_DIR$/Util/Util.js" />
         <option value="$PROJECT_DIR$/DataAnalyst/BasicTimeDataAnalyst.js" />
         <option value="$PROJECT_DIR$/Axis/Axis.js" />
         <option value="$PROJECT_DIR$/Draw/Color.js" />
         <option value="$PROJECT_DIR$/Axis/TimeAxis.js" />
-        <option value="$PROJECT_DIR$/Draw/Draw.js" />
         <option value="$PROJECT_DIR$/Legend/Legend.js" />
         <option value="$PROJECT_DIR$/Layout/Layout.js" />
         <option value="$PROJECT_DIR$/Layout/TopMarginLayout.js" />
@@ -202,14 +178,21 @@
         <option value="$PROJECT_DIR$/DataViewer/SingleSeries/SingleSeries.js" />
         <option value="$PROJECT_DIR$/DataViewer/SingleSeries/SingleLineSeries.js" />
         <option value="$PROJECT_DIR$/Draw/TipTriggerNodeDrawer.js" />
-        <option value="$PROJECT_DIR$/Weaver.js" />
         <option value="$PROJECT_DIR$/Draw/NodeDrawer.js" />
         <option value="$PROJECT_DIR$/CSS/my-chart.css" />
         <option value="$PROJECT_DIR$/DataViewer/TipControl.js" />
         <option value="$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleSeriesViewer.js" />
-        <option value="$PROJECT_DIR$/Chart.html" />
-        <option value="$PROJECT_DIR$/DataViewer/Sub/BasicLineLinearDataViewer.js" />
         <option value="$PROJECT_DIR$/DataViewer/Tip/TipControl.js" />
+        <option value="$PROJECT_DIR$/DataViewer/Sub/BasicLineLinearDataViewer.js" />
+        <option value="$PROJECT_DIR$/DataAnalyst/BasicLineIrregularDataAnalyst.js" />
+        <option value="$PROJECT_DIR$/Weaver.js" />
+        <option value="$PROJECT_DIR$/DataViewer/BasicCategoryDataViewer.js" />
+        <option value="$PROJECT_DIR$/DataViewer/BasicTimeDataViewer.js" />
+        <option value="$PROJECT_DIR$/Chart.html" />
+        <option value="$PROJECT_DIR$/Draw/Draw.js" />
+        <option value="$PROJECT_DIR$/DataViewer/BasicSingleTimeDataViewer.js" />
+        <option value="$PROJECT_DIR$/Util/Util.js" />
+        <option value="$PROJECT_DIR$/DataViewer/BasicLineIrregularDataViewer.js" />
         <option value="$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleLineSeriesViewer.js" />
       </list>
     </option>
@@ -397,24 +380,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Sub" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyChart" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyChart" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DataViewer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="SingleSeriesViewer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -483,11 +448,11 @@
       <recent name="$PROJECT_DIR$/Play" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/DataViewer" />
       <recent name="$PROJECT_DIR$/DataViewer/Tip" />
       <recent name="$PROJECT_DIR$/DataViewer/SingleSeries" />
       <recent name="$PROJECT_DIR$/Data/Sub" />
       <recent name="$PROJECT_DIR$/Data" />
-      <recent name="$PROJECT_DIR$/Layout/Sub" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.Util.js">
@@ -820,14 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Util/Util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="705">
-          <caret line="37" column="17" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Axis/Axis.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3026" max-vertical-offset="3870">
@@ -896,136 +853,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/Sub/BasicCategoryDataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.6153846" vertical-offset="0" max-vertical-offset="990">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/Sub/StackTimeDataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="653">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataAnalyst/BasicTimeDataAnalyst.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="720">
-          <caret line="41" column="6" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/IrregularIntervalDataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/RegularIntervalDataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/Sub/BasicSingleTimeDataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1310" max-vertical-offset="1950">
-          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Draw/Color.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="140" max-vertical-offset="810">
           <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/DataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="319" max-vertical-offset="1005">
-          <caret line="364" column="0" selection-start-line="351" selection-start-column="0" selection-end-line="364" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc;n#DataViewer#0" expanded="false" />
-            <element signature="n#!!block;n#DataViewer#0" expanded="false" />
-            <element signature="e#177#340#0" expanded="false" />
-            <element signature="e#418#820#0" expanded="false" />
-            <element signature="e#702#818#0" expanded="false" />
-            <element signature="e#823#1034#0" expanded="false" />
-            <element signature="e#1111#1590#0" expanded="false" />
-            <element signature="e#1198#1206#0" expanded="false" />
-            <element signature="e#1221#1229#0" expanded="false" />
-            <element signature="e#1244#1252#0" expanded="false" />
-            <element signature="e#1267#1275#0" expanded="false" />
-            <element signature="e#1593#2023#0" expanded="false" />
-            <element signature="e#2108#3031#0" expanded="false" />
-            <element signature="e#2145#2230#0" expanded="false" />
-            <element signature="e#2236#2316#0" expanded="false" />
-            <element signature="e#2503#2595#0" expanded="false" />
-            <element signature="e#2601#2693#0" expanded="false" />
-            <element signature="e#3035#3184#0" expanded="false" />
-            <element signature="e#3267#3986#0" expanded="false" />
-            <element signature="e#3436#3512#0" expanded="false" />
-            <element signature="e#3518#3586#0" expanded="false" />
-            <element signature="e#3822#3966#0" expanded="false" />
-            <element signature="e#4073#5516#0" expanded="false" />
-            <element signature="e#4605#4974#0" expanded="false" />
-            <element signature="e#5070#5389#0" expanded="false" />
-            <element signature="e#5519#5656#0" expanded="false" />
-            <element signature="e#5722#7217#0" expanded="false" />
-            <element signature="e#5803#5826#0" expanded="false" />
-            <element signature="e#5922#5928#0" expanded="false" />
-            <element signature="e#5939#5945#0" expanded="false" />
-            <element signature="e#5951#5957#0" expanded="false" />
-            <element signature="e#5967#5973#0" expanded="false" />
-            <element signature="e#6227#6304#0" expanded="false" />
-            <element signature="e#6310#6387#0" expanded="false" />
-            <element signature="e#6574#6666#0" expanded="false" />
-            <element signature="e#6672#6760#0" expanded="false" />
-            <element signature="e#7134#7214#0" expanded="false" />
-            <element signature="e#7305#7901#0" expanded="false" />
-            <element signature="e#7382#7459#0" expanded="false" />
-            <element signature="e#7465#7534#0" expanded="false" />
-            <element signature="e#7970#9463#0" expanded="false" />
-            <element signature="e#8051#8074#0" expanded="false" />
-            <element signature="e#8174#8180#0" expanded="false" />
-            <element signature="e#8192#8198#0" expanded="false" />
-            <element signature="e#8204#8210#0" expanded="false" />
-            <element signature="e#8221#8227#0" expanded="false" />
-            <element signature="e#8483#8558#0" expanded="false" />
-            <element signature="e#8564#8639#0" expanded="false" />
-            <element signature="e#8824#8914#0" expanded="false" />
-            <element signature="e#8920#9007#0" expanded="false" />
-            <element signature="e#9380#9460#0" expanded="false" />
-            <element signature="e#9552#10158#0" expanded="false" />
-            <element signature="e#9630#9708#0" expanded="false" />
-            <element signature="e#9714#9784#0" expanded="false" />
-            <element signature="e#10161#10373#0" expanded="false" />
-            <element signature="e#10448#10596#0" expanded="false" />
-            <element signature="e#10599#10763#0" expanded="false" />
-            <element signature="e#10864#11845#0" expanded="false" />
-            <element signature="e#10979#11059#0" expanded="false" />
-            <element signature="e#11126#11472#0" expanded="false" />
-            <element signature="e#11281#11371#0" expanded="false" />
-            <element signature="e#11377#11466#0" expanded="false" />
-            <element signature="e#11478#11558#0" expanded="false" />
-            <element signature="e#11848#11872#0" expanded="false" />
-            <element signature="e#11914#12070#0" expanded="false" />
-            <element signature="e#12117#12170#0" expanded="false" />
-            <element signature="e#12173#12245#0" expanded="false" />
-            <element signature="e#12246#12533#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1037,39 +869,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Draw/Draw.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="687" max-vertical-offset="5400">
-          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Weaver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="1770">
-          <caret line="39" column="48" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!block;n#weaveBasicCategory#0;n#weaveBasicCategory#0;n#!!block;n#weaver#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Draw/NodeDrawer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1250" max-vertical-offset="1905">
           <caret line="111" column="70" selection-start-line="111" selection-start-column="70" selection-end-line="111" selection-end-column="70" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/Sub/BasicTimeDataViewer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
-          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!doc;n#BasicTimeDataViewer#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1081,30 +885,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleCategorySeriesViewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="653">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataAnalyst/BasicLineIrregularDataAnalyst.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Weaver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="2130">
+          <caret line="65" column="107" selection-start-line="65" selection-start-column="107" selection-end-line="65" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataViewer/BasicCategoryDataViewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="945">
+          <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataViewer/StackTimeDataViewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="653">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Chart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="4155">
-          <caret line="24" column="66" selection-start-line="24" selection-start-column="66" selection-end-line="24" selection-end-column="66" />
+        <state vertical-scroll-proportion="-15.625" vertical-offset="1035" max-vertical-offset="4140">
+          <caret line="94" column="40" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/Sub/BasicLineLinearDataViewer.js">
+    <entry file="file://$PROJECT_DIR$/Draw/Draw.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
-          <caret line="29" column="57" selection-start-line="29" selection-start-column="57" selection-end-line="29" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4707" max-vertical-offset="5400">
+          <caret line="344" column="6" selection-start-line="344" selection-start-column="6" selection-end-line="344" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/Tip/TipControl.js">
+    <entry file="file://$PROJECT_DIR$/DataAnalyst/BasicTimeDataAnalyst.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1335">
-          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="97" max-vertical-offset="750">
+          <caret line="41" column="6" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataViewer/BasicTimeDataViewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
           <folding>
-            <element signature="n#!!doc;n#TipControl#0" expanded="false" />
+            <element signature="n#!!doc;n#BasicTimeDataViewer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1119,45 +971,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleCategorySeriesViewer.js">
+    <entry file="file://$PROJECT_DIR$/Util/Util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="653">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="517" max-vertical-offset="1290">
+          <caret line="49" column="52" selection-start-line="49" selection-start-column="52" selection-end-line="49" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataAnalyst/BasicLineLinearDataAnalyst.js">
+    <entry file="file://$PROJECT_DIR$/DataViewer/BasicSingleTimeDataViewer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1065">
-          <caret line="25" column="34" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1242" max-vertical-offset="1920">
+          <caret line="117" column="40" selection-start-line="117" selection-start-column="40" selection-end-line="117" selection-end-column="40" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataViewer/BasicLineIrregularDataViewer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="1035">
+          <caret line="39" column="97" selection-start-line="39" selection-start-column="97" selection-end-line="39" selection-end-column="97" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataViewer/Tip/TipControl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="555" max-vertical-offset="1335">
+          <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc;n#TipControl#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DataViewer/SingleSeriesViewer/SingleLineSeriesViewer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5053599" vertical-offset="0" max-vertical-offset="653">
-          <caret line="96" column="41" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="48" />
+        <state vertical-scroll-proportion="-0.89586526" vertical-offset="1065" max-vertical-offset="2145">
+          <caret line="36" column="6" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="6" />
           <folding>
             <element signature="n#!!doc;n#SingleLineSeriesViewer#0" expanded="false" />
-            <element signature="n#!!block;n#SingleLineSeriesViewer#0" expanded="false" />
-            <element signature="e#871#965#0" expanded="false" />
-            <element signature="e#1022#1198#0" expanded="false" />
-            <element signature="e#1256#2169#0" expanded="false" />
-            <element signature="e#1282#1305#0" expanded="false" />
-            <element signature="e#1464#1890#0" expanded="false" />
-            <element signature="e#2172#2427#0" expanded="false" />
-            <element signature="e#2493#2675#0" expanded="false" />
-            <element signature="e#2766#3393#0" expanded="false" />
-            <element signature="e#2867#3200#0" expanded="false" />
-            <element signature="e#3280#3389#0" expanded="false" />
-            <element signature="e#3469#3682#0" expanded="false" />
-            <element signature="e#3511#3622#0" expanded="false" />
-            <element signature="e#3746#3932#0" expanded="false" />
-            <element signature="e#3788#3811#0" expanded="false" />
-            <element signature="e#3817#3930#0" expanded="false" />
-            <element signature="e#3999#4003#0" expanded="false" />
+            <element signature="e#1618#1641#0" expanded="false" />
+            <element signature="e#1800#2226#0" expanded="false" />
+            <element signature="e#2508#2763#0" expanded="false" />
+            <element signature="e#2829#3011#0" expanded="false" />
+            <element signature="e#3102#3729#0" expanded="false" />
+            <element signature="e#3203#3536#0" expanded="false" />
+            <element signature="e#3616#3725#0" expanded="false" />
+            <element signature="e#3805#4018#0" expanded="false" />
+            <element signature="e#3847#3958#0" expanded="false" />
+            <element signature="e#4082#4268#0" expanded="false" />
+            <element signature="e#4124#4147#0" expanded="false" />
+            <element signature="e#4153#4266#0" expanded="false" />
           </folding>
         </state>
       </provider>

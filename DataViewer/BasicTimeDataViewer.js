@@ -10,8 +10,5 @@ function BasicTimeDataViewer(svg, multiSeries, xDrawInfo, yDrawInfo, isContinual
     this.isContinual = isContinual;
 }
 
-BasicTimeDataViewer.prototype = new DataViewer();
-BasicTimeDataViewer.prototype.constructor = BasicTimeDataViewer;
-
 
 

@@ -15,9 +15,6 @@ function BasicCategoryDataViewer(svg, multiSeries, xDrawInfo, yDrawInfo){
     this.yDrawInfo = yDrawInfo;
 }
 
-BasicCategoryDataViewer.prototype = new DataViewer();
-BasicCategoryDataViewer.prototype.constructor = BasicCategoryDataViewer;
-
 /**
  * public method. called by the weaver to draw the columns, and also set proper event listeners on those columns
  */

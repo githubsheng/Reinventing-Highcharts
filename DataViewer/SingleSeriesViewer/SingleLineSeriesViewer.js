@@ -6,15 +6,25 @@
  * Created by wangsheng on 23/6/14.
  */
 
-function SingleLineSeriesViewer(htmlContainer, svg, nodes, nodeShape, mcColor, isContinual, seriesName, tipControl){
+function SingleLineSeriesViewer(htmlContainer, svg, nodes, nodeShape, mcColor,
+                                isContinual, isRegular, seriesName, tipControl,
+                                xDrawInfo, yDrawInfo){
     //this.svgSingleSeries = draw.createGroup(); inherited from parent class.
     this.htmlContainer = htmlContainer; //if use the default inherited 'showTip' method then this field must be set.
     this.svg = svg;
     this.nodes = nodes;
     this.nodeShape = nodeShape;
     this.mcColor = mcColor;
+    this.isRegular = isRegular;
     this.isContinual = isContinual;
     this.seriesName = seriesName;
+    this.xDrawInfo = xDrawInfo;
+    this.yDrawInfo = yDrawInfo;
+
+    var bcr = this.svg.getBoundingClientRect();
+    this.svgLeft = bcr.left;
+    this.svgRight = bcr.right;
+
     this.highlightedNode = nodeDrawer.drawHighlightedNode(nodeShape, mcColor);
     this.tipControl = tipControl;
 }
@@ -24,7 +34,8 @@ SingleLineSeriesViewer.prototype.constructor = SingleSeriesViewer;
 
 SingleLineSeriesViewer.prototype.draw = function(){
     this.drawLine();
-    this.drawNodes();
+    //this.drawNodes();
+    this.enableRoutineTrace();
     this.svg.appendChild(this.svgSingleSeries);
 };
 
@@ -104,6 +115,71 @@ SingleLineSeriesViewer.prototype.deHighlightNode = function(){
 };
 
 SingleLineSeriesViewer.prototype.enableRoutineTrace = function(){
+//    if(!this.isContinual){
+//        return;
+//    }
 
+    var lineTrigger = draw.createStraightLines(this.nodes, 4, 0);
+    draw.setStrokeFill(lineTrigger, this.mcColor.strokeColor, 4, "none");
+    draw.setVisibility(lineTrigger, false);
+    lineTrigger.setAttributeNS(null, "pointer-events", "stroke");
+    this.svgSingleSeries.appendChild(lineTrigger);
+
+    if(this.isRegular){
+        var _this = this;
+        lineTrigger.addEventListener("mouseover", function(event){
+            var pixelX = event.clientX - _this.svgLeft;
+            var dataX = Math.round((pixelX - _this.xDrawInfo.startPoint)/_this.xDrawInfo.pixelPerData);
+            var dataY = _this.nodes[dataX * 4 + 2];
+            var pixelY = _this.nodes[dataX * 4 + 1];
+            //TODO: I need to have instant show tip function.
+            _this.tipControl.showDoubleLineTip(pixelX, pixelY, dataX, dataY, _this.seriesName, _this.mcColor);
+        });
+    } else {
+        var _this = this;
+
+        //extract the dataX and make it a standalone array where stride is 1 and offset is 0.
+        var dataXarray = [];
+        for(var i = 0; i < this.nodes.length; i = i + 4){
+            dataXarray.push(this.nodes[i + 2]); //offset is 2.
+        }
+
+        lineTrigger.addEventListener("mouseover", function(event){
+            //TODO: I need to have instant show tip function.
+            var pixelX = event.clientX - _this.svgLeft;
+
+            var estimatedDataX = Math.round((pixelX - _this.xDrawInfo.startPoint)/_this.xDrawInfo.pixelPerData);
+            //binary search, find the nearest node.
+            var idx = util.findElementIdxUsingBinarySearch(dataXarray, estimatedDataX); //the returned idx is of dataXarray
+            //convert it to the idx of this.nodes idx
+            idx = idx * 4;
+            _this.tipControl.showDoubleLineTip(_this.nodes[idx + 0], _this.nodes[idx + 1],
+                _this.nodes[idx + 2], _this.nodes[idx + 3], _this.seriesName, _this.mcColor);
+        });
+    }
+
+
+
+
+
+
+// 87 63 52 23
+//    if(this.isRegular){
+//        stack.addEventListener("mousemove", function(event){
+//
+//            //show the tip.
+//            basicTimeData.showTip(dataX, dataY, pixelX, pixelY, singleSeriesName, color, true);
+//            draw.translate(visualNode, pixelX, pixelY);
+//            draw.setVisibility(visualNode, true);
+//        });
+//
+//        stack.addEventListener("mouseout", function(){
+//            basicTimeData.hideTip();
+//            draw.setVisibility(visualNode, false);
+//        });
+//
+//    } else if (!this.isRegular){
+//
+//    }
 };
 

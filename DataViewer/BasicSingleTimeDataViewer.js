@@ -17,9 +17,6 @@ function BasicSingleTimeData(svg, multiSeries, xDrawInfo, yDrawInfo, isContinual
     this.isContinual = isContinual;
 }
 
-BasicSingleTimeData.prototype = new DataViewer();
-BasicSingleTimeData.prototype.constructor = BasicSingleTimeData;
-
 /**
  * This method draws the data between x and y axes. And it also configure the event listener.
  *
@@ -104,8 +101,8 @@ BasicSingleTimeData.prototype.draw = function(){
 };
 
 /**
- * returns an array that contains both pixel information and data information. The stride is 3 and the first 2 are pixel positions
- * while the last one are data information.
+ * returns an array that contains both pixel information and data information. The stride is 4 and the first 2 are pixel positions
+ * while the last one are data information. The third is not really needed and therefore is set to 0;
  * @param singleSeriesData
  * @returns {Array}
  */
@@ -113,10 +110,11 @@ BasicSingleTimeData.prototype.analyzeSingleSeriesData = function(singleSeriesDat
     var nodes = [];
 
     for(var i = 0; i < singleSeriesData.length; i++){
-        var x = this.xDrawInfo.startPoint + (i - this.xDrawInfo.min) * this.xDrawInfo.pixelPerData;
-        var y = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
-        nodes.push(x);
-        nodes.push(y);
+        var pixelX = this.xDrawInfo.startPoint + (i - this.xDrawInfo.min) * this.xDrawInfo.pixelPerData;
+        var pixelY = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
+        nodes.push(pixelX);
+        nodes.push(pixelY);
+        nodes.push(0); //dataX is not needed in regular continual data viewer.
         nodes.push(singleSeriesData[i]);
     }
 

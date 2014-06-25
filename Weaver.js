@@ -11,8 +11,8 @@ var weaver = {
         colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
 
         switch (type) {
-            case "basicLineLinear":
-                this.weaveBasicLineLinear(input, svg, div);
+            case "basicLineIrregular":
+                this.weaveBasicLineIrregular(input, svg, div);
                 break;
             case "basicCategory":
                 this.weaveBasicCategory(input, svg, div);
@@ -49,7 +49,7 @@ var weaver = {
         }
     },
 
-    weaveBasicLineLinear: function (input, svg, htmlContainer) {
+    weaveBasicLineIrregular: function (input, svg, htmlContainer) {
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
         legend.analyze();
 
@@ -61,8 +61,9 @@ var weaver = {
         var lar = layout.analyze(); //layout analyze result.
         var xAxisDataAreaLength = lar.xAxisLength - xLeftPadding - xRightPadding;
 
-        var dar = new BasicLineLinearDataAnalyst(input, xAxisDataAreaLength).analyze(); //data analyze result.
+        var dar = new BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength).analyze(); //data analyze result.
 
+        /* Even though the data intervals are irregular, but the marks on the x axis is linear and regular.*/
         var xAxis = new X_LinearAxis(svg, xAxisDataAreaLength, dar.minX, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
         var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
 

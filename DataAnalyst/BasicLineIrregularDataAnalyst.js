@@ -8,13 +8,13 @@
  * @param the length of x axis, excluding left and right padding.
  * @constructor
  */
-function BasicLineLinearDataAnalyst(input, xAxisDataAreaLength){
+function BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;
     this.results = null;
 }
 
-BasicLineLinearDataAnalyst.prototype.analyze = function(){
+BasicLineIrregularDataAnalyst.prototype.analyze = function(){
     if(this.results !== null){
         return this.results;
     }

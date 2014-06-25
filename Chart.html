@@ -17,7 +17,7 @@
 <script type="text/javascript" src="Legend/Legend.js"></script>
 <script type="text/javascript" src="Layout/Layout.js"></script>
 <script type="text/javascript" src="Layout/Sub/GeneralLayout.js"></script>
-<script type="text/javascript" src="DataAnalyst/BasicLineLinearDataAnalyst.js"></script>
+<script type="text/javascript" src="DataAnalyst/BasicLineIrregularDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicCategoryDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicTimeDataAnalyst.js"></script>
 <script type="text/javascript" src="Util/RandomPicker.js"></script>
@@ -25,10 +25,9 @@
 <script type="text/javascript" src="DataViewer/Tip/TipControl.js"></script>
 <script type="text/javascript" src="DataViewer/SingleSeriesViewer/SingleSeriesViewer.js"></script>
 <script type="text/javascript" src="DataViewer/SingleSeriesViewer/SingleLineSeriesViewer.js"></script>
-<script type="text/javascript" src="DataViewer/DataViewer.js"></script>
-<script type="text/javascript" src="DataViewer/Sub/BasicLineLinearDataViewer.js"></script>
-<script type="text/javascript" src="DataViewer/Sub/BasicCategoryDataViewer.js"></script>
-<script type="text/javascript" src="DataViewer/Sub/BasicSingleTimeDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/BasicLineIrregularDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/BasicCategoryDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/BasicSingleTimeDataViewer.js"></script>
 <script type="text/javascript" src="Weaver.js"></script>
 <script type="text/javascript">
     (function(){
@@ -93,7 +92,7 @@
             ],
             legend: "left"
         };
-        weaver.weave("basicLineLinear", input, document.getElementById("container1"));
+        weaver.weave("basicLineIrregular", input, document.getElementById("container1"));
     })();
 
     /**

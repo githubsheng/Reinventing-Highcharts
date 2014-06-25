@@ -19,9 +19,6 @@ function BasicLineLinearDataViewer(htmlContainer, svg, input, xDrawInfo, yDrawIn
     this.isContinual = isContinual;
 }
 
-BasicLineLinearDataViewer.prototype = new DataViewer();
-BasicLineLinearDataViewer.constructor = BasicLineLinearDataViewer;
-
 
 /**
  * need not be called after analyze() because there is no such method in this class.
@@ -39,7 +36,8 @@ BasicLineLinearDataViewer.prototype.draw = function () {
 
         var mcColor = randomPicker.pickSeriesColor();
         var nodeShape = randomPicker.pickNodeShape();
-        var singleLineSeriesViewer = new SingleLineSeriesViewer(this.htmlContainer, this.svg, nodes, nodeShape, mcColor, this.isContinual, singleSeriesName, tipControl);
+        var singleLineSeriesViewer = new SingleLineSeriesViewer(this.htmlContainer, this.svg, nodes, nodeShape, mcColor,
+            this.isContinual, false, singleSeriesName, tipControl, this.xDrawInfo, this.yDrawInfo);
         singleLineSeriesViewer.draw();
     }
 };
