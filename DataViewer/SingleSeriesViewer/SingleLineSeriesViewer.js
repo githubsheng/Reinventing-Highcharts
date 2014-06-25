@@ -120,7 +120,7 @@ SingleLineSeriesViewer.prototype.enableRoutineTrace = function(){
 //    }
 
     var lineTrigger = draw.createStraightLines(this.nodes, 4, 0);
-    draw.setStrokeFill(lineTrigger, this.mcColor.strokeColor, 4, "none");
+    draw.setStrokeFill(lineTrigger, this.mcColor.strokeColor, 10, "none");
     draw.setVisibility(lineTrigger, false);
     lineTrigger.setAttributeNS(null, "pointer-events", "stroke");
     this.svgSingleSeries.appendChild(lineTrigger);
@@ -137,6 +137,9 @@ SingleLineSeriesViewer.prototype.enableRoutineTrace = function(){
         });
     } else {
         var _this = this;
+        var previousIdx = 0;
+        var mouseX = 0;
+        var traceIntervalId = 0;
 
         //extract the dataX and make it a standalone array where stride is 1 and offset is 0.
         var dataXarray = [];
@@ -144,18 +147,41 @@ SingleLineSeriesViewer.prototype.enableRoutineTrace = function(){
             dataXarray.push(this.nodes[i + 2]); //offset is 2.
         }
 
-        lineTrigger.addEventListener("mouseover", function(event){
+        function findAndHighLight(){
             //TODO: I need to have instant show tip function.
-            var pixelX = event.clientX - _this.svgLeft;
+            var pixelX = mouseX - _this.svgLeft;
+            var estimatedDataX = (pixelX - _this.xDrawInfo.startPoint)/_this.xDrawInfo.pixelPerData + _this.xDrawInfo.min;
 
-            var estimatedDataX = Math.round((pixelX - _this.xDrawInfo.startPoint)/_this.xDrawInfo.pixelPerData);
             //binary search, find the nearest node.
             var idx = util.findElementIdxUsingBinarySearch(dataXarray, estimatedDataX); //the returned idx is of dataXarray
-            //convert it to the idx of this.nodes idx
-            idx = idx * 4;
-            _this.tipControl.showDoubleLineTip(_this.nodes[idx + 0], _this.nodes[idx + 1],
-                _this.nodes[idx + 2], _this.nodes[idx + 3], _this.seriesName, _this.mcColor);
+            if(idx === previousIdx) {
+                return;
+            } else {
+                previousIdx = idx;
+                //convert it to the idx of this.nodes idx
+                idx = idx * 4;
+                _this.tipControl.showDoubleLineTip(_this.nodes[idx + 0], _this.nodes[idx + 1],
+                    _this.nodes[idx + 2], _this.nodes[idx + 3], _this.seriesName, _this.mcColor);
+            }
+        };
+
+        //the mouse move event might be trigger like 280+ times per second.
+        lineTrigger.addEventListener("mousemove",  function(event){
+            mouseX = event.clientX;
         });
+
+        //but we will only do checking 5 times per second since finding the right element is computational stressful.
+        lineTrigger.addEventListener("mouseover",  function(){
+            traceIntervalId = window.setInterval(findAndHighLight, 200);
+        });
+
+        lineTrigger.addEventListener("mouseout",  function(){
+            window.clearInterval(traceIntervalId);
+        });
+
+//        lineTrigger.addEventListener("mouseout", function(event){
+//            _this.tipControl.hideTip();
+//        });
     }
 
 

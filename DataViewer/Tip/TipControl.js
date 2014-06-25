@@ -56,8 +56,8 @@ TipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor
         this.tip.style.display = "inline-block";
     } else {
         this.tip.style.transition = "0.3s";
+        window.clearTimeout(this.timeoutId);
     }
-    window.clearTimeout(this.timeoutId);
 
     var bcr = this.tip.getBoundingClientRect();
     if(this.tip.style.MozTransform !== undefined){
