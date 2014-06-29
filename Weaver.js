@@ -99,14 +99,13 @@ var weaver = {
         var layout = new GeneralLayout(svg, input.mainTitle, input.subTitle, input.yAxisTitle,
             input.xAxisTitle, legend);
 
-        var xLeftPadding = 10;
-        var xRightPadding = 10;
+        var xLeftPadding = 0;
+        var xRightPadding = 0;
         var lar = layout.analyze(); //layout analyze result.
         var xAxisDataAreaLength = lar.xAxisLength - xLeftPadding - xRightPadding;
 
         var dar = new BasicLineRegularDataAnalyst(input, xAxisDataAreaLength).analyze();
 
-        /* Even though the data intervals are irregular, but the marks on the x axis is linear and regular.*/
         var xAxis = new X_LinearAxis(svg, xAxisDataAreaLength, input.start, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
         var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
 

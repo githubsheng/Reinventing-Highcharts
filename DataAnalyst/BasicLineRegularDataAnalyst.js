@@ -50,7 +50,7 @@ BasicLineRegularDataAnalyst.prototype.analyze = function(){
 BasicLineRegularDataAnalyst.prototype.analyzeSingleSeries = function(singleSeriesData){
     var minY = singleSeriesData[0];
     var maxY = singleSeriesData[0];
-    var maxX = singleSeriesData.length * this.input.interval;
+    var maxX = util.chooseBetween(this.input.start === undefined, 0, this.input.start) + (singleSeriesData.length - 1) * this.input.interval; //length - 1是因为从第二个元素起才开始加interval
     var maxNodeCount = singleSeriesData.length;
 
     for(var i = 0; i < singleSeriesData.length; i++){

@@ -60,7 +60,7 @@ BasicSingleTimeData.prototype.analyzeSingleSeriesData = function(singleSeriesDat
     var parseTime = assembleParseTimeFunction(this.input.unit);
 
     for(var i = 0; i < singleSeriesData.length; i++){
-        var pixelX = this.xDrawInfo.startPoint + (i * interval - this.xDrawInfo.min) * this.xDrawInfo.pixelPerData;
+        var pixelX = this.xDrawInfo.startPoint + i * interval * this.xDrawInfo.pixelPerData;
         var pixelY = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
         nodes.push(pixelX);
         nodes.push(pixelY);

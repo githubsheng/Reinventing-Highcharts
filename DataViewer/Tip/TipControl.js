@@ -71,23 +71,28 @@ TipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor
 
     if(!this.isShown){
         this.isShown = true;
-        this.tip.style.transition = "none";
+        if(this.tip.style.transition !== undefined){
+            this.tip.style.transition = "none";
+        } else if(this.tip.style.WebkitTransition !== undefined){
+            this.tip.style.WebkitTransition = "none";
+        }
         this.tip.style.display = "inline-block";
     } else {
-        this.tip.style.transition = "0.3s";
+        if(this.tip.style.transition !== undefined){
+            this.tip.style.transition = "all 0.3s";
+        } else if(this.tip.style.WebkitTransition !== undefined){
+            this.tip.style.WebkitTransition = "all 0.3s";
+        }
     }
 
     var bcr = this.tip.getBoundingClientRect();
     if(this.tip.style.MozTransform !== undefined){
         this.tip.style.MozTransform = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
-    }
-    if(this.tip.style.webkitTransform !== undefined){
+    } else if(this.tip.style.webkitTransform !== undefined){
         this.tip.style.webkitTransform = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
-    }
-    if(this.tip.style.msTransform !== undefined){
+    } else if(this.tip.style.msTransform !== undefined){
         this.tip.style.msTransform = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
-    }
-    if(this.tip.style.transform !== undefined){
+    } else if(this.tip.style.transform !== undefined){
         this.tip.style.transform = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
     }
 

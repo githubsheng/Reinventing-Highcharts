@@ -23,7 +23,6 @@ function BasicLineRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDraw
     this.input = input;
     this.xDrawInfo = xDrawInfo;
     this.yDrawInfo = yDrawInfo;
-    this.topTip = null;
     this.isContinual = isContinual;
 }
 
@@ -37,14 +36,14 @@ BasicLineRegularDataViewer.prototype.draw = function(){
     var svgDrawGroup = draw.createGroup();
     var svgTriggerGroup = draw.createGroup();
     var randomPicker = new RandomPicker();
+    var tipControl =  new TipControl(this.htmlContainer, 7, false);
 
     for(var i = 0; i < this.input.series.length; i++){
         var seriesName = this.input.series[i][0];
         var nodes = this.analyzeSingleSeriesData(this.input.series[i][1]);
-
         var sssv = new SingleLineSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
             randomPicker.pickNodeShape(), randomPicker.pickSeriesColor(), this.isContinual, this.input.interval, seriesName,
-            new TipControl(this.htmlContainer, 7, false), this.xDrawInfo, this.yDrawInfo);
+            tipControl, this.xDrawInfo, this.yDrawInfo);
         sssv.draw();
     }
 
@@ -64,9 +63,8 @@ BasicLineRegularDataViewer.prototype.analyzeSingleSeriesData = function(singleSe
     var nodes = [];
     var interval = this.input.interval;
     var start = this.input.start;
-
     for(var i = 0; i < singleSeriesData.length; i++){
-        var pixelX = this.xDrawInfo.startPoint + (i * interval - this.xDrawInfo.min) * this.xDrawInfo.pixelPerData;
+        var pixelX = this.xDrawInfo.startPoint + i * interval * this.xDrawInfo.pixelPerData;
         var pixelY = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
         nodes.push(pixelX);
         nodes.push(pixelY);

@@ -87,8 +87,8 @@
     ];
 
     var input = {
-        mainTitle: "Sales of our company in 2013",
-        subTitle: "Data from sales department",
+        mainTitle: "Sales of our company in 2013 (Irregular intervals)",
+        subTitle: "The data set is small and is displayed as discrete nodes.",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
         series: [
@@ -253,8 +253,8 @@
     ];
 
     var input = {
-        mainTitle: "Sales of our company in 2013",
-        subTitle: "Data from sales department",
+        mainTitle: "Sales of our company in 2013 (Irregular intervals)",
+        subTitle: "The quantity of the data set is large and displayed as stream",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
         series: [
@@ -349,8 +349,8 @@
     ];
 
     var input = {
-        mainTitle: "Stock Prices Comparison",
-        subTitle: "Data from xxx department",
+        mainTitle: "Stock Prices Comparison (Regular interval)",
+        subTitle: "Regular data set allows for a lot of optimization",
         yAxisTitle: "Stock Price",
         xAxisTitle: "Company Sales",
         start: 201,
@@ -359,7 +359,7 @@
             [seriesName1, data1],
             [seriesName2, data2]
         ],
-        legend: "top"
+        legend: "bottom"
     };
 
     weaver.weave("basicLineRegular", input, document.getElementById("container3"));
@@ -406,7 +406,7 @@
 
         var input = {
             mainTitle: "Sales of our company in 2013",
-            subTitle: "Data from sales department",
+            subTitle: "Time series adjusts the axis and tip presentation",
             yAxisTitle: "number of items sold",
             xAxisTitle: "now I can't find a title for this axis",
             startTime: Date.UTC(2014, 5, 21, 13, 5),
