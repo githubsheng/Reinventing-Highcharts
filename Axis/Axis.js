@@ -71,18 +71,10 @@ X_Axis.prototype.analyzeReturn = function(){
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
 
-    var chartDisplayLeftEdgeX = this.originPosition[0];
-    var chartDisplayRightEdgeX = this.originPosition[0] + this.leftPadding + this.length + this.rightPadding;
-
-    var chartMiddleLineX = (chartDisplayLeftEdgeX + chartDisplayRightEdgeX)/2;
-
     return {
         startPoint: startPoint,
         pixelPerData: pixelPerData,
-        min: min,
-        chartDisplayLeftEdgeX: chartDisplayLeftEdgeX,
-        chartDisplayRightEdgeX: chartDisplayRightEdgeX,
-        chartMiddleLineX: chartMiddleLineX
+        min: min
     };
 };
 
@@ -165,13 +157,10 @@ Y_Axis.prototype.analyze = function(){
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
 
-    var chartDisplayTopEdgeY = this.originPosition[1] - this.length;
-
     return {
         startPoint: startPoint,
         pixelPerData: pixelPerData,
-        min: min,
-        chartDisplayTopEdgeY: chartDisplayTopEdgeY
+        min: min
     };
 };
 

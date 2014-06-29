@@ -1,4 +1,7 @@
 /**
+ * Created by wangsheng on 29/6/14.
+ */
+/**
  * Created by wangsheng on 16/6/14.
  */
 
@@ -13,7 +16,7 @@
  * @param isContinual
  * @constructor
  */
-function BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
+function BasicLineRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
     this.htmlContainer = htmlContainer;
     this.svg = svg;
     this.svgTrigger = svgTrigger;
@@ -29,21 +32,26 @@ function BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, y
  *
  * Since this method will only be called once it is ok to define some functions inside this method.
  */
-BasicSingleTimeData.prototype.draw = function(){
-    var seriesName = this.input.series[0][0];
-    var nodes = this.analyzeSingleSeriesData(this.input.series[0][1]);
+BasicLineRegularDataViewer.prototype.draw = function(){
 
     var svgDrawGroup = draw.createGroup();
     var svgTriggerGroup = draw.createGroup();
     var randomPicker = new RandomPicker();
 
-    var sssv = new SingleStackSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
-        randomPicker.pickNodeShape(), randomPicker.pickSeriesColor(), this.isContinual, this.input.interval, seriesName,
-        new TipControl(this.htmlContainer, 7, false), this.xDrawInfo, this.yDrawInfo);
-    sssv.draw();
+    for(var i = 0; i < this.input.series.length; i++){
+        var seriesName = this.input.series[i][0];
+        var nodes = this.analyzeSingleSeriesData(this.input.series[i][1]);
+
+        var sssv = new SingleLineSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
+            randomPicker.pickNodeShape(), randomPicker.pickSeriesColor(), this.isContinual, this.input.interval, seriesName,
+            new TipControl(this.htmlContainer, 7, false), this.xDrawInfo, this.yDrawInfo);
+        sssv.draw();
+    }
 
     this.svg.appendChild(svgDrawGroup);
     this.svgTrigger.appendChild(svgTriggerGroup);
+
+
 };
 
 /**
@@ -52,38 +60,18 @@ BasicSingleTimeData.prototype.draw = function(){
  * @param singleSeriesData
  * @returns {Array}
  */
-BasicSingleTimeData.prototype.analyzeSingleSeriesData = function(singleSeriesData){
+BasicLineRegularDataViewer.prototype.analyzeSingleSeriesData = function(singleSeriesData){
     var nodes = [];
     var interval = this.input.interval;
-    var startTime = this.input.startTime;
-
-    var parseTime = assembleParseTimeFunction(this.input.unit);
+    var start = this.input.start;
 
     for(var i = 0; i < singleSeriesData.length; i++){
         var pixelX = this.xDrawInfo.startPoint + (i * interval - this.xDrawInfo.min) * this.xDrawInfo.pixelPerData;
         var pixelY = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
         nodes.push(pixelX);
         nodes.push(pixelY);
-        nodes.push(parseTime(i));
+        nodes.push(start + interval * i);
         nodes.push(singleSeriesData[i]);
-    }
-
-
-    function assembleParseTimeFunction(unit){
-        switch(unit){
-            case "s":
-                return null;//TODO
-            case "m":
-                return function(idx){
-                    var date = new Date(startTime + interval * idx * 60000);
-                    return "(" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + " " + (date.getHours()+1)
-                    + ":" + (date.getMinutes()+1) + ")";
-                };
-
-            case "h":
-                return null;//TODO
-
-        }
     }
 
     return nodes;

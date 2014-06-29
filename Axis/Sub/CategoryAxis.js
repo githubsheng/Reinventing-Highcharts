@@ -83,17 +83,9 @@ X_CategoryAxis.prototype.analyzeReturn = function() {
         columnWidth = this.markPixelInterval / 2;
     }
 
-    var chartDisplayLeftEdgeX = this.originPosition[0];
-    var chartDisplayRightEdgeX = this.originPosition[0] + this.leftPadding + this.length + this.rightPadding;
-
-    var chartMiddleLineX = (chartDisplayLeftEdgeX + chartDisplayRightEdgeX)/2;
-
     return {
         categoryBasePositions: categoryBasePositions,
         columnWidth: columnWidth,
-        chartDisplayLeftEdgeX: chartDisplayLeftEdgeX,
-        chartDisplayRightEdgeX: chartDisplayRightEdgeX,
-        chartMiddleLineX: chartMiddleLineX
     };
 };
 

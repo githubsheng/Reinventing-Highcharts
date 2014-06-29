@@ -30,9 +30,10 @@
  * @param max               this is like the end. Say you have 431 points and the unit is M(minute), then the end is 431 minutes.
  * @param originPosition
  * @param unit              should be MS, S, M, H, D, MON or Y
+ * @param interval
  * @constructor
  */
-function TimeAxis(svg, length, max, originPosition, unit){
+function TimeAxis(svg, length, max, originPosition, unit, interval){
     this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;
@@ -47,6 +48,7 @@ function TimeAxis(svg, length, max, originPosition, unit){
     this.leftPadding = 0;//left padding is 0
     this.rightPadding = 0; //right padding is also 0 in this case
     this.unit = unit;
+    this.interval = interval;
 }
 
 TimeAxis.prototype = new X_Axis();
@@ -93,7 +95,7 @@ TimeAxis.prototype.drawLabels = function(){
     var labelGroup = draw.createGroup();
     var start = this.min;
     for(var i = 0; i < this.labelPositions.length; i = i + 2){
-        var label = start = start + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
+        var label = start + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
         label = this.appendUnit(label);
         labelGroup.appendChild(draw.createText(this.labelPositions[i], this.labelPositions[i+1], label, 11, "middle", false));
     }
@@ -136,16 +138,11 @@ TimeAxis.prototype.analyzeReturn = function(){
     var pixelPerData = this.markPixelInterval / this.markDataInterval;
     var min = this.min;
 
-    var chartDisplayLeftEdgeX = this.originPosition[0];
-    var chartDisplayRightEdgeX = this.originPosition[0] + this.leftPadding + this.length + this.rightPadding;
-
     /*this is xDrawInfo*/
     return {
         startPoint: startPoint,
         length: this.length, //excluding left and right padding.
         pixelPerData: pixelPerData,
-        min: min,
-        chartDisplayLeftEdgeX: chartDisplayLeftEdgeX,
-        chartDisplayRightEdgeX: chartDisplayRightEdgeX
+        min: min
     }
 };

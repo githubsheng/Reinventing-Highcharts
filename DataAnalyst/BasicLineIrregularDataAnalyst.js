@@ -11,13 +11,9 @@
 function BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;
-    this.results = null;
 }
 
 BasicLineIrregularDataAnalyst.prototype.analyze = function(){
-    if(this.results !== null){
-        return this.results;
-    }
     var series = this.input.series;
     //find the smallest & biggest value on x axis, and find the smallest & biggest value on y axis.
     var minX = series[0][1][1][0]; //first piece of data's x
@@ -55,13 +51,11 @@ BasicLineIrregularDataAnalyst.prototype.analyze = function(){
         isContinual = true;
     }
 
-    this.results = {
+    return {
         minX: minX,
         maxX: maxX,
         minY: minY,
         maxY: maxY,
         isContinual: isContinual
     };
-
-    return this.results;
 };

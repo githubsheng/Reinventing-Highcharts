@@ -9,9 +9,10 @@
  * @param yDrawInfo
  * @constructor
  */
-function BasicLineLinearDataViewer(htmlContainer, svg, input, xDrawInfo, yDrawInfo, isContinual) {
+function BasicLineIrregularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual) {
     this.htmlContainer = htmlContainer;
     this.svg = svg;
+    this.svgTrigger = svgTrigger;
     this.input = input;
     this.xDrawInfo = xDrawInfo;
     this.yDrawInfo = yDrawInfo;
@@ -23,12 +24,16 @@ function BasicLineLinearDataViewer(htmlContainer, svg, input, xDrawInfo, yDrawIn
 /**
  * need not be called after analyze() because there is no such method in this class.
  */
-BasicLineLinearDataViewer.prototype.draw = function () {
+BasicLineIrregularDataViewer.prototype.draw = function () {
     var tipControl = new TipControl(this.htmlContainer, 7, false);
 
     //loop through different series
     var series = this.input.series;
     var randomPicker = new RandomPicker();
+
+    var svgDrawGroup = draw.createGroup();
+    var svgTriggerGroup = draw.createGroup();
+
     for(var i = 0; i < series.length; i++) {
         var singleSeriesName = series[i][0];
         var singleSeriesData = series[i][1];
@@ -36,10 +41,16 @@ BasicLineLinearDataViewer.prototype.draw = function () {
 
         var mcColor = randomPicker.pickSeriesColor();
         var nodeShape = randomPicker.pickNodeShape();
-        var singleLineSeriesViewer = new SingleLineSeriesViewer(this.htmlContainer, this.svg, nodes, nodeShape, mcColor,
+        //I need to pass in the this.htmlContainer rather than a div that serves as a group because I need to
+        //append the tip template to the dom in order to use its getClientBoundingRect method. And this.htmlContainer
+        //is already inserted into the DOM.
+        var singleLineSeriesViewer = new SingleLineSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes, nodeShape, mcColor,
             this.isContinual, false, singleSeriesName, tipControl, this.xDrawInfo, this.yDrawInfo);
         singleLineSeriesViewer.draw();
     }
+
+    this.svg.appendChild(svgDrawGroup);
+    this.svgTrigger.appendChild(svgTriggerGroup);
 };
 
 
@@ -49,7 +60,7 @@ BasicLineLinearDataViewer.prototype.draw = function () {
  * @param singleSeriesData
  * @returns {Array}
  */
-BasicLineLinearDataViewer.prototype.analyzeSingleSeriesData = function(singleSeriesData){
+BasicLineIrregularDataViewer.prototype.analyzeSingleSeriesData = function(singleSeriesData){
     var nodes = []; //reset it to empty array.
 
     for (var ii = 0; ii < singleSeriesData.length; ii++) {

@@ -64,9 +64,8 @@ var util = {
         /*
             when the codes reaches here, there are only two elements sitting next to each other,
             and the target is either one of them, or between them. (if between them then the target
-            not in the array. we choose the closet element.
+            not in the array. we choose the closet element).
          */
-
         var a = target - array[startIdx];
         var b = array[endIdx] - target;
         if(a < b) {

@@ -4,7 +4,9 @@
 
 function TipControl(htmlContainer, topShift, isSingleLine){
     this.tip = null;
-    this.timeoutId = 0;
+    this.hideTipTimeout = 0;
+    this.isShown = false;
+    this.isSingleLine= isSingleLine;
     this.createTip(htmlContainer, topShift, isSingleLine);
 }
 
@@ -35,9 +37,20 @@ TipControl.prototype.createTip = function (htmlContainer, topShift, isSingleLine
     var bcr = tip.getBoundingClientRect();
     tip.style.marginTop = (-bcr.height - 2 - topShift) + "px";
     tip.style.borderColor = "black";
+    tip.style.display = "none";
 };
 
-TipControl.prototype.showSingleLineTip = function (pixelX, pixelY, dataY, seriesName, mcColor) {
+
+TipControl.prototype.showTip = function(pixelX, pixelY, dataX, dataY, seriesName, mcColor){
+    if(this.isSingleLine){
+        this.showSingleLineTip(pixelX, pixelY, dataX, dataY, seriesName, mcColor);
+    } else {
+        this.showDoubleLineTip(pixelX, pixelY, dataX, dataY, seriesName, mcColor);
+    }
+};
+
+TipControl.prototype.showSingleLineTip = function (pixelX, pixelY, dataX, dataY, seriesName, mcColor) {
+    //change the text.
     this.tip.childNodes[0].childNodes[0].nodeValue = seriesName;
     this.tip.childNodes[1].childNodes[0].nodeValue = dataY;
     this.applyTranslationAndColor(pixelX, pixelY, mcColor);
@@ -51,12 +64,17 @@ TipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, dataX, dataY, 
 };
 
 TipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor){
-    if(this.timeoutId === 0){
+    //clear hideTip.
+    if(this.hideTipTimeout !== 0){
+        window.clearTimeout(this.hideTipTimeout);
+    }
+
+    if(!this.isShown){
+        this.isShown = true;
         this.tip.style.transition = "none";
         this.tip.style.display = "inline-block";
     } else {
         this.tip.style.transition = "0.3s";
-        window.clearTimeout(this.timeoutId);
     }
 
     var bcr = this.tip.getBoundingClientRect();
@@ -78,8 +96,14 @@ TipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor
 
 TipControl.prototype.hideTip = function () {
     var _this = this;
-    this.timeoutId = window.setTimeout(function(){
+
+    if(this.hideTipTimeout !== 0){
+        window.clearTimeout(this.hideTipTimeout);
+    }
+
+    this.hideTipTimeout = window.setTimeout(function(){
+       _this.isShown = false;
        _this.tip.style.display = "none";
-       _this.timeoutId = 0;
+       _this.hideTipTimeout = 0;
     }, 1000);
 };
