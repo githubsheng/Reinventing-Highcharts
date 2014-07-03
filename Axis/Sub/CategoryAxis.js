@@ -12,7 +12,7 @@
  * @param rightPadding
  * @constructor
  */
-function X_CategoryAxis(svg, length, originPosition, categoriesNames){
+function X_CategoryAxis(svg, length, originPosition, categoriesNames, leftPadding, rightPadding){
     this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;
@@ -22,8 +22,8 @@ function X_CategoryAxis(svg, length, originPosition, categoriesNames){
     this.originPosition = originPosition;
     this.categoriesNames = categoriesNames;
     //category axis has fixed left and right padding.
-    this.leftPadding = 5;
-    this.rightPadding = 5;
+    this.leftPadding = leftPadding;
+    this.rightPadding = rightPadding;
 
 }
 
@@ -85,7 +85,7 @@ X_CategoryAxis.prototype.analyzeReturn = function() {
 
     return {
         categoryBasePositions: categoryBasePositions,
-        columnWidth: columnWidth,
+        columnWidth: columnWidth
     };
 };
 

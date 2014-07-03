@@ -37,6 +37,7 @@ BasicLineRegularDataViewer.prototype.draw = function(){
     var svgTriggerGroup = draw.createGroup();
     var randomPicker = new RandomPicker();
     var tipControl =  new TipControl(this.htmlContainer, 7, false);
+    tipControl.createTip();
 
     for(var i = 0; i < this.input.series.length; i++){
         var seriesName = this.input.series[i][0];

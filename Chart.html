@@ -3,13 +3,16 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link type="text/css" rel="stylesheet" href="CSS/my-chart.css"></link>
+    <link type="text/css" rel="stylesheet" href="CSS/my-chart.css"/>
 </head>
 <body>
 <div id="container1" style="width:900px; height:500px;"></div>
 <div id="container2" style="width:900px; height:500px;"></div>
 <div id="container3" style="width:900px; height:500px;"></div>
 <div id="container4" style="width:900px; height:500px;"></div>
+<div id="container5" style="width:900px; height:500px;"></div>
+<div id="container6" style="width:900px; height:500px;"></div>
+<div id="container7" style="width:900px; height:500px;"></div>
 <script type="text/javascript" src="Draw/Draw.js"></script>
 <script type="text/javascript" src="Draw/Color.js"></script>
 <script type="text/javascript" src="Util/Util.js"></script>
@@ -18,23 +21,36 @@
 <script type="text/javascript" src="Axis/Sub/CategoryAxis.js"></script>
 <script type="text/javascript" src="Axis/Sub/TimeAxis.js"></script>
 <script type="text/javascript" src="Legend/Legend.js"></script>
+
 <script type="text/javascript" src="Layout/Layout.js"></script>
 <script type="text/javascript" src="Layout/Sub/GeneralLayout.js"></script>
+<script type="text/javascript" src="Layout/Sub/LayoutNoAxes.js"></script>
+
+<script type="text/javascript" src="DataAnalyst/DataAnalystCommons.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicLineIrregularDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicCategoryDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicLineRegularDataAnalyst.js"></script>
+<script type="text/javascript" src="DataAnalyst/BasicStackRegularDataAnalyst.js"></script>
 <script type="text/javascript" src="Util/RandomPicker.js"></script>
 <script type="text/javascript" src="Draw/NodeDrawer.js"></script>
-<script type="text/javascript" src="DataViewer/Tip/TipControl.js"></script>
-<script type="text/javascript" src="DataViewer/Tip/TriggerControl.js"></script>
-<script type="text/javascript" src="DataViewer/SingleSeriesViewer/SingleLineSeriesViewer.js"></script>
-<script type="text/javascript" src="DataViewer/SingleSeriesViewer/SingleStackSeriesViewer.js"></script>
-<script type="text/javascript" src="DataViewer/BasicLineIrregularDataViewer.js"></script>
-<script type="text/javascript" src="DataViewer/BasicCategoryDataViewer.js"></script>
-<script type="text/javascript" src="DataViewer/BasicSingleTimeDataViewer.js"></script>
-<script type="text/javascript" src="DataViewer/BasicLineRegularDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/SharedSeriesInfo.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/TipControl.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/SharedTipControl.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/TriggerControl.js"></script>
+
+<script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleColumnViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleLineSeriesViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleStackSeriesViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleTimeSeriesViewer.js"></script>
+
+<script type="text/javascript" src="DataViewer/BasicLine/BasicLineIrregularDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Category/BasicCategoryDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Stack/BasicSingleTimeDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/BasicLine/BasicLineRegularDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Stack/BasicStackRegularDataViewer.js"></script>
 <script type="text/javascript" src="Weaver.js"></script>
 <script type="text/javascript">
+
 //basic irregular discrete data
 (function () {
     //this serves as the discrete irregular data demo
@@ -107,12 +123,12 @@
     //this serves as the continual irregular data demo
     var seriesName1 = "Pencil sales";
     var data1 = [
-        [0, 3],
-        [2, 1],
-        [4, 9],
-        [5, 2],
-        [6, 6],
-        [7, 7],
+        [0, -3],
+        [2, -1],
+        [4, -9],
+        [5, -2],
+        [6, -6],
+        [7, -7],
         [8, 13],
         [9, 14],
         [11, 17],
@@ -266,48 +282,6 @@
     weaver.weave("basicLineIrregular", input, document.getElementById("container2"));
 })();
 
-/**
- (function(){
-        var seriesName1 = "Pencil sales";
-        var data1 = [
-            2
-        ];
-
-        var seriesName2 = "Pen sales";
-        var data2 = [
-            3
-        ];
-
-        var seriesName3 = "Eraser sales";
-        var data3 = [
-            4.5
-        ];
-
-        var seriesName4 = "Ruler sales";
-        var data4 = [
-            3
-        ];
-
-        var input = {
-            mainTitle: "Sales of our company in 2013",
-            subTitle: "Data from sales department",
-            yAxisTitle: "number of items sold",
-            xAxisTitle: "now I can't find a title for this axis",
-            series: [
-                [seriesName1, data1],
-                [seriesName2, data2],
-                [seriesName3, data3],
-                [seriesName4, data4]
-            ],
-            legend: "right"
-        };
-
-        weaver.weave("basicCategory", input, document.getElementById("svg2"));
-    })();
- */
-
-
-
 //basic regular continual data.
 (function(){
     var seriesName1 = "A Company";
@@ -326,7 +300,7 @@
         0.8101, 0.8119, 0.8107, 0.8105,    0.8084, 0.8069,    0.8047, 0.8023,    0.7965, 0.7919,
         0.7921, 0.7922, 0.7934, 0.7918,    0.7915, 0.787, 0.7861, 0.7861, 0.7853, 0.7867,
         0.7827, 0.7834, 0.7766, 0.7751, 0.7739, 0.7767, 0.7802, 0.7788, 0.7828, 0.7816,
-        0.7829, 0.783, 0.7829, 0.7781, 0.7811, 0.7831, 0.7826, 0.7855, 0.7855, 0.7845,
+        0.7829, 0.783, 0.7829, 0.7781, 0.7811, 0.7831, 0.7826, 0.7855, 0.7855, 0.7845
     ];
 
     var seriesName2 = "B Company";
@@ -359,14 +333,14 @@
             [seriesName1, data1],
             [seriesName2, data2]
         ],
-        legend: "bottom"
+        legend: "right"
     };
 
     weaver.weave("basicLineRegular", input, document.getElementById("container3"));
 })();
 
 //single time series.
- (function(){
+(function(){
         var seriesName = "Total Sales";
         var data = [
             0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
@@ -421,6 +395,103 @@
         weaver.weave("singleTime", input, document.getElementById("container4"));
     })();
 
+
+(function(){
+        var seriesName1 = "Pencil sales";
+        var data1 = -2;
+
+        var seriesName2 = "Pen sales";
+        var data2 = 3;
+
+        var seriesName3 = "Eraser sales";
+        var data3 = 4.5;
+
+        var seriesName4 = "Ruler sales";
+        var data4 = 3;
+
+        var input = {
+            mainTitle: "Sales of our company in 2013",
+            subTitle: "Data from sales department",
+            yAxisTitle: "number of items sold",
+            xAxisTitle: "now I can't find a title for this axis",
+            series: [
+                [seriesName1, data1],
+                [seriesName2, data2],
+                [seriesName3, data3],
+                [seriesName4, data4]
+            ],
+            legend: "bottom"
+        };
+
+        weaver.weave("basicCategory", input, document.getElementById("container5"));
+    })();
+
+(function(){
+    var seriesName1 = "A Company";
+    var data1 = [23, 43, 87, 212, 413, 757, 1292];
+
+    var seriesName2 = "B Company";
+    var data2 = [16, 35, 73, 134, 254, 432, 932];
+
+    var seriesName3 = "C Company";
+    var data3 = [20, 38, 65, 142, 253, 432, 831];
+
+    var seriesName4 = "D Company";
+    var data4 = [12, 27, 54, 122, 287, 532, 1032];
+
+    var input = {
+        mainTitle: "Stock Prices Comparison (Regular interval)",
+        subTitle: "Regular data set allows for a lot of optimization",
+        yAxisTitle: "Stock Price",
+        xAxisTitle: "Company Sales",
+        start: 201,
+        interval: 5,
+        series: [
+            [seriesName1, data1],
+            [seriesName2, data2],
+            [seriesName3, data3],
+            [seriesName4, data4]
+        ],
+        legend: "right"
+    };
+
+    weaver.weave("basicStackRegular", input, document.getElementById("container6"));
+})();
+
+(function(){
+    var seriesName1 = "A Company";
+    var data1 = 23;
+
+    var seriesName2 = "B Company";
+    var data2 = 42;
+
+    var seriesName3 = "C Company";
+    var data3 = 1;
+
+    var seriesName4 = "D Company";
+    var data4 = 11;
+
+    var seriesName5 = "E Company";
+    var data5 = 19;
+
+    var seriesName6 = "F Company";
+    var data6 = 3;
+
+    var input = {
+        mainTitle: "Stock Prices Comparison (Regular interval)",
+        subTitle: "Regular data set allows for a lot of optimization",
+        series: [
+            [seriesName1, data1],
+            [seriesName2, data2],
+            [seriesName3, data3],
+            [seriesName4, data4],
+            [seriesName5, data5],
+            [seriesName6, data6]
+        ],
+        legend: "right"
+    };
+    weaver.weave("basicPieChart", input, document.getElementById("container7"));
+})();
 
 </script>
 </body>

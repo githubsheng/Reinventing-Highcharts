@@ -103,17 +103,13 @@ var nodeDrawer = {
      * draws a section that is used to trigger tip / visual node highlight.
      * @param pixelX
      * @param pixelY
-     * @param dataX
-     * @param dataY
+     * @param nodesStrideIdx
      * @returns {SVGELement}
      */
-    drawTrigger: function(pixelX, pixelY, dataX, dataY){
-        var nodeMouseOverSection = draw.createCircle(pixelX, pixelY, 10); //this is the part that triggers things.
-        draw.setStrokeFill(nodeMouseOverSection, false, false, "rgba(0,0,0,0)");
-        nodeMouseOverSection.ws_pixelX = pixelX;
-        nodeMouseOverSection.ws_pixelY = pixelY;
-        nodeMouseOverSection.ws_dataX = dataX;
-        nodeMouseOverSection.ws_dataY = dataY;
-        return nodeMouseOverSection;
+    drawTrigger: function(pixelX, pixelY, nodesStrideIdx){
+        var trigger = draw.createCircle(pixelX, pixelY, 10); //this is the part that triggers things.
+        draw.setStrokeFill(trigger, false, false, "rgba(0,0,0,0)");
+        trigger.ws_nodesStrideIdx = nodesStrideIdx;
+        return trigger;
     }
 };

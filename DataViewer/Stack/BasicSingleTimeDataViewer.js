@@ -36,10 +36,13 @@ BasicSingleTimeData.prototype.draw = function(){
     var svgDrawGroup = draw.createGroup();
     var svgTriggerGroup = draw.createGroup();
     var randomPicker = new RandomPicker();
+    var tipControl = new TipControl(this.htmlContainer, 7, false);
+    tipControl.createTip();
 
-    var sssv = new SingleStackSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
+    var sssv = new SingleTimeSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
         randomPicker.pickNodeShape(), randomPicker.pickSeriesColor(), this.isContinual, this.input.interval, seriesName,
-        new TipControl(this.htmlContainer, 7, false), this.xDrawInfo, this.yDrawInfo);
+        tipControl, this.xDrawInfo, this.yDrawInfo, 1, true);
+
     sssv.draw();
 
     this.svg.appendChild(svgDrawGroup);

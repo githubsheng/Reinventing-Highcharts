@@ -17,7 +17,6 @@ function Layout(){
     this.yAxisTitleFontSize = this.xAxisTitleFontSize = 15;
     this.xAxisHeight = 20;
     this.yAxisWidth = 30;
-    this.chartDisplayTopEdgeY = 0;
     this.areas = null;
 }
 
@@ -78,7 +77,6 @@ Layout.prototype.calculateWidthOfRightLegendComponent = function(){
 };
 
 Layout.prototype.calculateOuterAreasSizes = function(){
-
     if(this.areas !== null){
         return this.areas;
     }
@@ -90,12 +88,12 @@ Layout.prototype.calculateOuterAreasSizes = function(){
     var bottomOuterHeight = calculateBottomOuterHeight();
     var rightOuterWidth = calculateRightOuterWidth();
 
-    var svgWdith = +(this.svg.getAttribute("width"));
+    var svgWidth = +(this.svg.getAttribute("width"));
     var svgHeight = +(this.svg.getAttribute("height"));
 
     var topArea = {
         origin : [leftOuterWidth, 0],
-        width : svgWdith - leftOuterWidth - rightOuterWidth,
+        width : svgWidth - leftOuterWidth - rightOuterWidth,
         height: topOuterHeight
     };
 
@@ -106,7 +104,7 @@ Layout.prototype.calculateOuterAreasSizes = function(){
     };
 
     var rightArea = {
-        origin : [svgWdith - rightOuterWidth, topOuterHeight],
+        origin : [svgWidth - rightOuterWidth, topOuterHeight],
         width: rightOuterWidth,
         height: leftArea.height
     };

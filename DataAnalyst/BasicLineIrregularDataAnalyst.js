@@ -46,10 +46,7 @@ BasicLineIrregularDataAnalyst.prototype.analyze = function(){
         }
     }
 
-    var isContinual = false;
-    if(this.xAxisDataAreaLength / maxNodeCount < 20){
-        isContinual = true;
-    }
+    var isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, maxNodeCount);
 
     return {
         minX: minX,

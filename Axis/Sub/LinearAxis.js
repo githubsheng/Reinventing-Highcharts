@@ -42,7 +42,7 @@ X_LinearAxis.prototype.constructor = X_LinearAxis;
  * @param x_axis
  * @constructor
  */
-function Y_LinearAxis(svg, length, min, max, originPosition, x_axis){
+function Y_LinearAxis(svg, length, min, max, originPosition, x_axis, doNotExpandMin, doNotExpandMax){
     this.svg = svg;
     this.originPosition;
     this.length = length;
@@ -53,6 +53,8 @@ function Y_LinearAxis(svg, length, min, max, originPosition, x_axis){
     this.markPixelInterval = 0;
     this.originPosition = originPosition;
     this.x_axis = x_axis;
+    this.doNotExpandMin = doNotExpandMin;
+    this.doNotExpandMax = doNotExpandMax;
 
     this.markPositions = [];
     this.labelPositions = [];

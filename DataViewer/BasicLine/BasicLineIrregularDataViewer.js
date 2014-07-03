@@ -26,6 +26,7 @@ function BasicLineIrregularDataViewer(htmlContainer, svg, svgTrigger, input, xDr
  */
 BasicLineIrregularDataViewer.prototype.draw = function () {
     var tipControl = new TipControl(this.htmlContainer, 7, false);
+    tipControl.createTip();
 
     //loop through different series
     var series = this.input.series;

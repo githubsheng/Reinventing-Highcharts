@@ -49,16 +49,18 @@ var weaver = {
             case "basicLineRegular":
                 this.weaveBasicLineRegular(input, svg, svgTrigger, div);
                 break;
-//            case "basicCategory":
-//                this.weaveBasicCategory(input, svg, svgTrigger, div);
-//                break;
+            case "basicCategory":
+                this.weaveBasicCategory(input, svg, svgTrigger, div);
+                break;
             case "singleTime":
                 this.weaveSingleTime(input, svg, svgTrigger, div);
                 break;
-//            case "stackTime":
-//                this.weaveStackTime(iinput, svg, svgTrigger, div);
-//                break;
-
+            case "basicStackRegular":
+                this.weaveBasicStackRegular(input, svg, svgTrigger, div);
+                break;
+            case "basicPieChart":
+                this.weaveBasicPieChart(input, svg, svgTrigger, div);
+                break;
         }
     },
 
@@ -79,7 +81,7 @@ var weaver = {
 
         /* Even though the data intervals are irregular, but the marks on the x axis is linear and regular.*/
         var xAxis = new X_LinearAxis(svg, xAxisDataAreaLength, dar.minX, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
-        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis, false, false);
 
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
@@ -107,7 +109,7 @@ var weaver = {
         var dar = new BasicLineRegularDataAnalyst(input, xAxisDataAreaLength).analyze();
 
         var xAxis = new X_LinearAxis(svg, xAxisDataAreaLength, input.start, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
-        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis, false, false);
 
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
@@ -120,30 +122,34 @@ var weaver = {
         dataViewer.draw();
     },
 
-//    weaveBasicCategory: function(nput, svg, svgTrigger,  htmlContainer){
-//        var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/, "rectangular");
-//        legend.analyze();
-//
-//        var layout = new GeneralLayout(svg, input.mainTitle, input.subTitle, input.yAxisTitle,
-//            input.xAxisTitle, legend);
-//
-//        var lar = layout.analyze(); //layout analyze result.
-//        var dar = new BasicCategoryDataAnalyst(input).analyze();
-//
-//        //because leftPadding and rightPadding are both 0 therefore xAxisDataAreaLength is equal to lar.xAxisLength.
-//        var xAxis = new X_CategoryAxis(svg, lar.xAxisLength, lar.originPosition, dar.seriesNames);
-//        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
-//
-//        var xDrawInfo = xAxis.analyze();
-//        var yDrawInfo = yAxis.analyze();
-//
-//        var d = new BasicCategoryDataViewer(svg, input.series, xDrawInfo, yDrawInfo);
-//
-//        layout.draw();
-//        xAxis.draw();
-//        yAxis.draw();
-//        d.draw();
-//    },
+    weaveBasicCategory: function(input, svg, svgTrigger,  htmlContainer){
+        var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/, "rectangular");
+        legend.analyze();
+
+        var layout = new GeneralLayout(svg, input.mainTitle, input.subTitle, input.yAxisTitle,
+            input.xAxisTitle, legend);
+
+        var lar = layout.analyze(); //layout analyze result.
+        var dar = new BasicCategoryDataAnalyst(input).analyze();
+
+        var xLeftPadding = 0;
+        var xRightPadding = 0;
+
+        //because leftPadding and rightPadding are both 0 therefore xAxisDataAreaLength is equal to lar.xAxisLength.
+        var xAxis = new X_CategoryAxis(svg, lar.xAxisLength -xLeftPadding-xRightPadding, lar.originPosition,
+            dar.seriesNames, xLeftPadding, xRightPadding);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis, false, false);
+
+        var xDrawInfo = xAxis.analyze();
+        var yDrawInfo = yAxis.analyze();
+
+        var d = new BasicCategoryDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo);
+
+        layout.draw();
+        xAxis.draw();
+        yAxis.draw();
+        d.draw();
+    },
 
     weaveSingleTime: function(input, svg, svgTrigger,  htmlContainer){
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/, "rectangular");
@@ -157,7 +163,7 @@ var weaver = {
         var dar = new BasicLineRegularDataAnalyst(input, lar.xAxisLength).analyze();
 
         var xAxis = new TimeAxis(svg, lar.xAxisLength, dar.maxX, lar.originPosition, input.unit, input.interval);
-        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis, false, false);
 
         var xDrawInfo = xAxis.analyze();
         var yDrawInfo = yAxis.analyze();
@@ -168,5 +174,60 @@ var weaver = {
         xAxis.draw();
         yAxis.draw();
         d.draw();
+    },
+
+    weaveBasicStackRegular: function(input, svg, svgTrigger, htmlContainer){
+        var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
+        legend.analyze();
+
+        var layout = new GeneralLayout(svg, input.mainTitle, input.subTitle, input.yAxisTitle,
+            input.xAxisTitle, legend);
+
+        var xLeftPadding = 0;
+        var xRightPadding = 0;
+        var lar = layout.analyze(); //layout analyze result.
+        var xAxisDataAreaLength = lar.xAxisLength - xLeftPadding - xRightPadding;
+
+        var dar = new BasicStackRegularDataAnalyst(input, xAxisDataAreaLength).analyze();
+
+        var xAxis = new X_LinearAxis(svg, xAxisDataAreaLength, input.start, dar.maxX, lar.originPosition, xLeftPadding, xRightPadding);
+        var yAxis = new Y_LinearAxis(svg, lar.yAxisLength, dar.minY, dar.maxY, lar.originPosition, xAxis, true, false);
+
+        var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
+        var yDrawInfo = yAxis.analyze();
+
+        var dataViewer = new BasicStackRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
+
+        layout.draw();
+        xAxis.draw();
+        yAxis.draw();
+        dataViewer.draw();
+    },
+
+    weaveBasicPieChart: function(input, svg, svgTrigger, htmlContainer){
+        var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
+        legend.analyze();
+
+        var layout = new LayoutNoAxes(svg, input.mainTitle, input.subTitle, legend);
+        var lar = layout.analyze();
+
+        var origin = lar.originPosition;
+        var xAxisLength = lar.xAxisLength;
+        var yAxisLength = lar.yAxisLength;
+
+
+
+        //for test only
+        var circle = draw.createCircle(origin[0], origin[1], 2);
+        draw.setStrokeFill(circle, false, false, "blue");
+        svg.appendChild(circle);
+
+        var line1 = draw.createStraightLine(origin[0], origin[1], origin[0], origin[1] - yAxisLength);
+        var line2 = draw.createStraightLine(origin[0], origin[1], origin[0] + xAxisLength, origin[1]);
+
+        svg.appendChild(line1);
+        svg.appendChild(line2);
+
+        layout.draw();
     }
 };

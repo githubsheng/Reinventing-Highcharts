@@ -30,7 +30,8 @@ function SingleLineSeriesViewer(htmlContainer, svg, svgTrigger, nodes, nodeShape
 SingleLineSeriesViewer.prototype.draw = function(){
     this.svgLayerGroup.appendChild(this.drawLine());
     this.drawNodes();
-    this.enableNodeTrigger();
+    var highlightedNode = this.drawHighlightNode();
+    this.enableNodeTrigger(highlightedNode);
     this.enableRoutineTrace();
     this.svg.appendChild(this.svgLayerGroup);
     this.svgTrigger.appendChild(this.svgTriggerGroup);
@@ -56,32 +57,31 @@ SingleLineSeriesViewer.prototype.drawNodes = function(){
     this.svgLayerGroup.appendChild(visualNodeGroup);
 };
 
-SingleLineSeriesViewer.prototype.enableNodeTrigger = function(){
-    if(this.isContinual){
-        return;
-    }
-
-    //draw the highlighted node.
+SingleLineSeriesViewer.prototype.drawHighlightNode = function(){
     var highlightedNode = nodeDrawer.drawHighlightedNode(this.nodeShape, this.mcColor);
     draw.setVisibility(highlightedNode, false);
     this.svgLayerGroup.appendChild(highlightedNode);
+    return highlightedNode;
+};
 
+SingleLineSeriesViewer.prototype.enableNodeTrigger = function(highlightedNode){
+    if(this.isContinual){
+        return;
+    }
     //draw all those node trigger zones.
     var nodeMouseOverSectionGroup = draw.createGroup();
     for (var i = 0; i < this.nodes.length; i = i + 4) {
-        var nodeMouseOverSection = nodeDrawer.drawTrigger(this.nodes[i], this.nodes[i + 1],
-            this.nodes[i + 2], this.nodes[i + 3]);
-
+        var nodeMouseOverSection = nodeDrawer.drawTrigger(this.nodes[i], this.nodes[i + 1], i/4);
         nodeMouseOverSectionGroup.appendChild(nodeMouseOverSection);
     }
     this.svgTriggerGroup.appendChild(nodeMouseOverSectionGroup);
 
     //actually add listeners.
     var triggerControl = new TriggerControl(this.tipControl, this.seriesName, this.mcColor);
-    triggerControl.enableNodeTrigger(highlightedNode, nodeMouseOverSectionGroup);
+    triggerControl.enableNodeTrigger(nodeMouseOverSectionGroup, this.seriesName, this.mcColor, highlightedNode, this.nodes);
 };
 
-SingleLineSeriesViewer.prototype.enableRoutineTrace = function(){
+SingleLineSeriesViewer.prototype.enableRoutineTrace = function(highlightedNode){
     if(!this.isContinual){
         return;
     }
@@ -94,7 +94,7 @@ SingleLineSeriesViewer.prototype.enableRoutineTrace = function(){
 
     //actually add listeners.
     var triggerControl = new TriggerControl(this.tipControl, this.seriesName, this.mcColor);
-    triggerControl.enableRoutineTrace(this.htmlContainer, this.nodes, lineTrigger, this.constantInterval, this.xDrawInfo);
+    triggerControl.enableRoutineTrace(this.htmlContainer, this.seriesName, this.mcColor, this.nodes, lineTrigger, this.constantInterval, this.xDrawInfo);
 };
 
 

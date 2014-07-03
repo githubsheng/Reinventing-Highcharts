@@ -46,12 +46,12 @@ Legend.prototype.analyze = function(){
             var legendText = draw.createText(10 + columnWidth, this.rowHeight/2, singleSeriesName, this.fontSize, "start", "middle");
             this.legendSVG_Group.appendChild(singleSeriesNode);
             this.legendSVG_Group.appendChild(legendText);
-            columnWidth = columnWidth + 30 + legendText.getBBox().width;
+            columnWidth = columnWidth + 30 + legendText.getBoundingClientRect().width;
         }
     }
     draw.setVisibility(this.legendSVG_Group, false);
-    this.width = this.legendSVG_Group.getBBox().width;
-    this.height = this.legendSVG_Group.getBBox().height;
+    this.width = this.legendSVG_Group.getBoundingClientRect().width;
+    this.height = this.legendSVG_Group.getBoundingClientRect().height;
 };
 
 /**

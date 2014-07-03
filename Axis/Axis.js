@@ -74,6 +74,7 @@ X_Axis.prototype.analyzeReturn = function(){
     return {
         startPoint: startPoint,
         pixelPerData: pixelPerData,
+        length: this.length,
         min: min
     };
 };
@@ -169,9 +170,17 @@ Y_Axis.prototype.analyze = function(){
  */
 Y_Axis.prototype.adjustMarkInterval = function(){
     Axis.prototype.adjustMarkInterval.apply(this);
-    this.min = util.perfectNumber(this.markDataInterval * Math.floor(this.min / this.markDataInterval));
+    var min2 = util.perfectNumber(this.markDataInterval * Math.floor(this.min / this.markDataInterval));
+
+
+    if(this.min === min2 && !this.doNotExpandMin){
+        this.min = util.perfectNumber(this.min - this.markDataInterval);
+    } else {
+        this.min = min2;
+    }
+
     var max2 = util.perfectNumber(this.markDataInterval * Math.ceil(this.max / this.markDataInterval));
-    if(this.max === max2){
+    if(this.max === max2 && !this.doNotExpandMax){
         this.max = util.perfectNumber(this.max + this.markDataInterval); //so that there is always some room unoccupied at the top.
     } else {
         this.max = max2;

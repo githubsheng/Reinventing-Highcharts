@@ -183,6 +183,38 @@ var draw = {
         return c;
     },
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param radius
+     * @param startAngle
+     * @param endAngle
+     * @returns {string}
+     */
+    createArcOfCircle: function (x, y, radius, startAngle, endAngle){
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        var start = polarToCartesian(x, y, radius, endAngle);
+        var end = polarToCartesian(x, y, radius, startAngle);
+
+        var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+
+        var d = [
+            "M", start.x, start.y,
+            "A", radius, radius, 0, arcSweep, 0, end.x, end.y
+        ].join(" ");
+
+        return d;
+    },
+
     /*create structures*/
 
     /**
@@ -231,28 +263,17 @@ var draw = {
     },
 
     /**
-     * translate a svg element.
      *
+     * @param svgElement
      * @param x
      * @param y
-     * @param angle
-     * @param {SVGELement}
      */
     translate: function(svgElement, x, y){
-        var transform = svgElement.getAttributeNS(null, "transform");
-        if(transform){
-            var transforms = transform.split(") ");
-            for(var i = 0; i < transforms.length; i++){
-                if(transforms[i].substr(0, 9) === "translate") {
-                    transforms[i] = "translate(" + x + " " + y + ")";
-                }
-            }
-            transform = transforms.join(" ");
-
-        } else {
-            transform = "translate(" + x + " " + y + ")";
-        }
-        svgElement.setAttributeNS(null, "transform", transform);
+        var translate = "translate(" + x + "px, " + y + "px)";
+        svgElement.style.MozTransform = translate;
+        svgElement.style.webkitTransform = translate;
+        svgElement.style.msTransform = translate;
+        svgElement.style.transform = translate;
     },
 
     /**
@@ -290,7 +311,7 @@ var draw = {
         if(stroke){
             svgElement.setAttributeNS(null, "stroke", stroke);
         }
-        if(strokeWidth !== 0){
+        if(strokeWidth !== false){
             svgElement.setAttributeNS(null, "stroke-width", strokeWidth);
         }
         if(fill){

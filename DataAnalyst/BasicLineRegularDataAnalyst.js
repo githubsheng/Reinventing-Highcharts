@@ -17,8 +17,6 @@ BasicLineRegularDataAnalyst.prototype.analyze = function(){
 
         if(maxX === null){
             maxX = singleSeriesResult.maxX;
-        } else if (maxX < singleSeriesResult.maxX){
-            maxX = singleSeriesResult.maxX;
         }
 
         if(minY === null){
@@ -40,6 +38,7 @@ BasicLineRegularDataAnalyst.prototype.analyze = function(){
     }
 
     return  {
+        minX: this.input.start,
         maxX: maxX,
         minY: minY,
         maxY: maxY,
@@ -63,10 +62,7 @@ BasicLineRegularDataAnalyst.prototype.analyzeSingleSeries = function(singleSerie
         }
     }
 
-    var isContinual = false;
-    if(this.xAxisDataAreaLength / maxNodeCount < 20){
-        isContinual = true;
-    }
+    var isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, maxNodeCount);
 
     return  {
         maxX: maxX,
