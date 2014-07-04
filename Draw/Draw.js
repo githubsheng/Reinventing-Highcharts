@@ -190,7 +190,7 @@ var draw = {
      * @param radius
      * @param startAngle
      * @param endAngle
-     * @returns {string}
+     * @returns {SVGElement}
      */
     createArcOfCircle: function (x, y, radius, startAngle, endAngle){
         function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
@@ -208,11 +208,13 @@ var draw = {
         var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
 
         var d = [
-            "M", start.x, start.y,
-            "A", radius, radius, 0, arcSweep, 0, end.x, end.y
+            "M", x, y,
+            "", start.x, start.y,
+            "A", radius, radius, 0, arcSweep, 0, end.x, end.y,
+            "Z"
         ].join(" ");
 
-        return d;
+        return this.createPath(d);
     },
 
     /*create structures*/

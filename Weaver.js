@@ -211,22 +211,30 @@ var weaver = {
         var layout = new LayoutNoAxes(svg, input.mainTitle, input.subTitle, legend);
         var lar = layout.analyze();
 
-        var origin = lar.originPosition;
-        var xAxisLength = lar.xAxisLength;
-        var yAxisLength = lar.yAxisLength;
-
-
-
         //for test only
-        var circle = draw.createCircle(origin[0], origin[1], 2);
+        var circle = draw.createCircle(lar.originPosition[0], lar.originPosition[1], 2);
         draw.setStrokeFill(circle, false, false, "blue");
         svg.appendChild(circle);
 
-        var line1 = draw.createStraightLine(origin[0], origin[1], origin[0], origin[1] - yAxisLength);
-        var line2 = draw.createStraightLine(origin[0], origin[1], origin[0] + xAxisLength, origin[1]);
+        console.log(lar.center[0]);
+        console.log(lar.center[1]);
+
+        var center = draw.createCircle(lar.center[0], lar.center[1], 2);
+        draw.setStrokeFill(center, false, false, "blue");
+        svg.appendChild(center);
+
+
+        var line1 = draw.createStraightLine(lar.originPosition[0], lar.originPosition[1], lar.originPosition[0], lar.originPosition[1] - lar.dataDrawAreaY);
+        var line2 = draw.createStraightLine(lar.originPosition[0], lar.originPosition[1], lar.originPosition[0] + lar.dataDrawAreaX, lar.originPosition[1]);
 
         svg.appendChild(line1);
         svg.appendChild(line2);
+
+        var arc = draw.createArcOfCircle(lar.center[0], lar.center[1], 100, 0, 10);
+        draw.setStrokeFill(arc, false, false, "green");
+        svg.appendChild(arc);
+
+        //for test only [end]
 
         layout.draw();
     }

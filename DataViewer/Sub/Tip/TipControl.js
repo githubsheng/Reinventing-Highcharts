@@ -72,9 +72,10 @@ TipControl.prototype.showSingleLineTip = function (pixelX, pixelY, sharedSeriesI
     var mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
     var dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
-    this.tip.childNodes[0].childNodes[0].nodeValue = seriesName;
-    this.tip.childNodes[2].childNodes[0].nodeValue = dataY;
-    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
+    this.genericShowTip(pixelX, pixelY, seriesName, mcColor, dataY);
+//    this.tip.childNodes[0].childNodes[0].nodeValue = seriesName;
+//    this.tip.childNodes[2].childNodes[0].nodeValue = dataY;
+//    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
 };
 
 TipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, sharedSeriesInfoRegisterIdx, nodesStrideIdx){
@@ -84,6 +85,27 @@ TipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, sharedSeriesIn
     var dataX = this.sharedSeriesInfo.getDataX(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
     var dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
+    this.genericShowDoubleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
+//    this.tip.childNodes[0].nodeValue = seriesName;
+//    this.tip.childNodes[2].nodeValue = dataX + " -- " + dataY;
+//    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
+};
+
+TipControl.prototype.genericShowTip = function(pixelX, pixelY, seriesName, mcColor, dataX, dataY){
+    if(this.isSingleLine){
+        this.genericShowSingleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
+    } else {
+        this.genericShowDoubleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
+    }
+};
+
+TipControl.prototype.genericShowSingleLineTip = function(pixelX, pixelY, seriesName, mcColor, dataY){
+    this.tip.childNodes[0].childNodes[0].nodeValue = seriesName;
+    this.tip.childNodes[2].childNodes[0].nodeValue = dataY;
+    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
+};
+
+TipControl.prototype.genericShowDoubleLineTip = function(pixelX, pixelY, seriesName, mcColor, dataX, dataY){
     this.tip.childNodes[0].nodeValue = seriesName;
     this.tip.childNodes[2].nodeValue = dataX + " -- " + dataY;
     this.applyTranslationAndColor(pixelX, pixelY, mcColor);
