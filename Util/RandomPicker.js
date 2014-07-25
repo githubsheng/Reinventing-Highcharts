@@ -3,7 +3,7 @@
  */
 
 function RandomPicker(){
-    this.seriesColors = ["blue", "red", "green", "orange"]; //TODO: add these "purple", "gray"
+    this.seriesColors = ["blue", "green", "red", "lightBlue", "darkGreen", "yellow", "purple"]; //TODO: add these "purple", "gray"
     this.currentSeriesColorIndex = 0;
     this.nodeShape = ["circle", "rectangular", "triangle", "reverse-triangle"];
     this.currentNodeShapeIndex = 0;

@@ -1,0 +1,242 @@
+/* note that none of the values/numbers in the following shaders are tuned to achieve a good enough lighting result and I have no idea about the theory behind the shaders*/
+
+/*vertex shader*/
+uniform mat4 MVMatrix;
+uniform mat4 MVPMatrix;
+uniform mat3 NormalMatrix;
+uniform vec3 WCLightPos;   // Position of light in world coordinates
+uniform vec4 ViewPosition; // Position of camera in world space
+uniform mat4 WCtoLC;       // World to light coordinate transform
+uniform mat4 WCtoLCit;     // World to light inverse transpose
+
+uniform mat4 MCtoWC;
+uniform mat4 MCtoWCit;
+
+
+attribute  vec4  MCVertex;
+attribute  vec3  MCNormal;
+
+
+varying vec3  LCpos;  // Vertex position in light coordinates
+varying vec3  LCnorm;  // Normal in light coordinates
+varying vec3  LCcamera; // Camera position in light coordinates
+
+void main() {
+
+gl_Position = MVPMatrix * MCVertex;
+// Compute world space position and normal
+vec4 wcPos  = MCtoWC * MCVertex;
+vec3 wcNorm = (MCtoWCit * vec4(MCNormal, 0.0)).xyz;
+
+// Compute light coordinate system camera position, vertex position and normal
+LCcamera = (WCtoLC * ViewPosition).xyz;
+LCpos = (WCtoLC * wcPos).xyz;
+LCnorm = (WCtoLCit * vec4(wcNorm, 0.0)).xyz;
+}
+
+
+/*fragment shader*/
+
+precision mediump float;
+
+uniform vec3 SurfaceColor;
+
+// Light parameters
+uniform vec3 LightColor;
+uniform vec3 LightWeights;
+
+// Surface parameters
+uniform vec3 SurfaceWeights;
+uniform float SurfaceRoughness;
+uniform bool AmbientClamping;
+
+// Super ellipse shaping parameters
+uniform bool BarnShaping;
+uniform float SeWidth;
+uniform float SeHeight;
+uniform float SeWidthEdge;
+uniform float SeHeightEdge;
+uniform float SeRoundness;
+
+// Distance shaping parameters
+uniform float DsNear;
+uniform float DsFar;
+uniform float DsNearEdge;
+uniform float DsFarEdge;
+
+
+varying vec3 LCpos; // Vertex position in light coordinates
+varying vec3 LCnorm; // Normal in light coordinates
+varying vec3 LCcamera; // Camera position in light coordinates
+
+
+float superEllipseShape(vec3 pos) {
+    if (!BarnShaping)
+        return 1.0;
+    else {
+        // Project the point onto the z = 1.0 plane
+        vec2 ppos = pos.xy / pos.z;
+        vec2 abspos = abs(ppos);
+        float w = SeWidth;
+        float W = SeWidth + SeWidthEdge;
+        float h = SeHeight;
+        float H = SeHeight + SeHeightEdge;
+        float exp1 = 2.0 / SeRoundness;
+        float exp2 = -SeRoundness / 2.0;
+
+        float inner = w * h * pow(pow(h * abspos.x, exp1) +
+        pow(w * abspos.y, exp1), exp2);
+        float outer = W * H * pow(pow(H * abspos.x, exp1) +
+        pow(W * abspos.y, exp1), exp2);
+        return 1.0 - smoothstep(inner, outer, 1.0);
+    }
+}
+
+float distanceShape(vec3 pos) {
+    float depth;
+    depth = abs(pos.z);
+    float dist = smoothstep(DsNear - DsNearEdge, DsNear, depth) *
+    (1.0 - smoothstep(DsFar, DsFar + DsFarEdge, depth));
+    return dist;
+}
+
+void main() {
+    vec3 tmpLightColor = LightColor;
+    vec3 N = normalize(LCnorm);
+    vec3 L = -normalize(LCpos);
+    vec3 V = normalize(LCcamera-LCpos);
+    vec3 H = normalize(L + V);
+    vec3 tmpColor = tmpLightColor;
+    float attenuation = 1.0;
+    attenuation *= superEllipseShape(LCpos);
+    attenuation *= distanceShape(LCpos);
+    float ndotl = dot(N, L);
+    float ndoth = dot(N, H);
+    vec3 litResult;
+    litResult[0] = AmbientClamping ? max(ndotl, 0.0) : 1.0;
+    litResult[1] = max(ndotl, 0.0);
+    litResult[2] = litResult[1] * max(ndoth, 0.0) * SurfaceRoughness;
+    litResult *= SurfaceWeights * LightWeights;
+    vec3 ambient = tmpLightColor * SurfaceColor * litResult[0];
+    vec3 diffuse = tmpColor * SurfaceColor * litResult[1];
+    vec3 specular = tmpColor * litResult[2];
+
+    gl_FragColor = vec4(attenuation *(ambient + diffuse + specular), 1.0);
+}
+
+/*play function (i have no idea what the values chosen in here mean...)*/
+function play(){
+    //get the attribute/uniform indices in the vertex shader.
+    var uMVMatrixIdx = gl.getUniformLocation(program, "MVMatrix");
+    var uMVPMatrixIdx = gl.getUniformLocation(program, "MVPMatrix");
+    var uNormalMatrixIdx = gl.getUniformLocation(program, "NormalMatrix");
+    var uLightPosIdx = gl.getUniformLocation(program, "WCLightPos");
+    var uViewPosIdx = gl.getUniformLocation(program, "ViewPosition");
+    var uWCtoLCIdx = gl.getUniformLocation(program, "WCtoLC");
+    var uWCtoLCitIdx = gl.getUniformLocation(program, "WCtoLCit");
+
+    var uMCtoWCIdx = gl.getUniformLocation(program, "MCtoWC");
+    var uMCtoWCitIdx = gl.getUniformLocation(program, "MCtoWCit");
+
+    //feed all kinds of matrices
+    var viewMatrix = mat4.create();
+    var projectionMatrix = mat4.create();
+    var modelMatrix = mat4.create();
+    var VPMatrix = mat4.create();
+    var MVPMatrix = mat4.create();
+    var MVMatrix = mat4.create();
+    var normalMatrix = mat3.create();
+
+    var lightPosition = vec3.fromValues(3.0, 3.0, 3.0);
+    var viewPosition = vec3.fromValues(10, 20, 30);
+    mat4.perspective(projectionMatrix, Math.PI * 0.1, gl.viewportWidth / gl.viewportHeight, 1, 2000.0);
+    mat4.lookAt(viewMatrix, viewPosition, vec3.fromValues(0,0,0), vec3.fromValues(0,1,0));
+
+
+    //uMVMatrixIdx (model view matrix) -- MVMatrix is set here.
+    mat4.multiply(MVMatrix, viewMatrix, modelMatrix);
+    gl.uniformMatrix4fv(uMVMatrixIdx,false,MVMatrix);
+
+    //uMVPMatrixIdx (mvp matrix) -- MVPMatrix is set here.
+    mat4.multiply(VPMatrix, projectionMatrix, viewMatrix);
+    mat4.multiply(MVPMatrix, VPMatrix, modelMatrix);
+    gl.uniformMatrix4fv(uMVPMatrixIdx, false, MVPMatrix);
+
+    //uNormalMatrixIdx (normal matrix) -- normalMatrix is set here.
+    mat3.normalFromMat4(normalMatrix, MVMatrix);
+    gl.uniformMatrix3fv(uNormalMatrixIdx, false, normalMatrix);
+
+    //uLightPosIdx (light position)
+    gl.uniform3fv(uLightPosIdx, lightPosition);
+
+    //uViewPosIdx (view position)
+    gl.uniform4fv(uViewPosIdx, vec4.fromValues(10, 10, 20, 1));
+
+    //uWCtoLCIdx (World to light coordinate transform)
+    var WCtoLCmatrix = mat4.create();
+    mat4.lookAt(WCtoLCmatrix, lightPosition, vec3.fromValues(0, 0, 0), vec3.fromValues(0,1,0));
+    gl.uniformMatrix4fv(uWCtoLCIdx, false, WCtoLCmatrix);
+
+    //uWCtoLCitIdx (World to light inverse transpose)
+    var WCtoLCitMatrix = mat4.create();
+    mat4.transpose(WCtoLCitMatrix, WCtoLCmatrix);
+    mat4.invert(WCtoLCitMatrix, WCtoLCitMatrix);
+    gl.uniformMatrix4fv(uWCtoLCitIdx, false, WCtoLCitMatrix);
+
+    //uMCtoWCIdx (from model space to world space, that is, the model matrix)
+    gl.uniformMatrix4fv(uMCtoWCIdx, false, modelMatrix);
+
+    //uMCtoWCitIdx (inverse transpose of model matrix)
+    var modelItMatrix = mat4.create();
+    mat4.invert(modelItMatrix, modelMatrix);
+    mat4.transpose(modelItMatrix, modelItMatrix);
+    gl.uniformMatrix4fv(uMCtoWCitIdx, false, modelItMatrix);
+
+
+    //now fragment shader...
+    var uLightColorIdx = gl.getUniformLocation(program, "LightColor");
+    var lightColor = vec3.fromValues(1, 1, 1);
+    gl.uniform3fv(uLightColorIdx, lightColor);
+
+    var uLightWeightsIdx = gl.getUniformLocation(program, "LightWeights");
+    var lightWeightVal = 0.9;
+    var lightWeights = vec3.fromValues(lightWeightVal, lightWeightVal, lightWeightVal);
+    gl.uniform3fv(uLightWeightsIdx, lightWeights);
+
+    var uSurfaceWeightsIdx = gl.getUniformLocation(program, "SurfaceWeights");
+    var surfaceWeightVal = 0.8;
+    var surfaceWeights = vec3.fromValues(surfaceWeightVal, surfaceWeightVal, surfaceWeightVal);
+    gl.uniform3fv(uSurfaceWeightsIdx, surfaceWeights);
+
+    var uSurfaceRoughnessIdx = gl.getUniformLocation(program, "SurfaceRoughness");
+    var surfaceRoughness = 0.8;
+    gl.uniform1f(uSurfaceRoughnessIdx, surfaceRoughness);
+
+    var uAmbientClampingIdx = gl.getUniformLocation(program, "AmbientClamping");
+    gl.uniform1i(uAmbientClampingIdx, 1);
+
+    var uBarnShapingIdx = gl.getUniformLocation(program, "BarnShaping");
+    gl.uniform1i(uBarnShapingIdx, 1);
+
+    var uSeWidthIdx = gl.getUniformLocation(program, "SeWidth");
+    var uSeHeightIdx = gl.getUniformLocation(program, "SeHeight");
+    var uSeWidthEdgeIdx = gl.getUniformLocation(program, "SeWidthEdge");
+    var uSeHeightEdgeIdx = gl.getUniformLocation(program, "SeHeightEdge");
+    var uSeRoundnessIdx = gl.getUniformLocation(program, "SeRoundness");
+
+    gl.uniform1f(uSeWidthIdx, 1);
+    gl.uniform1f(uSeHeightIdx, 1);
+    gl.uniform1f(uSeWidthEdgeIdx, 0.3);
+    gl.uniform1f(uSeHeightEdgeIdx, 0.3);
+    gl.uniform1f(uSeRoundnessIdx, 0.5);
+
+    var uDsNearIdx = gl.getUniformLocation(program, "DsNear");
+    var uDsFarIdx = gl.getUniformLocation(program, "DsFar");
+    var uDsNearEdgeIdx = gl.getUniformLocation(program, "DsNearEdge");
+    var uDsFarEdgeIdx = gl.getUniformLocation(program, "DsFarEdge");
+
+    gl.uniform1f(uDsNearIdx, 1);
+    gl.uniform1f(uDsFarIdx, 15);
+    gl.uniform1f(uDsNearEdgeIdx, 1);
+    gl.uniform1f(uDsFarEdgeIdx, 5);
+}

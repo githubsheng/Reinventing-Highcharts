@@ -1,0 +1,28 @@
+/* vertex shader */
+attribute vec4 MCVertex;
+
+void main() {
+    gl_Position = MCVertex;
+}
+
+/* fragment shader */
+precision mediump float;
+
+const vec3 materialColor = vec3(1.0, 0.5, 1.0);
+
+void main(){
+    gl_FragColor = vec4(materialColor, 1.0);
+}
+
+/* play function */
+function play(){
+    gl.disable(gl.DEPTH_TEST);
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.BLEND);
+    gl.blendEquation(gl.FUNC_ADD);
+    gl.blendFunc(gl.ZERO, gl.SRC_COLOR);
+    //gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+}

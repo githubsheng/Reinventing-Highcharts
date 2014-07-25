@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script id="shader-vertex" type="x-shader/x-vertex">
+uniform mat4 MVPMatrix;
+uniform mat3 NormalMatrix;
+uniform vec3 ecDirectionalLightDir;
+uniform mat4 MVMartix;
+uniform bool IsTranslucent;
+
+attribute vec4 MCVertex;
+attribute vec3 MCNormal;
+
+varying float diffuseFactor;
+
+void main(){
+	gl_Position = MVPMatrix * MCVertex;
+	vec3 ecNormal = normalize(NormalMatrix * MCNormal);
+	vec3 ecMCVertex = vec3(MVMartix * MCVertex);
+	vec3 ecLightDir = normalize(ecDirectionalLightDir);
+	diffuseFactor = dot(ecLightDir, ecNormal);
+	if(diffuseFactor < 0.0) {
+	    diffuseFactor = dot(ecLightDir, -ecNormal);
+	}
+
+	if(IsTranslucent){
+	    diffuseFactor = 0.85 + (0.15 * diffuseFactor);
+	}
+}
+    </script>
+    <script id="shader-fragment" type="x-shader/x-fragment">
+precision mediump float;
+
+vec3 materialColor = vec3(1, 1, 1);
+
+varying float diffuseFactor;
+
+void main(){
+	gl_FragColor = vec4(materialColor * diffuseFactor, 1.0);
+}
+    </script>
+    <script src="gl-matrix.js"></script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="webgl_playground.js"></script>
+</body>
+</html>

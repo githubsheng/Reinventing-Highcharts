@@ -4,6 +4,130 @@
     <meta charset="UTF-8">
     <title></title>
     <link type="text/css" rel="stylesheet" href="CSS/my-chart.css"/>
+    <style>
+        body {
+            background-color: lightgrey;
+        }
+
+        body > div {
+            margin-bottom: 30px;
+            background-image: url(div-bg.png);
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 2px 2px 2px 0px grey;
+        }
+    </style>
+
+    <script id="shader-vertex" type="x-shader/x-vertex">
+            /*vertex shader*/
+            uniform mat4 MVMatrix;
+            uniform mat4 MVPMatrix;
+            uniform mat3 NormalMatrix;
+
+            uniform vec3 ecDirectionalLightPositionOne;
+            uniform vec3 ecDirectionalLightPositionTwo;
+
+            attribute vec4 MCVertex;
+            attribute vec3 MCNormal;
+
+            uniform bool IsTranslucent;
+
+            varying vec3 colorFactor;
+
+            const vec3 DirectionalLightColor = vec3(1.0, 1.0, 1.0);
+
+            //here I only include diffuse light. There is no ambient (which hemisphere light has already done its job), or specular light.
+            vec3 computeSingleDirectionalLight(const in vec3 ecNormal, const in vec3 ecVertexPosition, const in vec3 ecDirectionalLightPosition, const in bool calculateBackFaceLight){
+                vec3 lightDir = normalize(ecDirectionalLightPosition - ecVertexPosition);
+                float diffuseFactor = dot(lightDir, ecNormal);
+                if(calculateBackFaceLight && diffuseFactor < 0.0){
+                    diffuseFactor = dot(lightDir, -ecNormal);
+                } else {
+                    diffuseFactor = max(diffuseFactor, 0.0);
+                }
+                return DirectionalLightColor * diffuseFactor;
+            }
+
+            vec3 computeDirectionalLight(const in vec3 ecNormal, const in vec3 ecVertexPosition, const in bool calculateBackFaceLight){
+                vec3 directionalLightOne = computeSingleDirectionalLight(ecNormal, ecVertexPosition, ecDirectionalLightPositionOne, calculateBackFaceLight);
+                vec3 directionalLightTwo = computeSingleDirectionalLight(ecNormal, ecVertexPosition, ecDirectionalLightPositionTwo, calculateBackFaceLight);
+                return directionalLightOne * 0.7 + directionalLightTwo * 0.3;
+            }
+
+
+            void main() {
+                vec3 ecVertexPosition = vec3(MVMatrix * MCVertex);
+                vec3 ecNormal = normalize(NormalMatrix * MCNormal);
+
+                if(IsTranslucent){
+                    vec3 directionalLightColor = computeDirectionalLight(ecNormal, ecVertexPosition, true);
+                    //只用directional diffuse来做半透明的明暗调节。这是因为如果用hemisphere+directional diffuse一起来做调节系数的话。hemisphere的ground color（黑色）会导致半透明体底部过暗。
+                    colorFactor = vec3(0.85) + directionalLightColor * 0.15;
+                } else {
+                    vec3 directionalLightColor = computeDirectionalLight(ecNormal, ecVertexPosition, false);
+                    colorFactor = vec3(0.65) + directionalLightColor * 0.35;
+                }
+
+                gl_Position = MVPMatrix * MCVertex;
+            }
+        </script>
+
+    <script id="shader-fragment" type="x-shader/x-fragment">
+            precision mediump float;
+
+            uniform vec3 materialColor;
+
+            varying vec3 colorFactor;
+
+            void main(){
+                gl_FragColor = vec4(materialColor * colorFactor, 1.0);
+            }
+        </script>
+
+    <script id="shader-simple-vertex" type="x-shader/x-vertex">
+            uniform mat4 MVPMatrix;
+
+            attribute vec4 MCVertex;
+
+            void main(){
+                gl_Position = MVPMatrix * MCVertex;
+            }
+        </script>
+
+    <script id="shader-simple-fragment" type="x-shader/x-fragment">
+            precision mediump float;
+
+            uniform vec3 materialColor;
+
+            void main(){
+                gl_FragColor = vec4(materialColor, 1.0);
+            }
+        </script>
+
+    <script id="shader-label-vertex" type="x-shader/x-vertex">
+            uniform mat4 MVPMatrix;
+
+            attribute vec4 MCVertex;
+            attribute vec2 aTexCoord;
+
+            varying vec2 vTexCoord;
+
+            void main(){
+                gl_Position = MVPMatrix * MCVertex;
+                vTexCoord = aTexCoord;
+            }
+        </script>
+
+    <script id="shader-label-fragment" type="x-shader/x-vertex">
+            precision mediump float;
+
+            uniform sampler2D uSampler;
+            varying vec2 vTexCoord;
+
+            void main(){
+                gl_FragColor = texture2D(uSampler, vTexCoord);
+            }
+        </script>
 </head>
 <body>
 <div id="container1" style="width:900px; height:500px;"></div>
@@ -13,6 +137,8 @@
 <div id="container5" style="width:900px; height:500px;"></div>
 <div id="container6" style="width:900px; height:500px;"></div>
 <div id="container7" style="width:900px; height:500px;"></div>
+<div id="container8" style="width:900px; height:500px;"></div>
+<div id="container9" style="width:900px; height:700px;"></div>
 <script type="text/javascript" src="Draw/Draw.js"></script>
 <script type="text/javascript" src="Draw/Color.js"></script>
 <script type="text/javascript" src="Util/Util.js"></script>
@@ -25,29 +151,47 @@
 <script type="text/javascript" src="Layout/Layout.js"></script>
 <script type="text/javascript" src="Layout/Sub/GeneralLayout.js"></script>
 <script type="text/javascript" src="Layout/Sub/LayoutNoAxes.js"></script>
+<script type="text/javascript" src="Layout/Sub/MultipleLegendLayout.js"></script>
 
 <script type="text/javascript" src="DataAnalyst/DataAnalystCommons.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicLine/BasicLineIrregularDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/Category/BasicCategoryDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/BasicLine/BasicLineRegularDataAnalyst.js"></script>
 <script type="text/javascript" src="DataAnalyst/Stack/BasicStackRegularDataAnalyst.js"></script>
+<script type="text/javascript" src="DataAnalyst/Pie/BasicPieDataAnalyst.js"></script>
+
 <script type="text/javascript" src="Util/RandomPicker.js"></script>
 <script type="text/javascript" src="Draw/NodeDrawer.js"></script>
-<script type="text/javascript" src="DataViewer/Sub/Tip/SharedSeriesInfo.js"></script>
+
 <script type="text/javascript" src="DataViewer/Sub/Tip/TipControl.js"></script>
-<script type="text/javascript" src="DataViewer/Sub/Tip/SharedTipControl.js"></script>
 <script type="text/javascript" src="DataViewer/Sub/Tip/TriggerControl.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/Sub/SharedControl/SharedSeriesInfo.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/Sub/SharedControl/SharedTipControl.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/Sub/PieSliceControl/PieSliceTriggerControl.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/Tip/Sub/StaticControl/StaticTipControl.js"></script>
 
 <script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleColumnViewer.js"></script>
 <script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleLineSeriesViewer.js"></script>
 <script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleStackSeriesViewer.js"></script>
 <script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SingleTimeSeriesViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SinglePieSeriesViewer/PieDataLabelSlotsController.js"></script>
+<script type="text/javascript" src="DataViewer/Sub/SingleSeriesViewer/SinglePieSeriesViewer/SinglePieSeriesViewer.js"></script>
 
 <script type="text/javascript" src="DataViewer/BasicLine/BasicLineIrregularDataViewer.js"></script>
 <script type="text/javascript" src="DataViewer/Category/BasicCategoryDataViewer.js"></script>
 <script type="text/javascript" src="DataViewer/Stack/BasicSingleTimeDataViewer.js"></script>
 <script type="text/javascript" src="DataViewer/BasicLine/BasicLineRegularDataViewer.js"></script>
+<script type="text/javascript" src="DataViewer/Pie/BasicPieDataViewer.js"></script>
 <script type="text/javascript" src="DataViewer/Stack/BasicStackRegularDataViewer.js"></script>
+
+<!-- 3d data viewer -->
+<script type="text/javascript" src="DataViewer/3D/gl-matrix.js"></script>
+<script type="text/javascript" src="DataViewer/3D/three-model.js"></script>
+<script type="text/javascript" src="DataViewer/3D/webgl-util.js"></script>
+<script type="text/javascript" src="DataViewer/3D/webgl-parse-data.js"></script>
+<script type="text/javascript" src="DataViewer/3D/canvas-label-generator.js"></script>
+<script type="text/javascript" src="DataViewer/3D/webgl-main.js"></script>
+
 <script type="text/javascript" src="Weaver.js"></script>
 <script type="text/javascript">
 
@@ -478,8 +622,8 @@
     var data6 = 3;
 
     var input = {
-        mainTitle: "Stock Prices Comparison (Regular interval)",
-        subTitle: "Regular data set allows for a lot of optimization",
+        mainTitle: "Market Share in Mars",
+        subTitle: "This chart does not display the data label",
         series: [
             [seriesName1, data1],
             [seriesName2, data2],
@@ -488,11 +632,87 @@
             [seriesName5, data5],
             [seriesName6, data6]
         ],
-        legend: "right"
+        legend: "bottom",
+        noDataLabel: true
     };
+
     weaver.weave("basicPieChart", input, document.getElementById("container7"));
 })();
 
+(function(){
+    var seriesName1 = "A Company";
+    var data1 = 45;
+
+    var seriesName2 = "B Company";
+    var data2 = 1;
+
+    var seriesName3 = "C Company";
+    var data3 = 1;
+
+    var seriesName4 = "D Company";
+    var data4 = 1;
+
+    var seriesName5 = "E Company";
+    var data5 = 1;
+
+    var seriesName6 = "F Company";
+    var data6 = 1;
+
+    var seriesName7 = "G Company";
+    var data7 = 22;
+
+    var seriesName8 = "H Company";
+    var data8 = 1;
+
+    var seriesName9 = "I Company";
+    var data9 = 1;
+
+    var seriesName10 = "J Company";
+    var data10 = 1;
+
+    var seriesName11 = "K Company";
+    var data11 = 1;
+
+    var input = {
+        mainTitle: "Market Share in Mars",
+        subTitle: "This chart displays the data label",
+        series: [
+            [seriesName1, data1],
+            [seriesName2, data2],
+            [seriesName3, data3],
+            [seriesName4, data4],
+            [seriesName5, data5],
+            [seriesName6, data6],
+            [seriesName7, data7],
+            [seriesName8, data8],
+            [seriesName9, data9],
+            [seriesName10, data10],
+            [seriesName11, data11]
+        ],
+        legend: "right",
+        noDataLabel: false
+    };
+
+    weaver.weave("basicPieChart", input, document.getElementById("container8"));
+})();
+
+(function(){
+    var input = {
+        series : {
+            rows : [ "Apple", "Orange", "Plum", "Pineapple"],
+            columns : [ "Frequently", "occasionally", "Never" ],
+            data : [ [ 101, 122, 143 ], [ 111, 122, 143 ], [ 91, 112, 153 ], [ 34, 78, 26 ] ],
+            focus: [[0, 0], [2, 0], [3, 2], [1, 2]]
+        },
+        rowLegend: "top",
+        columnLegend: "bottom",
+        mainTitle: "How Often Do Normal People Eat These Kinds Of Fruits",
+        subTitle: "The data is collected from somewhere",
+        startAngle : -0.6283185307179586
+    };
+
+    weaver.weave("3dGrid", input, document.getElementById("container9"));
+})();
 </script>
 </body>
 </html>

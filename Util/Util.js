@@ -75,6 +75,14 @@ var util = {
         } else {
             return startIdx;
         }
-    }
+    },
 
+    polarToCartesian: function(centerX, centerY, radius, angleInDegrees) {
+        var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+
+        return [
+            centerX + (radius * Math.cos(angleInRadians)),
+            centerY + (radius * Math.sin(angleInRadians))
+        ];
+    }
 };

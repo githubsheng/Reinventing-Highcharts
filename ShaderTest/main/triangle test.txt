@@ -1,0 +1,54 @@
+var canvas = document.querySelector("#canvas");
+
+canvas.width = 500;
+canvas.height = 500;
+
+//create context and program
+var gl = canvas.getContext("webgl");
+gl.viewportWidth = canvas.width;
+gl.viewportHeight = canvas.height;
+gl.clearColor(0.0, 0.0, 0.0, 1.0);
+gl.enable(gl.DEPTH_TEST);
+
+var program = gl.createProgram();
+
+//create shaders and compile them
+var vShader = gl.createShader(gl.VERTEX_SHADER);
+var vShaderSource = document.querySelector("#shader-vertex").innerHTML.trim();
+gl.shaderSource(vShader, vShaderSource);
+gl.compileShader(vShader);
+console.log(gl.getShaderParameter(vShader, gl.COMPILE_STATUS));
+
+var fShader = gl.createShader(gl.FRAGMENT_SHADER);
+var fShaderSource = document.querySelector("#shader-fragment").innerHTML.trim();
+gl.shaderSource(fShader, fShaderSource);
+gl.compileShader(fShader);
+console.log(gl.getShaderParameter(fShader, gl.COMPILE_STATUS));
+
+//connect the shaders to the progam.
+gl.attachShader(program, vShader);
+gl.attachShader(program, fShader);
+
+gl.linkProgram(program);
+gl.useProgram(program);
+
+//feed the information of vertices.
+var vertices = new Float32Array([
+    -0.5, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.5, 0.0, //first triangle
+    -0.5, 0.3, 0.0, 0.5, 0.3, 0.0, 0.0, 0.8, 0.0
+]); //a single triangle here.
+
+//create buffers and feed them to the shaders, and always feed the vertices positions and vertices normals
+var aPositionIdx = gl.getAttribLocation(program, "MCVertex");
+var vertexBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+gl.vertexAttribPointer(aPositionIdx, 3, gl.FLOAT, false, 0, 0);
+gl.enableVertexAttribArray(aPositionIdx);
+gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+play();
+
+function play(){
+//go here.
+}

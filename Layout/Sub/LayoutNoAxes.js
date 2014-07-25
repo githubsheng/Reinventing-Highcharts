@@ -8,8 +8,8 @@ function LayoutNoAxes(svg, mainTitle, subTitle, legend){
     this.yAxisTitle = undefined; //since there is no axis there will be no axis title.
     this.xAxisTitle = undefined; //since there is no axis there will be no axis title.
     //these two override the values in the Layout.js
-    this.xAxisHeight = 20;
-    this.yAxisWidth = 30;
+    this.xAxisHeight = 0;
+    this.yAxisWidth = 0;
 
     this.legend = legend;
 }
@@ -26,12 +26,12 @@ LayoutNoAxes.prototype.analyze = function(){
     var radii = calculateSuggestedRadius();
 
     return {
-        originPosition: origin, //TODO: this is not needed and therefore I need to remove it later.
         dataDrawAreaX: dataDrawAreaX,
         dataDrawAreaY: dataDrawAreaY,
         center: [origin[0] + dataDrawAreaX/2, origin[1] - dataDrawAreaY/2],
-        radiusOfCircleForPositioningLabels: radii[0],
-        radiusOfPie: radii[1]
+        radiusForLabel: radii[0],
+        radiusForPie: radii[1],
+        radiusForConnectionLine: radii[2]
     };
 
     function calculateOriginPosition(outerAreas){
@@ -44,15 +44,19 @@ LayoutNoAxes.prototype.analyze = function(){
         var suggestedDataLabelHeight = 19;
 
         var d;
-        if(dataDrawAreaX > dataDrawAreaY){
+        if(dataDrawAreaX < dataDrawAreaY){
             d = dataDrawAreaX/2;
         } else {
             d = dataDrawAreaY/2;
         }
 
-        var radiusOfCircleForPositioningLabels = d - suggestedDataLabelHeight / 2; //the data label position is really the position of the connector of the data label.
-        var radiusOfPie = radiusOfCircleForPositioningLabels - 15;
+        //the data label position is really the position of the connector of the data label.
+        //that's why i need to divide suggestedDataLabelHeight by 2.
+        var radiusOfCircleForPositioningLabels = d - suggestedDataLabelHeight / 2;
+        var radiusOfPie = radiusOfCircleForPositioningLabels - 30;
+        var radiusOfCircleForConnectionLineTurn = radiusOfCircleForPositioningLabels - 20;
+        //draw these hateful circle to see what they do if you forget about them.
 
-        return [radiusOfCircleForPositioningLabels, radiusOfPie];
+        return [radiusOfCircleForPositioningLabels, radiusOfPie, radiusOfCircleForConnectionLineTurn];
     }
 };

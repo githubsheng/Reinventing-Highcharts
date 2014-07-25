@@ -37,14 +37,6 @@ TriggerControl.prototype.enableColumnTrigger = function(columnTrigger, htmlConta
     });
 };
 
-TriggerControl.prototype.highlightNode = function(pixelX, pixelY){
-
-};
-
-TriggerControl.prototype.deHighlightNode = function(){
-
-};
-
 /**
  * This method requires the target has the following property:
  * 1. ws_nodesStrideIdx
@@ -100,27 +92,6 @@ TriggerControl.prototype.enableRoutineTrace = function(htmlContainer, seriesName
     var previousIdx = -1; //this idex is the stride idx. and stride idx happens to be the same of dataXarray idx.
     var mouseX = 0;
     var traceIntervalId = 0;
-
-//    var isShown = false; //set the flag yeah.
-//    function highlightNode(pixelX, pixelY) {
-//        if(highlightedNode === null){
-//            return;
-//        }
-//
-//        if (!isShown) {
-//            draw.setVisibility(highlightedNode, true);
-//            isShown = true;
-//
-//        }
-//        draw.translate(highlightedNode, pixelX, pixelY);
-//    }
-//
-//    function deHighlightNode() {
-//        if (isShown && highlightedNode !== null) {
-//            draw.setVisibility(highlightedNode, false);
-//            isShown = false;
-//        }
-//    }
 
     //this handler has different definitions based on whether the data has constant data interval or irregular data interval
     var findAndHighLight;

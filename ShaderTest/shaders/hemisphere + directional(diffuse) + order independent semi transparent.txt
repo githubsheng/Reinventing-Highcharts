@@ -1,0 +1,168 @@
+/*vertex shader*/
+uniform vec3 ecHemishpereLightPosition; //light position in the view coordinate space.
+uniform vec3 SkyColor;
+uniform vec3 GroundColor;
+
+uniform mat4 MVMatrix;
+uniform mat4 MVPMatrix;
+uniform mat3 NormalMatrix;
+
+uniform vec3 ecDirectionalLightPosition;
+
+uniform float HemisphereLightContribution;
+uniform float DirectionalLightContribution;
+
+attribute vec4 MCVertex;
+attribute vec3 MCNormal;
+
+uniform bool IsTranslucent;
+
+varying vec3 colorFactor;
+
+const vec3 DirectionalLightColor = vec3(1.0, 1.0, 1.0);
+
+vec3 computeHemisphereLightingColor(const in vec3 ecNormal, const in vec3 ecVertexPosition){
+    vec3 lightDir = normalize(ecHemishpereLightPosition - ecVertexPosition);
+    float costheta = dot(ecNormal, lightDir);
+    float a = costheta * 0.5 + 0.5;
+    return mix(GroundColor, SkyColor, a);
+}
+
+//here I only include diffuse light. There is no ambient (which hemisphere light has already done its job), or specular light.
+vec3 computeDirectionalLight(const in vec3 ecNormal, const in vec3 ecVertexPosition, const in bool calculateBackFaceLight){
+    vec3 lightDir = normalize(ecDirectionalLightPosition - ecVertexPosition);
+    float diffuseFactor = dot(lightDir, ecNormal);
+    if(calculateBackFaceLight && diffuseFactor < 0.0){
+        diffuseFactor = dot(lightDir, -ecNormal);
+    } else {
+        diffuseFactor = max(diffuseFactor, 0.0);
+    }
+    return DirectionalLightColor * diffuseFactor;
+}
+
+
+void main() {
+    vec3 ecVertexPosition = vec3(MVMatrix * MCVertex);
+    vec3 ecNormal = normalize(NormalMatrix * MCNormal);
+
+    if(IsTranslucent){
+        //只用directional diffuse来做半透明的明暗调节。这是因为如果用hemisphere+directional diffuse一起来做调节系数的话。hemisphere的ground color（黑色）会导致半透明体底部过暗。
+        colorFactor = vec3(0.85) + computeDirectionalLight(ecNormal, ecVertexPosition, true) * 0.15;
+    } else {
+        vec3 hemishpereLightingColor = computeHemisphereLightingColor(ecNormal, ecVertexPosition);
+        vec3 directionalLightingColor = computeDirectionalLight(ecNormal, ecVertexPosition, false);
+        colorFactor = min((hemishpereLightingColor * HemisphereLightContribution + directionalLightingColor * DirectionalLightContribution), 1.0);
+    }
+
+    gl_Position = MVPMatrix * MCVertex;
+}
+
+/*fragment shader*/
+precision mediump float;
+
+uniform vec3 materialColor;
+
+varying vec3 colorFactor;
+
+void main(){
+    gl_FragColor = vec4(materialColor * colorFactor, 1.0);
+}
+
+/*play function*/
+function play(){
+    //get the attribute/uniform indices in the shaders.
+    var uMVPMatrixIdx = gl.getUniformLocation(program, "MVPMatrix");
+    var uNormalMatrixIdx = gl.getUniformLocation(program, "NormalMatrix");
+    var uMVMatrixIdx = gl.getUniformLocation(program, "MVMatrix");
+
+    //feed all kinds of matrices
+    var modelMatrix = mat4.create();
+    var viewMatrix = mat4.create();
+    var projectionMatrix = mat4.create();
+
+    var VPMatrix = mat4.create(); //intermediate result used to calculate MVP
+    var MVPMatrix = mat4.create();
+    var MVMatrix = mat4.create();
+    var normalMatrix = mat3.create();
+
+    //projection matrix, view matrix, and VP matrix.
+    mat4.perspective(projectionMatrix, Math.PI * 0.1, gl.viewportWidth / gl.viewportHeight, 1, 2000.0);
+    mat4.lookAt(viewMatrix, vec3.fromValues(5, 20, 40), vec3.fromValues(0,0,0), vec3.fromValues(0,1,0));
+    mat4.multiply(VPMatrix, projectionMatrix, viewMatrix);
+
+    //hemisphere light
+    var skyColorIdx = gl.getUniformLocation(program, "SkyColor");
+    var groundColorIdx = gl.getUniformLocation(program, "GroundColor");
+    gl.uniform3fv(skyColorIdx, vec3.fromValues(1, 1, 1));
+    gl.uniform3fv(groundColorIdx, vec3.fromValues(0.1, 0.1, 0.1));
+
+    var ecHemishpereLightPositionIdx = gl.getUniformLocation(program, "ecHemishpereLightPosition");
+    var wcHemishpereLightPosition = vec3.fromValues(0, 10, 0);
+    var ecHemishpereLightPosition = vec3.create();
+    vec3.transformMat4(ecHemishpereLightPosition, wcHemishpereLightPosition, viewMatrix);
+    gl.uniform3fv(ecHemishpereLightPositionIdx, ecHemishpereLightPosition);
+
+    //directional light. I only include directional light here for the sake of simplicity.
+    var ecDirectionalLightIdx = gl.getUniformLocation(program, "ecDirectionalLightPosition");
+    var wcDirectionalLightPosition = vec3.fromValues(-5, 30, 50);
+    var ecDirectionalLightPosition = vec3.create();
+    vec3.transformMat4(ecDirectionalLightPosition, wcDirectionalLightPosition, viewMatrix);
+    gl.uniform3fv(ecDirectionalLightIdx, ecDirectionalLightPosition);
+
+    //light mix
+    var hemisphereLightContributionIdx = gl.getUniformLocation(program, "HemisphereLightContribution");
+    var directionalLightContributionIdx = gl.getUniformLocation(program, "DirectionalLightContribution");
+    gl.uniform1f(hemisphereLightContributionIdx, 0.8);
+    gl.uniform1f(directionalLightContributionIdx, 0.3);
+
+    //material color
+    var materialColorIdx = gl.getUniformLocation(program, "materialColor");
+    //translucent control
+    var isTranslucentIdx = gl.getUniformLocation(program, "IsTranslucent");
+
+    //for this order independent blending to work, clear color has to be "white".
+    gl.clearColor(1.0, 1.0, 1.0, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    //draw those 9 cuboids
+    gl.uniform1i(isTranslucentIdx, 0);
+    gl.uniform3fv(materialColorIdx, vec3.fromValues(0.25, 0.6, 0.8));
+    drawSingleCuboid(0, 0); //正中心的
+
+    gl.depthMask(false);
+    gl.enable(gl.BLEND);
+    gl.blendEquation(gl.FUNC_ADD);
+    gl.blendFunc(gl.ZERO, gl.SRC_COLOR);
+
+    gl.uniform1i(isTranslucentIdx, 1);
+    gl.uniform3fv(materialColorIdx, vec3.fromValues(1.0, 1.0, 1.0));
+
+    drawSingleCuboid(4, 0);
+    drawSingleCuboid(-4, 0);
+
+    drawSingleCuboid(0, 4);
+    drawSingleCuboid(4, 4);
+    drawSingleCuboid(-4, 4);
+
+    drawSingleCuboid(0, -4);
+    drawSingleCuboid(4, -4);
+    drawSingleCuboid(-4, -4);
+
+
+    function drawSingleCuboid(x, z){
+        mat4.identity(modelMatrix);
+        mat4.translate(modelMatrix, modelMatrix, vec3.fromValues(x, 0, z));
+        //model matrix and MVP matrix...
+        mat4.multiply(MVPMatrix, VPMatrix, modelMatrix);
+        gl.uniformMatrix4fv(uMVPMatrixIdx, false, MVPMatrix);
+
+        //normal matrix and MV matrix.
+        mat4.multiply(MVMatrix, viewMatrix, modelMatrix);
+        mat3.normalFromMat4(normalMatrix, MVMatrix);
+        gl.uniformMatrix4fv(uMVMatrixIdx, false, MVMatrix);
+        gl.uniformMatrix3fv(uNormalMatrixIdx, false, normalMatrix);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, elementBuffer);
+        gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_BYTE, 0);
+    }
+}

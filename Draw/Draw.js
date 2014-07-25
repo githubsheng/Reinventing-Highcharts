@@ -75,6 +75,11 @@ var draw = {
         return line;
     },
 
+    createQuadraticBezierCurve: function(coordinates){
+        var d = "M" + coordinates[0] + " " + coordinates[1] + " Q " + coordinates[2] + " " + coordinates[3] + " " + coordinates[4] + " " + coordinates[5];
+        return this.createPath(d);
+    },
+
     /**
      * create a svg text element.
      *
@@ -193,24 +198,15 @@ var draw = {
      * @returns {SVGElement}
      */
     createArcOfCircle: function (x, y, radius, startAngle, endAngle){
-        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
-            var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
-
-            return {
-                x: centerX + (radius * Math.cos(angleInRadians)),
-                y: centerY + (radius * Math.sin(angleInRadians))
-            };
-        }
-
-        var start = polarToCartesian(x, y, radius, endAngle);
-        var end = polarToCartesian(x, y, radius, startAngle);
+        var start = util.polarToCartesian(x, y, radius, endAngle);
+        var end = util.polarToCartesian(x, y, radius, startAngle);
 
         var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
 
         var d = [
             "M", x, y,
-            "", start.x, start.y,
-            "A", radius, radius, 0, arcSweep, 0, end.x, end.y,
+            "", start[0], start[1],
+            "A", radius, radius, 0, arcSweep, 0, end[0], end[1],
             "Z"
         ].join(" ");
 
@@ -364,6 +360,16 @@ var draw = {
             svgElement.setAttributeNS(null, "visibility", "visibile");
         } else {
             svgElement.setAttributeNS(null, "visibility", "hidden");
+        }
+    },
+
+    setPointerEvent: function(svgElement, fill, stroke){
+        if(fill){
+            svgElement.setAttributeNS(null, "pointer-events", "fill");
+        }
+
+        if(stroke){
+            svgElement.setAttributeNS(null, "pointer-events", "stroke");
         }
     },
 

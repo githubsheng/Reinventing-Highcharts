@@ -122,6 +122,7 @@ Layout.prototype.calculateOuterAreasSizes = function(){
         bottomArea: bottomArea
     };
 
+
     return this.areas;
 
     function calculateTopOuterHeight(){

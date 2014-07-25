@@ -22,15 +22,7 @@ TipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStructure,
     var tip = document.createElement("div");
     this.tip = tip;
 
-    if(!this.isSingleLine){
-        if(funcCreateHtmlMultipleLineTipStructure !== null && funcCreateHtmlMultipleLineTipStructure !== undefined){
-            funcCreateHtmlMultipleLineTipStructure(tip);
-        } else {
-            tip.appendChild(document.createTextNode("null"));//slot for series name
-            tip.appendChild(document.createElement("br"));
-            tip.appendChild(document.createTextNode("null")); //slot for data.
-        }
-    } else {
+    if(this.isSingleLine){
         if(funcCreateHtmlSingleLineTipStructure !== null && funcCreateHtmlSingleLineTipStructure !== undefined){
             funcCreateHtmlSingleLineTipStructure(tip);
         } else {
@@ -41,6 +33,15 @@ TipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStructure,
             var dataSpan = document.createElement("span");
             tip.appendChild(dataSpan);
             dataSpan.appendChild(document.createTextNode("null"));
+        }
+
+    } else {
+        if(funcCreateHtmlMultipleLineTipStructure !== null && funcCreateHtmlMultipleLineTipStructure !== undefined){
+            funcCreateHtmlMultipleLineTipStructure(tip);
+        } else {
+            tip.appendChild(document.createTextNode("null"));//slot for series name
+            tip.appendChild(document.createElement("br"));
+            tip.appendChild(document.createTextNode("null")); //slot for data.
         }
     }
 
@@ -72,10 +73,7 @@ TipControl.prototype.showSingleLineTip = function (pixelX, pixelY, sharedSeriesI
     var mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
     var dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
-    this.genericShowTip(pixelX, pixelY, seriesName, mcColor, dataY);
-//    this.tip.childNodes[0].childNodes[0].nodeValue = seriesName;
-//    this.tip.childNodes[2].childNodes[0].nodeValue = dataY;
-//    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
+    this.genericShowTip(pixelX, pixelY, seriesName, mcColor, 0, dataY);
 };
 
 TipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, sharedSeriesInfoRegisterIdx, nodesStrideIdx){
@@ -86,14 +84,11 @@ TipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, sharedSeriesIn
     var dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
     this.genericShowDoubleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
-//    this.tip.childNodes[0].nodeValue = seriesName;
-//    this.tip.childNodes[2].nodeValue = dataX + " -- " + dataY;
-//    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
 };
 
 TipControl.prototype.genericShowTip = function(pixelX, pixelY, seriesName, mcColor, dataX, dataY){
     if(this.isSingleLine){
-        this.genericShowSingleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
+        this.genericShowSingleLineTip(pixelX, pixelY, seriesName, mcColor, dataY);
     } else {
         this.genericShowDoubleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
     }
@@ -108,6 +103,12 @@ TipControl.prototype.genericShowSingleLineTip = function(pixelX, pixelY, seriesN
 TipControl.prototype.genericShowDoubleLineTip = function(pixelX, pixelY, seriesName, mcColor, dataX, dataY){
     this.tip.childNodes[0].nodeValue = seriesName;
     this.tip.childNodes[2].nodeValue = dataX + " -- " + dataY;
+    this.applyTranslationAndColor(pixelX, pixelY, mcColor);
+};
+
+TipControl.prototype.genericShowDoubleLineTipDataYOnly = function(pixelX, pixelY, seriesName, mcColor, dataY){
+    this.tip.childNodes[0].nodeValue = seriesName;
+    this.tip.childNodes[2].nodeValue = dataY;
     this.applyTranslationAndColor(pixelX, pixelY, mcColor);
 };
 
@@ -153,3 +154,14 @@ TipControl.prototype.hideTip = function () {
        _this.hideTipTimeout = 0;
     }, 1000);
 };
+
+TipControl.prototype.hideTipImmediately = function(){
+    if(this.hideTipTimeout !== 0){
+        window.clearTimeout(this.hideTipTimeout);
+    }
+
+    this.isShown = false;
+    this.tip.style.display = "none";
+    this.hideTipTimeout = 0;
+};
+

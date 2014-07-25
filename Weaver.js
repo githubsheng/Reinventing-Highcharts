@@ -3,69 +3,110 @@
  */
 
 var weaver = {
-    createSVGandDivContainer: function(container){
+    createContainers: function(container, options){
         container.setAttribute("class", "mc-container");
         var bcr = container.getBoundingClientRect();
         var width = bcr.width;
         var height = bcr.height;
+        var svg;
+        var tipContainer;
+        var svgTriggerLayer;
+        var canvas;
+        var canvasTrigger;
+        var offScreenCanvas;
 
-        var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttributeNS(null, "width", width.toString());
-        svg.setAttributeNS(null, "height", height.toString());
+        //this one is always hidden and does not matter
+        if(options.offScreenCanvas){
+            offScreenCanvas = document.createElement("canvas");
+            offScreenCanvas.style.display = "none";
+            container.appendChild(offScreenCanvas);
+        }
 
-        var svgTriggerLayer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svgTriggerLayer.setAttributeNS(null, "width", width.toString());
-        svgTriggerLayer.setAttributeNS(null, "height", height.toString());
-        svgTriggerLayer.style.position = "absolute";
-        svgTriggerLayer.style.left = "0";
-        svgTriggerLayer.style.top = "0";
+        if(options.svg){
+            svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.style.position = "absolute";
+            svg.style.left = "0px";
+            svg.style.top = "0px";
+            svg.setAttributeNS(null, "width", width.toString());
+            svg.setAttributeNS(null, "height", height.toString());
+            container.appendChild(svg);
+        }
 
-        var div = document.createElement("div");
-        div.setAttribute("class", "mc-div-draw-layer");
+        if(options.canvas){
+            canvas = document.createElement("canvas");
+            container.appendChild(canvas);
 
-        container.appendChild(svg);
-        container.appendChild(div); //tip layer should be above the
-        container.appendChild(svgTriggerLayer);
+            //position can only be set after the relevant layout has been analyzed.
+        }
+
+        if(options.tipContainer){
+            tipContainer = document.createElement("div");
+            tipContainer.setAttribute("class", "mc-div-draw-layer");
+            container.appendChild(tipContainer); //tip layer should be above the
+        }
+
+        if(options.svgTrigger){
+            svgTriggerLayer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgTriggerLayer.setAttributeNS(null, "width", width.toString());
+            svgTriggerLayer.setAttributeNS(null, "height", height.toString());
+            svgTriggerLayer.style.position = "absolute";
+            svgTriggerLayer.style.left = "0";
+            svgTriggerLayer.style.top = "0";
+            container.appendChild(svgTriggerLayer);
+        }
+
+        if(options.canvasTrigger){
+            canvasTrigger = document.createElement("div");
+            container.appendChild(canvasTrigger);
+        }
+
+
 
         return {
             svg: svg,
-            div: div,
-            svgTrigger: svgTriggerLayer
+            div: tipContainer, //which is really tip container....bad naming but lazy to rename it..
+            svgTrigger: svgTriggerLayer,
+            canvas: canvas,
+            offScreenCanvas: offScreenCanvas,
+            canvasTrigger: canvasTrigger
         }
     },
+
 
     weave: function (type, input /* in the future also various kinds of options */, container) {
-        var subContainers = this.createSVGandDivContainer(container);
-        var svg = subContainers.svg;
-        var div = subContainers.div;
-        var svgTrigger = subContainers.svgTrigger;
-
-        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
-
         switch (type) {
             case "basicLineIrregular":
-                this.weaveBasicLineIrregular(input, svg, svgTrigger, div);
+                this.weaveBasicLineIrregular(input, container);
                 break;
             case "basicLineRegular":
-                this.weaveBasicLineRegular(input, svg, svgTrigger, div);
+                this.weaveBasicLineRegular(input, container);
                 break;
             case "basicCategory":
-                this.weaveBasicCategory(input, svg, svgTrigger, div);
+                this.weaveBasicCategory(input, container);
                 break;
             case "singleTime":
-                this.weaveSingleTime(input, svg, svgTrigger, div);
+                this.weaveSingleTime(input, container);
                 break;
             case "basicStackRegular":
-                this.weaveBasicStackRegular(input, svg, svgTrigger, div);
+                this.weaveBasicStackRegular(input, container);
                 break;
             case "basicPieChart":
-                this.weaveBasicPieChart(input, svg, svgTrigger, div);
+                this.weaveBasicPieChart(input, container);
+                break;
+            case "3dGrid":
+                this.weave3dGrid(input, container);
                 break;
         }
     },
 
 
-    weaveBasicLineIrregular: function (input, svg, svgTrigger,  htmlContainer) {
+    weaveBasicLineIrregular: function (input, container) {
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true});
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
         legend.analyze();
 
@@ -86,7 +127,7 @@ var weaver = {
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
 
-        var dataViewer = new BasicLineIrregularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
+        var dataViewer = new BasicLineIrregularDataViewer(tipContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
 
         layout.draw();
         xAxis.draw();
@@ -94,7 +135,13 @@ var weaver = {
         dataViewer.draw();
     },
 
-    weaveBasicLineRegular: function(input, svg, svgTrigger, htmlContainer){
+    weaveBasicLineRegular: function(input, container){
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true});
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
         legend.analyze();
 
@@ -114,7 +161,7 @@ var weaver = {
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
 
-        var dataViewer = new BasicLineRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
+        var dataViewer = new BasicLineRegularDataViewer(tipContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
 
         layout.draw();
         xAxis.draw();
@@ -122,7 +169,13 @@ var weaver = {
         dataViewer.draw();
     },
 
-    weaveBasicCategory: function(input, svg, svgTrigger,  htmlContainer){
+    weaveBasicCategory: function(input, container){
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true});
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/, "rectangular");
         legend.analyze();
 
@@ -143,7 +196,7 @@ var weaver = {
         var xDrawInfo = xAxis.analyze();
         var yDrawInfo = yAxis.analyze();
 
-        var d = new BasicCategoryDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo);
+        var d = new BasicCategoryDataViewer(tipContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo);
 
         layout.draw();
         xAxis.draw();
@@ -151,7 +204,13 @@ var weaver = {
         d.draw();
     },
 
-    weaveSingleTime: function(input, svg, svgTrigger,  htmlContainer){
+    weaveSingleTime: function(input, container){
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true});
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/, "rectangular");
         legend.analyze();
 
@@ -168,7 +227,7 @@ var weaver = {
         var xDrawInfo = xAxis.analyze();
         var yDrawInfo = yAxis.analyze();
 
-        var d = new BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
+        var d = new BasicSingleTimeData(tipContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
 
         layout.draw();
         xAxis.draw();
@@ -176,7 +235,13 @@ var weaver = {
         d.draw();
     },
 
-    weaveBasicStackRegular: function(input, svg, svgTrigger, htmlContainer){
+    weaveBasicStackRegular: function(input, container){
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true});
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
         legend.analyze();
 
@@ -196,7 +261,7 @@ var weaver = {
         var xDrawInfo = xAxis.analyze(); //drawing information related to X axis.
         var yDrawInfo = yAxis.analyze();
 
-        var dataViewer = new BasicStackRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
+        var dataViewer = new BasicStackRegularDataViewer(tipContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, dar.isContinual);
 
         layout.draw();
         xAxis.draw();
@@ -204,38 +269,94 @@ var weaver = {
         dataViewer.draw();
     },
 
-    weaveBasicPieChart: function(input, svg, svgTrigger, htmlContainer){
+    weaveBasicPieChart: function(input, container){
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true});
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
         var legend = new Legend(svg, input.series, input.legend/*this is really legendPosition*/);
         legend.analyze();
 
         var layout = new LayoutNoAxes(svg, input.mainTitle, input.subTitle, legend);
         var lar = layout.analyze();
 
-        //for test only
-        var circle = draw.createCircle(lar.originPosition[0], lar.originPosition[1], 2);
-        draw.setStrokeFill(circle, false, false, "blue");
-        svg.appendChild(circle);
+        var analyst = new BasicPieDataAnalyst(input);
+        var dar = analyst.analyze();
 
-        console.log(lar.center[0]);
-        console.log(lar.center[1]);
-
-        var center = draw.createCircle(lar.center[0], lar.center[1], 2);
-        draw.setStrokeFill(center, false, false, "blue");
-        svg.appendChild(center);
-
-
-        var line1 = draw.createStraightLine(lar.originPosition[0], lar.originPosition[1], lar.originPosition[0], lar.originPosition[1] - lar.dataDrawAreaY);
-        var line2 = draw.createStraightLine(lar.originPosition[0], lar.originPosition[1], lar.originPosition[0] + lar.dataDrawAreaX, lar.originPosition[1]);
-
-        svg.appendChild(line1);
-        svg.appendChild(line2);
-
-        var arc = draw.createArcOfCircle(lar.center[0], lar.center[1], 100, 0, 10);
-        draw.setStrokeFill(arc, false, false, "green");
-        svg.appendChild(arc);
-
-        //for test only [end]
+        var dataViewer = new BasicPieDataViewer(tipContainer, svg, svgTrigger, input, lar.center, lar.dataDrawAreaX,
+        lar.dataDrawAreaY, lar.radiusForLabel, lar.radiusForPie, lar.radiusForConnectionLine,  dar.total);
+        dataViewer.draw();
 
         layout.draw();
+    },
+
+    /**
+     *
+     * @param input
+     */
+    weave3dGrid: function(input, container){
+        /**
+         * svg               this is used to draw layout, legends as well as 2D data.
+         * svgTrigger        this is used as trigger in 2d data. This needs to be set "display:none" in 3d context.
+         * tipContainer      both tips in 3d context and in 2d context can be put here.
+         * canvas            this is the place I use webgl to draw the 3d grids. This needs to be set "display:none" in 2d context.
+         * offScreenCanvas   this is the place I use 2d canvas to generate label image data. This needs to be set "display:none" all the time.
+         * canvasTrigger     this is used as the trigger in 3d context. Notice that this htmlTrigger should be of the same size
+         *                   of canvas and positioned exactly at the same place.
+         */
+        var subContainers = this.createContainers(container, {svg: true, svgTrigger: true, tipContainer: true, canvas: true, offScreenCanvas: true, canvasTrigger: true});
+        //set the sub container's background color to white...
+        container.style.background = "white";
+
+        var svg = subContainers.svg;
+        var tipContainer = subContainers.div;
+        var svgTrigger = subContainers.svgTrigger;
+        var canvas = subContainers.canvas;
+        var offScreenCanvas = subContainers.offScreenCanvas;
+        var canvasTrigger = subContainers.canvasTrigger;
+        colors.initLinearGradients(svg);//this draws a <defs> containing all those linear gradients that can be used by others.
+
+
+        var legendList = [];
+        var rowLegend = new Legend(svg, input.series, input.rowLegend/*this is really legendPosition*/, "rectangular");
+        rowLegend.analyze(input.series.rows, true);
+        var columnLegend = new Legend(svg, input.series, input.columnLegend/*this is really legendPosition*/);
+        columnLegend.analyze(input.series.columns, false);
+        legendList.push(rowLegend);
+        legendList.push(columnLegend);
+
+        var layout = new MultipleLegendLayout(svg, input.mainTitle, input.subTitle, legendList);
+        var lar = layout.analyze();
+
+        var relativePositionOfCanvasAndItsTrigger = [lar.originPosition[0], lar.originPosition[1]-lar.dataDrawAreaY];
+        var canvasDimension = [lar.dataDrawAreaX, lar.dataDrawAreaY];
+
+        canvas.style.position = "absolute";
+        canvas.style.left = relativePositionOfCanvasAndItsTrigger[0] + "px";
+        canvas.style.top = relativePositionOfCanvasAndItsTrigger[1] + "px";
+        canvas.width = canvasDimension[0];
+        canvas.height = canvasDimension[1];
+
+        //show it when in 3d context (default context)
+        canvasTrigger.style.position = "absolute";
+        canvasTrigger.style.left = relativePositionOfCanvasAndItsTrigger[0] + "px";
+        canvasTrigger.style.top = relativePositionOfCanvasAndItsTrigger[1] + "px";
+        canvasTrigger.style.width = canvasDimension[0] + "px";
+        canvasTrigger.style.height = canvasDimension[1] + "px";
+
+        //set the tip container to be of the same size of canvas, and sits at the same spot. When turning on 2d context,
+        //then it should be of the same size and position as the svg layer.
+        tipContainer.style.left = relativePositionOfCanvasAndItsTrigger[0] + "px";
+        tipContainer.style.top = relativePositionOfCanvasAndItsTrigger[1] + "px";
+        tipContainer.style.width = canvasDimension[0] + "px";
+        tipContainer.style.height = canvasDimension[1] + "px";
+
+
+        svgTrigger.style.display = "none"; //show it when in 2d context
+
+        layout.draw();
+        threeDgridWebgl.draw(input, canvas, offScreenCanvas, canvasTrigger, tipContainer);
     }
 };
