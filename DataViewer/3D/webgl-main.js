@@ -176,7 +176,6 @@ var threeDgridWebgl = {
             drawAllLabels();
             drawAllCuboids();
             drawAllOutlines();
-            console.log(angleY);
         }
 
         function drawAllCuboids(){

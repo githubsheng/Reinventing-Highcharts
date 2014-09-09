@@ -1,11 +1,14 @@
-/**
- * Created by wangsheng on 27/5/14.
- */
-
-for(var i = 0; i < 10; i++){
-    console.log(i);
-    var a = i;
+function stepForward(input){
+    return input + 1
 }
-console.log(".........");
-console.log(i);
-console.log(a);
+function stepBackward(input){
+    return input - 1
+}
+
+function chooseStepFunction(backwards){
+    return backwards ? stepBackward : stepForward
+}
+
+
+
+chooseStepFunction();
