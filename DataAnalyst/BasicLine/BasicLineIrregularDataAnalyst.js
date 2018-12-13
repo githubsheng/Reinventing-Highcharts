@@ -16,19 +16,19 @@ function BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength){
  * @returns {{minX: number, maxX: number, minY: number, maxY: number, isContinual: (boolean)}}
  */
 BasicLineIrregularDataAnalyst.prototype.analyze = function(){
-    var series = this.input.series;
+    let series = this.input.series;
     //find the smallest & biggest value on x axis, and find the smallest & biggest value on y axis.
-    var minX = series[0][1][1][0]; //first piece of data's x
-    var maxX = series[0][1][1][0];
-    var minY = series[0][1][1][1];
-    var maxY = series[0][1][1][1];
-    var maxNodeCount = 0;
+    let minX = series[0][1][1][0]; //first piece of data's x
+    let maxX = series[0][1][1][0];
+    let minY = series[0][1][1][1];
+    let maxY = series[0][1][1][1];
+    let maxNodeCount = 0;
 
     //loop through different series
-    for(var i = 0; i < series.length; i++){
-        var singleSeriesData = series[i][1];
-        for(var ii = 0; ii < singleSeriesData.length; ii++){
-            var point = singleSeriesData[ii];
+    for(let i = 0; i < series.length; i++){
+        let singleSeriesData = series[i][1];
+        for(let ii = 0; ii < singleSeriesData.length; ii++){
+            let point = singleSeriesData[ii];
             if(point[0] < minX){
                 minX = point[0];
             }
@@ -48,7 +48,7 @@ BasicLineIrregularDataAnalyst.prototype.analyze = function(){
         }
     }
 
-    var isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, maxNodeCount);
+    let isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, maxNodeCount);
 
     return {
         minX: minX,
