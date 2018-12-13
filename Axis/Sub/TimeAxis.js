@@ -54,9 +54,9 @@ TimeAxis.prototype.constructor = TimeAxis;
  * see the same method defined in Axis.js
  */
 TimeAxis.prototype.adjustMarkInterval = function(){
-    var dataPerPixel = (this.max - this.min) / this.length;
-    var dataInterval = dataPerPixel * this.preferredMarkPixelInterval;
-    var perfectDataInterval = dataInterval;
+    let dataPerPixel = (this.max - this.min) / this.length;
+    let dataInterval = dataPerPixel * this.preferredMarkPixelInterval;
+    let perfectDataInterval = dataInterval;
 
     //right now let me just simply write the code for S, M, and H
     switch(this.unit){
@@ -69,11 +69,11 @@ TimeAxis.prototype.adjustMarkInterval = function(){
             break;
     }
 
-    var largest = this.preferredMarkDataIntervals[this.preferredMarkDataIntervals.length - 1];
+    let largest = this.preferredMarkDataIntervals[this.preferredMarkDataIntervals.length - 1];
     if(dataInterval > largest){
         dataInterval = largest;
     } else {
-        for(var i = 0; i < this.preferredMarkDataIntervals.length; i++){
+        for(let i = 0; i < this.preferredMarkDataIntervals.length; i++){
             if(dataInterval < (this.preferredMarkDataIntervals[i] + util.pickFirstAvailable(this.preferredMarkDataIntervals[i+1], this.preferredMarkDataIntervals[i])) / 2){
                 dataInterval =  this.preferredMarkDataIntervals[i];
                 break;
@@ -88,10 +88,10 @@ TimeAxis.prototype.adjustMarkInterval = function(){
  * see the same method defined in Axis.js X_Axis.
  */
 TimeAxis.prototype.drawLabels = function(){
-    var labelGroup = draw.createGroup();
-    var start = this.min;
-    for(var i = 0; i < this.labelPositions.length; i = i + 2){
-        var label = start + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
+    let labelGroup = draw.createGroup();
+    let start = this.min;
+    for(let i = 0; i < this.labelPositions.length; i = i + 2){
+        let label = start + this.markDataInterval * i / 2; //divide i by 2 because i = i + 2 in the loop
         label = this.appendUnit(label);
         labelGroup.appendChild(draw.createText(this.labelPositions[i], this.labelPositions[i+1], label, 11, "middle", false));
     }
@@ -112,14 +112,12 @@ TimeAxis.prototype.appendUnit = function(label){
             } else {
                 return label + "s";
             }
-            break;
         case "m":
             if(this.markDataInterval === 60 || this.markDataInterval === 120){
                 return label / 60 + "h";
             } else {
                 return label + "m";
             }
-            break;
     }
 };
 
@@ -128,9 +126,9 @@ TimeAxis.prototype.appendUnit = function(label){
  * @returns {{startPoint: number, pixelPerData: number, min: number}}
  */
 TimeAxis.prototype.analyzeReturn = function(){
-    var startPoint = this.originPosition[0] + this.leftPadding;
-    var pixelPerData = this.markPixelInterval / this.markDataInterval;
-    var min = this.min;
+    let startPoint = this.originPosition[0] + this.leftPadding;
+    let pixelPerData = this.markPixelInterval / this.markDataInterval;
+    let min = this.min;
 
     /*this is xDrawInfo*/
     return {
