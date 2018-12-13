@@ -38,43 +38,43 @@ X_CategoryAxis.prototype.adjustMarkInterval = function(){
 };
 
 X_CategoryAxis.prototype.calculateMarkPositions = function(){
-    var firstMarkPositionX = this.originPosition[0] + this.leftPadding;
-    var markPositionY = this.originPosition[1];
+    let firstMarkPositionX = this.originPosition[0] + this.leftPadding;
+    let markPositionY = this.originPosition[1];
     this.markPositions.push(firstMarkPositionX);
     this.markPositions.push(markPositionY);
 
-    for(var i = 0; i < this.categoriesNames.length; i++){
+    for(let i = 0; i < this.categoriesNames.length; i++){
         this.markPositions.push(firstMarkPositionX + this.markPixelInterval * (i + 1));
         this.markPositions.push(markPositionY);
     }
 };
 
 X_CategoryAxis.prototype.calculateLabelPositions = function(){
-    var halfMarkInterval = this.markPixelInterval / 2;
-    var l = this.markPositions.length - 2; //最后一个mark不需要
-    for(var i = 0; i < l; i = i + 2){
+    let halfMarkInterval = this.markPixelInterval / 2;
+    let l = this.markPositions.length - 2; //最后一个mark不需要
+    for(let i = 0; i < l; i = i + 2){
         this.labelPositions.push(this.markPositions[i] + halfMarkInterval);
         this.labelPositions.push(this.markPositions[i+1] + 5);
     }
 };
 
 X_CategoryAxis.prototype.drawLabels = function(){
-    for(var i = 0; i < this.labelPositions.length; i = i + 2){
-        var categoryName = this.categoriesNames[i/2];
-        var label = draw.createText(this.labelPositions[i], this.labelPositions[i+1], categoryName, false, "middle", "top");
+    for(let i = 0; i < this.labelPositions.length; i = i + 2){
+        let categoryName = this.categoriesNames[i/2];
+        let label = draw.createText(this.labelPositions[i], this.labelPositions[i+1], categoryName, false, "middle", "top");
         this.svg.appendChild(label);
     }
 };
 
 X_CategoryAxis.prototype.analyzeReturn = function() {
-    var categoryBasePositions = [];
-    for(var i = 0; i < this.labelPositions.length; i = i + 2){
+    let categoryBasePositions = [];
+    for(let i = 0; i < this.labelPositions.length; i = i + 2){
         categoryBasePositions.push(this.labelPositions[i]);
         categoryBasePositions.push(this.labelPositions[i + 1] - 5);//because when calculating the label positions i shift them 5 px down from the origin Y
     }
 
     //adjust the column width.based on the mark interval
-    var columnWidth;
+    let columnWidth;
     if(this.markPixelInterval < 8){
         columnWidth = 4;
     } else if (this.markPixelInterval > 40){
