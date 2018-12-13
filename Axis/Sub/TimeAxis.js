@@ -16,21 +16,17 @@
  *
  * preferred data interval for Y is 1, 2, 3, 5, 10 或者是这些数乘以10的整数倍。
  *
- * TODO: reveal the data interval and optimize them with knowledge from tests.
- *
  * Values bigger than the greatest data interval is not allowed. This is because with the preferred pixel interval being 100 pixels.
  * A greater data interval (than the greatest preferred) will leads to the case in which a single pixel maps to more than 1 data.
  * In this case an error should be thrown and user should told to split the data into a smaller set.
- */
-
-/**
  *
- * @param svg
- * @param length
+ *
+ * @param svg               the svg element to which we are going to append the axis
+ * @param length            the length of the axis
  * @param max               this is like the end. Say you have 431 points and the unit is M(minute), then the end is 431 minutes.
- * @param originPosition
+ * @param originPosition    origin position
  * @param unit              should be MS, S, M, H, D, MON or Y
- * @param interval
+ * @param interval          the time interval, if interval is 5 and unit is M, then it means there is 5 minutes between each data point.
  * @constructor
  */
 function TimeAxis(svg, length, max, originPosition, unit, interval){
@@ -62,7 +58,7 @@ TimeAxis.prototype.adjustMarkInterval = function(){
     var dataInterval = dataPerPixel * this.preferredMarkPixelInterval;
     var perfectDataInterval = dataInterval;
 
-    //TODO right now let me just simply write the code for S, M, and H
+    //right now let me just simply write the code for S, M, and H
     switch(this.unit){
         case "s":
         case "m":
@@ -106,8 +102,6 @@ TimeAxis.prototype.drawLabels = function(){
  * depending on the unit and the data interval, this function may switch to a greater unit. For example, if the data interval is
  * 15 and the unit is m, then this function simply append letter "m" to 15 and make the label "15m". However, if the data interval
  * is 60 and the unit is m, the this function transforms "60m" to "1h" and "120m" to "2h".
- *
- * The way I write this method is slow but since there won't be many labels so its fine...
  */
 TimeAxis.prototype.appendUnit = function(label){
     //TODO: right now i have only implement the case in which the unit is "minute" or "second".
@@ -131,7 +125,7 @@ TimeAxis.prototype.appendUnit = function(label){
 
 /**
  * see the the same method in X_Axis  (Axis.js)
- * @returns {{startPoint: *, pixelPerData: number, min: number}}
+ * @returns {{startPoint: number, pixelPerData: number, min: number}}
  */
 TimeAxis.prototype.analyzeReturn = function(){
     var startPoint = this.originPosition[0] + this.leftPadding;
