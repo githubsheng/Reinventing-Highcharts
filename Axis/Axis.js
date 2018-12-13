@@ -4,6 +4,11 @@
  * The methods defined in these parent class uses the following properties from a child:
  * min, max, length, preferredMarkPixelInterval, markDataInterval, markPixelInterval, originPosition, leftPadding, rightPadding,
  * labelPositions, markPositions and svg
+ *
+ * !important. note that i can just define the above arguments here in this constructor and have the child classes call the
+ * parent constructor. but this parent constructor really just does nothing. So I will just directly assign the above
+ * arguments to instance property in child constructors.
+ *
  * @constructor
  */
 function Axis(){
@@ -228,7 +233,8 @@ Y_Axis.prototype.calculateLabelPositions = function(){
  */
 Y_Axis.prototype.drawMarks = function(){
     let dValue = "";
-    let markWidth = this.x_axis.length + util.pickFirstAvailable(this.x_axis.leftPadding, 0)
+    let markWidth = this.x_axis.length
+        + util.pickFirstAvailable(this.x_axis.leftPadding, 0)
         + util.pickFirstAvailable(this.x_axis.rightPadding, 0);
     for(let i = 0; i < this.markPositions.length; i = i + 2) {
         let x1 = this.markPositions[i];
