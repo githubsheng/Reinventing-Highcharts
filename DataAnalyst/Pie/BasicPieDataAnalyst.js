@@ -1,13 +1,19 @@
 /**
- * Created by wangsheng on 4/7/14.
+ * this class analyze the input data of a pie chart
+ * @param input     input data of a pie chart
+ * @constructor
  */
 function BasicPieDataAnalyst(input){
     this.input = input;
 }
 
+/**
+ * finds the total of all series' value
+ * @returns {{total: number}}
+ */
 BasicPieDataAnalyst.prototype.analyze = function(){
-    var total = 0;
-    for(var i = 0; i < this.input.series.length; i++){
+    let total = 0;
+    for(let i = 0; i < this.input.series.length; i++){
         total = total + this.input.series[i][1];
     }
 
