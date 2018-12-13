@@ -1,14 +1,9 @@
 /**
- * Created by wangsheng on 26/5/14.
+ * Axis serves as the parent of X_Axis and Y_Axis and its prototype holds common functions shared by X_Axis and Y_Axis.
  *
  * The methods defined in these parent class uses the following properties from a child:
  * min, max, length, preferredMarkPixelInterval, markDataInterval, markPixelInterval, originPosition, leftPadding, rightPadding,
  * labelPositions, markPositions and svg
- */
-
-/**
- * Axis serves as the parent of X_Axis and Y_Axis and its prototype holds common functions shared by X_Axis and Y_Axis.
- *
  * @constructor
  */
 function Axis(){
@@ -16,7 +11,7 @@ function Axis(){
 }
 
 /**
- * draw the whole axis, this method should only be called AFTER the axis is analyzed.
+ * draw the whole axis, this method should only be called AFTER the axis is analyzed (after we figured out where to draw what)
  */
 Axis.prototype.draw = function(){
     this.drawMarks();
@@ -26,6 +21,8 @@ Axis.prototype.draw = function(){
 /**
  * assume the axis is linear and calculate the interval based on min, max, preferred pixel and length values. This method
  * does not adjust min max value.
+ *
+ * this method is the key why we are able to get pretty intervals.
  */
 Axis.prototype.adjustMarkInterval = function(){
     let dataPerPixel = (this.max - this.min) / this.length;
@@ -57,6 +54,7 @@ X_Axis.prototype.constructor = X_Axis;
 
 /**
  * get all statuses and numbers correct.
+ * @returns {{startPoint: number, pixelPerData: number, length: number, min: number}}
  */
 X_Axis.prototype.analyze = function(){
     this.adjustMarkInterval();
@@ -66,6 +64,10 @@ X_Axis.prototype.analyze = function(){
     return this.analyzeReturn();
 };
 
+/**
+ * calculate and get the information we need so that we can correctly draw the axis later
+ * @returns {{startPoint: number, pixelPerData: number, length: number, min: number}}
+ */
 X_Axis.prototype.analyzeReturn = function(){
     let startPoint = this.originPosition[0] + this.leftPadding;
     let pixelPerData = this.markPixelInterval / this.markDataInterval;
@@ -143,11 +145,13 @@ X_Axis.prototype.calculateLabelPositions = function(){
  */
 function Y_Axis(){}
 
+//extends the Axis class
 Y_Axis.prototype = new Axis();
 Y_Axis.prototype.constructor = Y_Axis;
 
 /**
- * get all statuses and numbers correct.
+ * get all statuses and numbers correct. we need this information to properly draw the axis
+ * @returns {{startPoint: number, pixelPerData: number, min: number}}
  */
 Y_Axis.prototype.analyze = function(){
     this.adjustMarkInterval();
@@ -166,7 +170,10 @@ Y_Axis.prototype.analyze = function(){
 };
 
 /**
- * adjust both mark data interval and mark pixel interval.
+ * adjust both mark data interval and mark pixel interval. This method also adjusts the min value and the max value.
+ * We need to adjust the min and max value because sometimes the min max values are quite ugly(say, 1.372), we want to
+ * make them pretty, say (1.3) or (1.2). If we want to keep the original min max value (not making them pretty looking)
+ * then we can configure the `this.doNotExpandMin` and `this.doNotExpandMax` settings.
  */
 Y_Axis.prototype.adjustMarkInterval = function(){
     Axis.prototype.adjustMarkInterval.apply(this);
