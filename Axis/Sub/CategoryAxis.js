@@ -3,13 +3,13 @@
  */
 
 /**
- * creates
- * @param length    length does not include left padding or right padding.
- * @param min
- * @param max
- * @param originPosition
- * @param leftPadding
- * @param rightPadding
+ * this class creates a x axis for category charts
+ * @param svg               this is the svg element to which we will be appending new svg element
+ * @param length            length of the axis. length does not include left padding or right padding.
+ * @param categoriesNames   the names of the categories, we need to render them as labels along the axis
+ * @param originPosition    the origin position of the cartesian coordinate system.
+ * @param leftPadding       the left padding of the axis
+ * @param rightPadding      the right padding of the axis
  * @constructor
  */
 function X_CategoryAxis(svg, length, originPosition, categoriesNames, leftPadding, rightPadding){
@@ -27,6 +27,7 @@ function X_CategoryAxis(svg, length, originPosition, categoriesNames, leftPaddin
 
 }
 
+//this class extends X_Axis
 X_CategoryAxis.prototype = new X_Axis();
 X_CategoryAxis.constructor = X_CategoryAxis;
 
@@ -37,6 +38,9 @@ X_CategoryAxis.prototype.adjustMarkInterval = function(){
     this.markPixelInterval = this.length / this.categoriesNames.length;
 };
 
+/**
+ * calculate the mark pixel positions
+ */
 X_CategoryAxis.prototype.calculateMarkPositions = function(){
     let firstMarkPositionX = this.originPosition[0] + this.leftPadding;
     let markPositionY = this.originPosition[1];
@@ -49,6 +53,9 @@ X_CategoryAxis.prototype.calculateMarkPositions = function(){
     }
 };
 
+/**
+ * calculate the positions of the labels
+ */
 X_CategoryAxis.prototype.calculateLabelPositions = function(){
     let halfMarkInterval = this.markPixelInterval / 2;
     let l = this.markPositions.length - 2; //最后一个mark不需要
@@ -58,6 +65,9 @@ X_CategoryAxis.prototype.calculateLabelPositions = function(){
     }
 };
 
+/**
+ * draw the labels below the axis
+ */
 X_CategoryAxis.prototype.drawLabels = function(){
     for(let i = 0; i < this.labelPositions.length; i = i + 2){
         let categoryName = this.categoriesNames[i/2];
@@ -66,11 +76,18 @@ X_CategoryAxis.prototype.drawLabels = function(){
     }
 };
 
+
+/**
+ * based on the mark pixel intervals and label positions, analyze the positions of category column positions
+ * and the column width
+ * @returns {{categoryBasePositions: Array, columnWidth: number}} a tuple of: category column positions and column width
+ */
 X_CategoryAxis.prototype.analyzeReturn = function() {
     let categoryBasePositions = [];
     for(let i = 0; i < this.labelPositions.length; i = i + 2){
         categoryBasePositions.push(this.labelPositions[i]);
-        categoryBasePositions.push(this.labelPositions[i + 1] - 5);//because when calculating the label positions i shift them 5 px down from the origin Y
+        //because when calculating the label positions i shift them 5 px down from the origin Y
+        categoryBasePositions.push(this.labelPositions[i + 1] - 5);
     }
 
     //adjust the column width.based on the mark interval
