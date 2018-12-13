@@ -1,19 +1,27 @@
 /**
- * Created by wangsheng on 16/6/14.
+ * this implementation analyzes the data for a basic line chart that has both linear data y axis and linear data x axis.
+ * @param input                 the input that carries data belonging to different series.
+ * @param xAxisDataAreaLength   the area where we are going to display the data (using node), if the area is too small,
+ *                              we will display a continual line, otherwise we will display a node for each of the data point
+ * @constructor
  */
-
 function BasicLineRegularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;
 }
 
+/**
+ * find the min max in all series' data, also find if we need to draw a continual line to represent the data,
+ * or do we need to draw each node for each data point, depending on how much space we have.
+ * @returns {{minX: number, maxX: number, minY: number, maxY: number, isContinual: (boolean)}}
+ */
 BasicLineRegularDataAnalyst.prototype.analyze = function(){
-    var maxX = null;
-    var minY = null;
-    var maxY = null;
-    var isContinual = false;
-    for(var i = 0; i < this.input.series.length; i++){
-        var singleSeriesResult = this.analyzeSingleSeries(this.input.series[i][1]);
+    let maxX = null;
+    let minY = null;
+    let maxY = null;
+    let isContinual = false;
+    for(let i = 0; i < this.input.series.length; i++){
+        let singleSeriesResult = this.analyzeSingleSeries(this.input.series[i][1]);
 
         if(maxX === null){
             maxX = singleSeriesResult.maxX;
@@ -46,13 +54,18 @@ BasicLineRegularDataAnalyst.prototype.analyze = function(){
     };
 };
 
+/**
+ * find the min max in a single serie's data, also find if we need to draw a continual line to represent the data,
+ * or do we need to draw each node for each data point, depending on how much space we have.
+ * @returns {{maxX: number, minY: number, maxY: number, isContinual: (boolean)}}
+ */
 BasicLineRegularDataAnalyst.prototype.analyzeSingleSeries = function(singleSeriesData){
-    var minY = singleSeriesData[0];
-    var maxY = singleSeriesData[0];
-    var maxX = util.chooseBetween(this.input.start === undefined, 0, this.input.start) + (singleSeriesData.length - 1) * this.input.interval; //length - 1是因为从第二个元素起才开始加interval
-    var maxNodeCount = singleSeriesData.length;
+    let minY = singleSeriesData[0];
+    let maxY = singleSeriesData[0];
+    let maxX = util.chooseBetween(this.input.start === undefined, 0, this.input.start) + (singleSeriesData.length - 1) * this.input.interval; //length - 1是因为从第二个元素起才开始加interval
+    let maxNodeCount = singleSeriesData.length;
 
-    for(var i = 0; i < singleSeriesData.length; i++){
+    for(let i = 0; i < singleSeriesData.length; i++){
         if(singleSeriesData[i] > maxY){
             maxY = singleSeriesData[i];
         }
@@ -62,7 +75,7 @@ BasicLineRegularDataAnalyst.prototype.analyzeSingleSeries = function(singleSerie
         }
     }
 
-    var isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, maxNodeCount);
+    let isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, maxNodeCount);
 
     return  {
         maxX: maxX,
