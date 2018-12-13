@@ -1,8 +1,4 @@
 /**
- * Created by wangsheng on 4/6/14.
- */
-
-/**
  * this class creates a x axis for category charts
  * @param svg               this is the svg element to which we will be appending new svg element
  * @param length            length of the axis. length does not include left padding or right padding.
