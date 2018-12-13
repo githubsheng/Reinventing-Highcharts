@@ -28,13 +28,13 @@ Axis.prototype.draw = function(){
  * does not adjust min max value.
  */
 Axis.prototype.adjustMarkInterval = function(){
-    var dataPerPixel = (this.max - this.min) / this.length;
-    var dataInterval = dataPerPixel * this.preferredMarkPixelInterval;
-    var perfectDataInterval = dataInterval;
+    let dataPerPixel = (this.max - this.min) / this.length;
+    let dataInterval = dataPerPixel * this.preferredMarkPixelInterval;
+    let perfectDataInterval = dataInterval;
 
-    var magnitude = Math.pow(10, Math.floor(Math.log(dataInterval) / Math.log(10)));
+    let magnitude = Math.pow(10, Math.floor(Math.log(dataInterval) / Math.log(10)));
     dataInterval = dataInterval / magnitude;
-    for(var i = 0; i < this.preferredMarkDataIntervals.length; i++){
+    for(let i = 0; i < this.preferredMarkDataIntervals.length; i++){
         if(dataInterval < (this.preferredMarkDataIntervals[i] + util.pickFirstAvailable(this.preferredMarkDataIntervals[i+1], this.preferredMarkDataIntervals[i])) / 2){
             dataInterval =  this.preferredMarkDataIntervals[i];
             break;
@@ -67,9 +67,9 @@ X_Axis.prototype.analyze = function(){
 };
 
 X_Axis.prototype.analyzeReturn = function(){
-    var startPoint = this.originPosition[0] + this.leftPadding;
-    var pixelPerData = this.markPixelInterval / this.markDataInterval;
-    var min = this.min;
+    let startPoint = this.originPosition[0] + this.leftPadding;
+    let pixelPerData = this.markPixelInterval / this.markDataInterval;
+    let min = this.min;
 
     return {
         startPoint: startPoint,
@@ -84,16 +84,16 @@ X_Axis.prototype.analyzeReturn = function(){
  * draw the marks of the axis based on the calculated mark position
  */
 X_Axis.prototype.drawMarks = function(){
-    var dValue = "";
-    for(var i = 0; i < this.markPositions.length; i = i + 2) {
-        var x1 = this.markPositions[i];
-        var y1 = this.markPositions[i + 1];
-        var x2 = x1;
-        var y2 = y1 + 5;
+    let dValue = "";
+    for(let i = 0; i < this.markPositions.length; i = i + 2) {
+        let x1 = this.markPositions[i];
+        let y1 = this.markPositions[i + 1];
+        let x2 = x1;
+        let y2 = y1 + 5;
         dValue = dValue + "M" + x1 + " " + y1 + " L" + x2 + " " + y2 + " ";
     }
     dValue = dValue.trim();
-    var marks = draw.createPath(dValue);
+    let marks = draw.createPath(dValue);
     draw.setStrokeFill(marks, "darkgray", false, false);
     this.svg.appendChild(marks);
 };
@@ -102,9 +102,9 @@ X_Axis.prototype.drawMarks = function(){
  * draw the labels of the axis based on the calculated label position
  */
 X_Axis.prototype.drawLabels = function(){
-    var labelGroup = draw.createGroup();
-    var text = this.min;
-    for(var i = 0; i < this.labelPositions.length; i = i + 2){
+    let labelGroup = draw.createGroup();
+    let text = this.min;
+    for(let i = 0; i < this.labelPositions.length; i = i + 2){
         text = util.perfectNumber(this.min + this.markDataInterval * i / 2); //divide i by 2 because i = i + 2 in the loop
         labelGroup.appendChild(draw.createText(this.labelPositions[i], this.labelPositions[i+1], text, 11, "middle", false));
     }
@@ -115,9 +115,9 @@ X_Axis.prototype.drawLabels = function(){
  * calculate the mark positions. The first mark starts at origin + padding
  */
 X_Axis.prototype.calculateMarkPositions = function(){
-    var x = this.originPosition[0] + this.leftPadding;
-    var y = this.originPosition[1];
-    var currentDataPoint = this.min;
+    let x = this.originPosition[0] + this.leftPadding;
+    let y = this.originPosition[1];
+    let currentDataPoint = this.min;
     while(currentDataPoint < this.max || currentDataPoint === this.max) {
         this.markPositions.push(x);
         this.markPositions.push(y);
@@ -130,7 +130,7 @@ X_Axis.prototype.calculateMarkPositions = function(){
  * calculate the label positions. By default the label positions are a little bit below the mark position.
  */
 X_Axis.prototype.calculateLabelPositions = function(){
-    for(var i = 0; i < this.markPositions.length; i = i + 2){
+    for(let i = 0; i < this.markPositions.length; i = i + 2){
         this.labelPositions.push(this.markPositions[i]);
         this.labelPositions.push(this.markPositions[i + 1] + 16);
     }
@@ -154,9 +154,9 @@ Y_Axis.prototype.analyze = function(){
     this.calculateMarkPositions();
     this.calculateLabelPositions();
 
-    var startPoint = this.originPosition[1];
-    var pixelPerData = this.markPixelInterval / this.markDataInterval;
-    var min = this.min;
+    let startPoint = this.originPosition[1];
+    let pixelPerData = this.markPixelInterval / this.markDataInterval;
+    let min = this.min;
 
     return {
         startPoint: startPoint,
@@ -170,7 +170,7 @@ Y_Axis.prototype.analyze = function(){
  */
 Y_Axis.prototype.adjustMarkInterval = function(){
     Axis.prototype.adjustMarkInterval.apply(this);
-    var min2 = util.perfectNumber(this.markDataInterval * Math.floor(this.min / this.markDataInterval));
+    let min2 = util.perfectNumber(this.markDataInterval * Math.floor(this.min / this.markDataInterval));
 
 
     if(this.min === min2 && !this.doNotExpandMin){
@@ -179,13 +179,13 @@ Y_Axis.prototype.adjustMarkInterval = function(){
         this.min = min2;
     }
 
-    var max2 = util.perfectNumber(this.markDataInterval * Math.ceil(this.max / this.markDataInterval));
+    let max2 = util.perfectNumber(this.markDataInterval * Math.ceil(this.max / this.markDataInterval));
     if(this.max === max2 && !this.doNotExpandMax){
         this.max = util.perfectNumber(this.max + this.markDataInterval); //so that there is always some room unoccupied at the top.
     } else {
         this.max = max2;
     }
-    var numOfIntervals = (this.max - this.min) / this.markDataInterval;
+    let numOfIntervals = (this.max - this.min) / this.markDataInterval;
     this.markPixelInterval = this.length / numOfIntervals;
 };
 
@@ -194,9 +194,9 @@ Y_Axis.prototype.adjustMarkInterval = function(){
  * calculate the mark positions assuming its a linear axis.
  */
 Y_Axis.prototype.calculateMarkPositions = function(){
-    var x = this.originPosition[0];
-    var y = this.originPosition[1];
-    var currentDataPoint = this.min;
+    let x = this.originPosition[0];
+    let y = this.originPosition[1];
+    let currentDataPoint = this.min;
     while(currentDataPoint < this.max || currentDataPoint === this.max) {
         this.markPositions.push(x);
         this.markPositions.push(y);
@@ -209,7 +209,7 @@ Y_Axis.prototype.calculateMarkPositions = function(){
  * calculate the label positions
  */
 Y_Axis.prototype.calculateLabelPositions = function(){
-    for(var i = 0; i < this.markPositions.length; i = i + 2){
+    for(let i = 0; i < this.markPositions.length; i = i + 2){
         this.labelPositions.push(this.markPositions[i]);
         //font size = 11 and therefore moving the font downwards by 5.5 (11/2) vertically centers the text.
         this.labelPositions.push(this.markPositions[i + 1]);
@@ -220,25 +220,25 @@ Y_Axis.prototype.calculateLabelPositions = function(){
  * draw all the marks. The marks are very wide, almost as wide as the chart, and run through the data section.
  */
 Y_Axis.prototype.drawMarks = function(){
-    var dValue = "";
-    var markWidth = this.x_axis.length + util.pickFirstAvailable(this.x_axis.leftPadding, 0)
+    let dValue = "";
+    let markWidth = this.x_axis.length + util.pickFirstAvailable(this.x_axis.leftPadding, 0)
         + util.pickFirstAvailable(this.x_axis.rightPadding, 0);
-    for(var i = 0; i < this.markPositions.length; i = i + 2) {
-        var x1 = this.markPositions[i];
-        var y1 = this.markPositions[i + 1];
-        var x2 = x1 + markWidth;
-        var y2 = y1;
+    for(let i = 0; i < this.markPositions.length; i = i + 2) {
+        let x1 = this.markPositions[i];
+        let y1 = this.markPositions[i + 1];
+        let x2 = x1 + markWidth;
+        let y2 = y1;
         dValue = dValue + "M" + x1 + " " + y1 + " L" + x2 + " " + y2 + " ";
     }
     dValue = dValue.trim();
-    var marks = draw.createPath(dValue);
+    let marks = draw.createPath(dValue);
     draw.setStrokeFill(marks, "darkgray", "1", "none");
     this.svg.appendChild(marks);
 };
 
 Y_Axis.prototype.drawLabels = function(){
-    var text = this.min;
-    for(var i = 0; i < this.labelPositions.length; i = i + 2){
+    let text = this.min;
+    for(let i = 0; i < this.labelPositions.length; i = i + 2){
         text = util.perfectNumber(this.min + this.markDataInterval * i / 2); //divide i by 2 because i = i + 2 in the loop
         this.svg.appendChild(draw.createText(this.labelPositions[i] - 10, this.labelPositions[i+1], text, "11", "end", "middle"));
     }
