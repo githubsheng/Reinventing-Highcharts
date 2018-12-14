@@ -9,6 +9,7 @@
  * @constructor
  */
 import {X_Axis} from "../Axis";
+import {draw} from "../../Draw/Draw";
 
 export function X_CategoryAxis(svg, length, originPosition, categoriesNames, leftPadding, rightPadding){
     this.svg = svg;

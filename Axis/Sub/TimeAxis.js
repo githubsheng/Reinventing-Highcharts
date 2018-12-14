@@ -30,6 +30,7 @@
  * @constructor
  */
 import {X_Axis} from "../Axis";
+import {draw} from "../../Draw/Draw";
 
 export function TimeAxis(svg, length, max, originPosition, unit, interval){
     this.svg = svg;
