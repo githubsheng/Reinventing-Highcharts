@@ -1,7 +1,10 @@
 /**
- * Created by wangsheng on 24/6/14.
+ * this class is responsible for creating and managing all the tool tips
+ * @param htmlContainer     the html container to which the tool tips will be appended
+ * @param topShift          how much do we want to shift the tooltip upwards
+ * @param isSingleLine      if tool tip content contains only a single line.
+ * @constructor
  */
-
 export function TipControl(htmlContainer, topShift, isSingleLine){
     this.tip = null;
     this.hideTipTimeout = 0;
@@ -13,24 +16,24 @@ export function TipControl(htmlContainer, topShift, isSingleLine){
 }
 
 /**
- *
+ * create the tip (html element) and configure its style properly
  * @param funcCreateHtmlSingleLineTipStructure      accepts a parameter (which is a div) and inserts html elements inside this div to form a tip template. If null or undefined then the method will use its default setting.
  * @param funcCreateHtmlMultipleLineTipStructure     accepts a parameter (which is a div) and inserts html elements inside this div to form a tip template. If null or undefined then the method will use its default setting.
  */
 TipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStructure, funcCreateHtmlMultipleLineTipStructure) {
     //draw the tip at origin 0 0 and do the top shift.
-    var tip = document.createElement("div");
+    let tip = document.createElement("div");
     this.tip = tip;
 
     if(this.isSingleLine){
         if(funcCreateHtmlSingleLineTipStructure !== null && funcCreateHtmlSingleLineTipStructure !== undefined){
             funcCreateHtmlSingleLineTipStructure(tip);
         } else {
-            var seriesNameSpan = document.createElement("span");
+            let seriesNameSpan = document.createElement("span");
             tip.appendChild(seriesNameSpan);
             seriesNameSpan.appendChild(document.createTextNode("null"));
             tip.appendChild(document.createTextNode(" -- "));
-            var dataSpan = document.createElement("span");
+            let dataSpan = document.createElement("span");
             tip.appendChild(dataSpan);
             dataSpan.appendChild(document.createTextNode("null"));
         }
@@ -49,7 +52,7 @@ TipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStructure,
 
     //after appending the div to document I can then safely call getBoundingClientRect
     this.htmlContainer.appendChild(tip);
-    var bcr = tip.getBoundingClientRect();
+    let bcr = tip.getBoundingClientRect();
     tip.style.marginTop = (-bcr.height - 2 - this.topShift) + "px";
     tip.style.borderColor = "black";
     tip.style.display = "none";
@@ -69,19 +72,19 @@ TipControl.prototype.showTip = function(pixelX, pixelY, sharedSeriesInfoRegister
 
 TipControl.prototype.showSingleLineTip = function (pixelX, pixelY, sharedSeriesInfoRegisterIdx, nodesStrideIdx) {
     //change the text.
-    var seriesName = this.sharedSeriesInfo.getSeriesName(sharedSeriesInfoRegisterIdx);
-    var mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
-    var dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
+    let seriesName = this.sharedSeriesInfo.getSeriesName(sharedSeriesInfoRegisterIdx);
+    let mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
+    let dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
     this.genericShowTip(pixelX, pixelY, seriesName, mcColor, 0, dataY);
 };
 
 TipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, sharedSeriesInfoRegisterIdx, nodesStrideIdx){
     //change the text.
-    var seriesName = this.sharedSeriesInfo.getSeriesName(sharedSeriesInfoRegisterIdx);
-    var mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
-    var dataX = this.sharedSeriesInfo.getDataX(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
-    var dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
+    let seriesName = this.sharedSeriesInfo.getSeriesName(sharedSeriesInfoRegisterIdx);
+    let mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
+    let dataX = this.sharedSeriesInfo.getDataX(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
+    let dataY = this.sharedSeriesInfo.getDataY(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
     this.genericShowDoubleLineTip(pixelX, pixelY, seriesName, mcColor, dataX, dataY);
 };
@@ -130,8 +133,8 @@ TipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor
         this.tip.style.transitionProperty = "transform";
     }
 
-    var bcr = this.tip.getBoundingClientRect();
-    var translate = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
+    let bcr = this.tip.getBoundingClientRect();
+    let translate = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
     this.tip.style.MozTransform = translate;
     this.tip.style.webkitTransform = translate;
     this.tip.style.msTransform = translate;
@@ -142,7 +145,7 @@ TipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor
 };
 
 TipControl.prototype.hideTip = function () {
-    var _this = this;
+    let _this = this;
 
     if(this.hideTipTimeout !== 0){
         window.clearTimeout(this.hideTipTimeout);
