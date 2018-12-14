@@ -2,7 +2,7 @@
  * Created by wangsheng on 24/6/14.
  */
 
-function TipControl(htmlContainer, topShift, isSingleLine){
+export function TipControl(htmlContainer, topShift, isSingleLine){
     this.tip = null;
     this.hideTipTimeout = 0;
     this.isShown = false;
