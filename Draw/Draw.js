@@ -6,7 +6,7 @@
  * TODO: organize all these methods into different types.
  * creates all kinds of paths, lines, and shapes
  */
-var draw = {
+export const draw = {
     xml_namespace: "http://www.w3.org/2000/svg",
 
     /*----create tags-----*/
