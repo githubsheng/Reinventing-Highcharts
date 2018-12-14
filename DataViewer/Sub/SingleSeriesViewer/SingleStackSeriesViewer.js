@@ -1,10 +1,29 @@
 /**
- * Created by wangsheng on 27/6/14.
+ * draws a single stack for a series in a stack chart
+ * please reference `SingleLineSeriesViewer` for the meanings of the parameters.
+ * @param htmlContainer
+ * @param svg
+ * @param svgTrigger
+ * @param nodes
+ * @param nodeShape
+ * @param mcColor
+ * @param isContinual
+ * @param constantInterval
+ * @param seriesName
+ * @param tipControl
+ * @param xDrawInfo
+ * @param yDrawInfo
+ * @param lineWidth             the width of the outline
+ * @param isLinearGradient      does the stack's color uses linear gradient
+ * @constructor
  */
+import {draw} from "../../../Draw/Draw";
+import {SingleLineSeriesViewer} from "./SingleLineSeriesViewer";
+import {nodeDrawer} from "../../../Draw/NodeDrawer";
 
-function SingleStackSeriesViewer(htmlContainer, svg, svgTrigger, nodes, nodeShape, mcColor,
-                                isContinual, constantInterval/*if not regular is should be false, otherwise it should be the interval value*/,
-                                seriesName, tipControl, xDrawInfo, yDrawInfo, lineWidth, isLinearGradient){
+export function SingleStackSeriesViewer(htmlContainer, svg, svgTrigger, nodes, nodeShape, mcColor,
+                                        isContinual, constantInterval/*if not regular is should be false, otherwise it should be the interval value*/,
+                                        seriesName, tipControl, xDrawInfo, yDrawInfo, lineWidth, isLinearGradient){
     this.htmlContainer = htmlContainer; //if use the default inherited 'showTip' method then this field must be set.
     this.svg = svg;
     this.svgTrigger = svgTrigger;
