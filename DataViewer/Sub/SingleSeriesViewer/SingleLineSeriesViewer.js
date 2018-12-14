@@ -1,11 +1,3 @@
-/**
- * Created by wangsheng on 23/6/14.
- */
-
-/**
- * Created by wangsheng on 23/6/14.
- */
-
 function SingleLineSeriesViewer(htmlContainer, svg, svgTrigger, nodes, nodeShape, mcColor,
                                 isContinual, constantInterval/*if not regular is should be false, otherwise it should be the interval value*/,
                                 seriesName, tipControl, xDrawInfo, yDrawInfo){
