@@ -2,7 +2,7 @@
  * Created by wangsheng on 5/6/14.
  */
 
-var nodeDrawer = {
+export const nodeDrawer = {
     draw: function (nodeShape, mcColor, x, y) {
         switch (nodeShape) {
             case "circle":
