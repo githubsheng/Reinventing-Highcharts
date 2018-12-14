@@ -1,8 +1,11 @@
 /**
- * Created by wangsheng on 27/6/14.
+ * this class is used to enable the tool tips. it mainly adds various of event listeners. these
+ * listeners use tip control to display / move / style / hide the tool tips.
+ * @param tipControl        tip control
+ * @param seriesName        name of the series
+ * @param mcColor           color of the tool tip
+ * @constructor
  */
-
-
 function TriggerControl(tipControl, seriesName, mcColor){
     this.tipControl = tipControl;
     this.seriesName = seriesName;
@@ -11,7 +14,7 @@ function TriggerControl(tipControl, seriesName, mcColor){
 }
 
 /**
- *
+ * enable tool tip for a column
  * @param columnTrigger
  * @param htmlContainer
  * @param seriesName
@@ -83,6 +86,16 @@ TriggerControl.prototype.enableNodeTrigger = function(nodeMouseOverSectionGroup,
 
 };
 
+/**
+ * enable tool tip for a routine (ie. a line, most likely not straight )
+ * @param htmlContainer     to which we will append the tool tip element
+ * @param seriesName
+ * @param mcColor
+ * @param nodes
+ * @param routineGroup
+ * @param constantInterval
+ * @param xDrawInfo
+ */
 TriggerControl.prototype.enableRoutineTrace = function(htmlContainer, seriesName, mcColor, nodes, routineGroup, constantInterval, xDrawInfo){
     //register this thing first.
     var sharedSeriesInfo = this.sharedSeriesInfo;
