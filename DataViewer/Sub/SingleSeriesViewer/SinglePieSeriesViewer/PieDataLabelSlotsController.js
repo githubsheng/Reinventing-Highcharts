@@ -4,7 +4,7 @@
  */
 import {draw} from "../../../../Draw/Draw";
 
-function PieDataLabelSlotsController(){
+export function PieDataLabelSlotsController(){
     this.leftSlots = [];
     this.rightSlots = [];
 }
