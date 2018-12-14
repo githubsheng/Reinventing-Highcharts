@@ -12,7 +12,7 @@
  * @param yDrawInfo
  * @constructor
  */
-function BasicCategoryDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo){
+export function BasicCategoryDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo){
     this.htmlContainer = htmlContainer;
     this.svg = svg;
     this.svgTrigger = svgTrigger;
