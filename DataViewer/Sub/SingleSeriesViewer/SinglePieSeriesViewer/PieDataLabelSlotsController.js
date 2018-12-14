@@ -2,6 +2,8 @@
  * this class manages the slots, texts in the slots and the connection lines that connect the slot to the pie circle.
  * @constructor
  */
+import {draw} from "../../../../Draw/Draw";
+
 function PieDataLabelSlotsController(){
     this.leftSlots = [];
     this.rightSlots = [];
@@ -20,39 +22,39 @@ PieDataLabelSlotsController.prototype.generateEmptySlots = function(dataLabelHei
     this.rightSlots = generateSlotsOnTheOneSide(false);
 
     //test start
-//    var group = draw.createGroup();
-//    for(var i = 0; i < this.leftSlots.length; i = i + 4){
-//        var circle = draw.createCircle(this.leftSlots[i+1], this.leftSlots[i+2], 2);
+//    let group = draw.createGroup();
+//    for(let i = 0; i < this.leftSlots.length; i = i + 4){
+//        let circle = draw.createCircle(this.leftSlots[i+1], this.leftSlots[i+2], 2);
 //        group.appendChild(circle);
 //    }
-//    for(var i = 0; i < this.rightSlots.length; i = i + 4){
-//        var circle = draw.createCircle(this.rightSlots[i+1], this.rightSlots[i+2], 2);
+//    for(let i = 0; i < this.rightSlots.length; i = i + 4){
+//        let circle = draw.createCircle(this.rightSlots[i+1], this.rightSlots[i+2], 2);
 //        group.appendChild(circle);
 //    }
 //    svg.appendChild(group);
     //test end
 
     function generateSlotsOnTheOneSide(isLeftHandSide){
-        var slots = [];
+        let slots = [];
         //from top to bottom
-        var availableSpace = radiusOfCircleForLabel * 2 ;
-        var dataSlotIdx = 0; //the top most slot index is 0. this index is for the right hand side only.
-        var r2 = Math.pow(radiusOfCircleForLabel, 2);
+        let availableSpace = radiusOfCircleForLabel * 2 ;
+        let dataSlotIdx = 0; //the top most slot index is 0. this index is for the right hand side only.
+        let r2 = Math.pow(radiusOfCircleForLabel, 2);
         while(availableSpace - (dataLabelHeight * dataSlotIdx + dataLabelHeight/5) > 0){
 
-            var spaceTaken = dataLabelHeight * dataSlotIdx + dataLabelHeight/5; //plus dataLabelHeight/4 so that we don't have a data label right on top of the circle, otherwise left hand side's top will overlap right hand side's top.
-            var s2 = Math.pow(radiusOfCircleForLabel - spaceTaken, 2); //or spaceTaken - radiusOfCircleForLabel, its the same.
+            let spaceTaken = dataLabelHeight * dataSlotIdx + dataLabelHeight/5; //plus dataLabelHeight/4 so that we don't have a data label right on top of the circle, otherwise left hand side's top will overlap right hand side's top.
+            let s2 = Math.pow(radiusOfCircleForLabel - spaceTaken, 2); //or spaceTaken - radiusOfCircleForLabel, its the same.
 
-            var horizontalDistanceFromCenter = Math.sqrt(r2 - s2);
+            let horizontalDistanceFromCenter = Math.sqrt(r2 - s2);
 
-            var x;
+            let x;
             if(isLeftHandSide){
                 x = centerOfCircleForLabel[0] - horizontalDistanceFromCenter;
             } else {
                 x = centerOfCircleForLabel[0] + horizontalDistanceFromCenter;
             }
 
-            var y = centerOfCircleForLabel[1] + (spaceTaken - radiusOfCircleForLabel);
+            let y = centerOfCircleForLabel[1] + (spaceTaken - radiusOfCircleForLabel);
 
             slots.push(dataSlotIdx);
             slots.push(x);
@@ -78,17 +80,11 @@ PieDataLabelSlotsController.prototype.processConnectorInfo = function(connectors
 
     sortConnectorsInfoOrderByPixelY(connectorsInfo);
 
-    var slots;
-    if(isLeft){
-        slots = this.leftSlots;
-    } else {
-        slots = this.rightSlots;
-    }
+    let slots = isLeft ? this.leftSlots : this.rightSlots;
 
-
-    for(var i = 0; i < connectorsInfo.length; i++){
-        var connectorInfo = connectorsInfo[i];
-        var suitableSlotIdx = this.findNearestAvailableSlotIdx(connectorInfo.position[0], connectorInfo.position[1], slots);
+    for(let i = 0; i < connectorsInfo.length; i++){
+        let connectorInfo = connectorsInfo[i];
+        let suitableSlotIdx = this.findNearestAvailableSlotIdx(connectorInfo.position[0], connectorInfo.position[1], slots);
         if(suitableSlotIdx !== -1){
             connectorInfo.slotIdx = suitableSlotIdx;
         } else {
@@ -99,19 +95,13 @@ PieDataLabelSlotsController.prototype.processConnectorInfo = function(connectors
     return connectorsInfo;
 
     function sortConnectorsInfoOrderByPixelY(connectorsInfo){
-        connectorsInfo.sort(function(a, b){
-            if(a.position[1] < b.position[1]){
-                return -1
-            } else {
-                return 1;
-            }
-        });
+        connectorsInfo.sort((a, b) => a.position[1] - b.position[1]);
     }
 
     function shiftCollectorsWithSlotsForward(pendingConnectorIdx, slots){
-        var groupHeadSlotIdx = -1;
-        var group = [];//lets say connectors whose slots sit right next to each other belong to one group.
-        for(var i = pendingConnectorIdx - 1; i > 0; i--){
+        let groupHeadSlotIdx = -1;
+        let group = [];//lets say connectors whose slots sit right next to each other belong to one group.
+        for(let i = pendingConnectorIdx - 1; i > 0; i--){
             group.push(connectorsInfo[i]);
             if(connectorsInfo[i].slotIdx - connectorsInfo[i-1].slotIdx > 1 /*there are free slots between the slot of the current connector and the slot of the preceding connector.*/){
                 groupHeadSlotIdx = connectorsInfo[i].slotIdx;
@@ -119,7 +109,7 @@ PieDataLabelSlotsController.prototype.processConnectorInfo = function(connectors
             }
         }
         //shift the current group 1 slot forward.
-        for(var i = 0; i < group.length; i++){
+        for(let i = 0; i < group.length; i++){
             group[i].slotIdx = group[i].slotIdx - 1;
         }
         //since we move whole group 1 slot forward, we take an extra slot and we need to mark it as "taken"
@@ -140,15 +130,15 @@ PieDataLabelSlotsController.prototype.processConnectorInfo = function(connectors
  * @returns {number}    the index of the nearest slot.
  */
 PieDataLabelSlotsController.prototype.findNearestAvailableSlotIdx = function(pixelX, pixelY, slots/*left or right*/){
-    var nearestIdx = -1;
-    var nearestDistance = 10000;
-    for(var i = 0; i < slots.length; i = i + 4){
+    let nearestIdx = -1;
+    let nearestDistance = 10000;
+    for(let i = 0; i < slots.length; i = i + 4){
         if(slots[i+3]){
             //if already taken.
             continue;
         }
 
-        var d = calculateDistance(pixelX, pixelY, slots[i+1], slots[i+2]);
+        let d = calculateDistance(pixelX, pixelY, slots[i+1], slots[i+2]);
         if(d < nearestDistance){
             nearestDistance = d;
             nearestIdx = i;
@@ -175,16 +165,12 @@ PieDataLabelSlotsController.prototype.findNearestAvailableSlotIdx = function(pix
  * @returns {*}
  */
 PieDataLabelSlotsController.prototype.createConnectionLine = function(connectorInfo){
-    var slots;
-    if(connectorInfo.isLeft){
-        slots = this.leftSlots;
-    } else {
-        slots = this.rightSlots;
-    }
+    let slots;
 
-    var coordinates = [connectorInfo.position[0], connectorInfo.position[1], connectorInfo.connectionLineTurnPos[0], connectorInfo.connectionLineTurnPos[1], slots[connectorInfo.slotIdx * 4 + 1], slots[connectorInfo.slotIdx * 4 + 2]];
+    slots = connectorInfo.isLeft ? this.leftSlots : this.rightSlots;
+    let coordinates = [connectorInfo.position[0], connectorInfo.position[1], connectorInfo.connectionLineTurnPos[0], connectorInfo.connectionLineTurnPos[1], slots[connectorInfo.slotIdx * 4 + 1], slots[connectorInfo.slotIdx * 4 + 2]];
 
-    var curve =  draw.createQuadraticBezierCurve(coordinates);
+    let curve =  draw.createQuadraticBezierCurve(coordinates);
     draw.setStrokeFill(curve, connectorInfo.mcColor.strokeColor, 1, "none");
     return curve;
 };
@@ -197,7 +183,7 @@ PieDataLabelSlotsController.prototype.createConnectionLine = function(connectorI
  * @returns {SVGTextElement} the text element (the label)
  */
 PieDataLabelSlotsController.prototype.createTextInSlot = function(textString, slotIdx, isLeft){
-    var slots;
+    let slots;
     if(isLeft){
         slots = this.leftSlots;
         return draw.createText(slots[slotIdx * 4 + 1] - 5 , slots[slotIdx * 4 + 2], textString, 14, isLeft ? "end" : "start", "middle");
