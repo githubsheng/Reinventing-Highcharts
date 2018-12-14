@@ -1,8 +1,25 @@
 /**
- * Created by wangsheng on 4/7/14.
+ * draw the part of pie, for a single series.
+ * this is mainly used in BasicPieDataViewer, so please reference that class for the meaning of the params.
+ * @param svg
+ * @param htmlContainer
+ * @param tipControl
+ * @param svgTrigger
+ * @param startAngle
+ * @param endAngle
+ * @param radiusForLabel
+ * @param radiusForPie
+ * @param radiusForConnectionLineTurn
+ * @param center
+ * @param seriesName
+ * @param mcColor
+ * @param dataY
+ * @param slotsController
+ * @constructor
  */
+import {draw} from "../../../../Draw/Draw";
 
-function SinglePieSeriesViewer(svg, htmlContainer, tipControl, svgTrigger, startAngle, endAngle, radiusForLabel, radiusForPie, radiusForConnectionLineTurn, center, seriesName, mcColor, dataY, slotsController){
+export function SinglePieSeriesViewer(svg, htmlContainer, tipControl, svgTrigger, startAngle, endAngle, radiusForLabel, radiusForPie, radiusForConnectionLineTurn, center, seriesName, mcColor, dataY, slotsController){
     this.svg = svg;
     this.htmlContainer = htmlContainer;
     this.tipControl = tipControl;
@@ -19,9 +36,12 @@ function SinglePieSeriesViewer(svg, htmlContainer, tipControl, svgTrigger, start
     this.slotsController = slotsController;
 }
 
+/**
+ * draw the part of the pie, for a single series
+ */
 SinglePieSeriesViewer.prototype.draw = function(){
     //slice.
-    var slice = draw.createArcOfCircle(this.center[0], this.center[1], this.radiusForPie, this.startAngle, this.endAngle);
+    let slice = draw.createArcOfCircle(this.center[0], this.center[1], this.radiusForPie, this.startAngle, this.endAngle);
     draw.setStrokeFill(slice, "white", 1.5, this.mcColor.fillColor);
     this.svg.appendChild(slice);
 
@@ -31,16 +51,16 @@ SinglePieSeriesViewer.prototype.draw = function(){
 
 SinglePieSeriesViewer.prototype.getConnectorInfo = function(){
     //calculate the connector that connects to label. The connector is the one on the edge of our visual circle.
-    var sliceDataLabelConnectorPosition = util.polarToCartesian(this.center[0], this.center[1], this.radiusForPie, (this.endAngle + this.startAngle)/2);
-    var connectionLineTurnPos = util.polarToCartesian(this.center[0], this.center[1], this.radiusForConnectionLineTurn, (this.endAngle + this.startAngle)/2);
+    let sliceDataLabelConnectorPosition = util.polarToCartesian(this.center[0], this.center[1], this.radiusForPie, (this.endAngle + this.startAngle)/2);
+    let connectionLineTurnPos = util.polarToCartesian(this.center[0], this.center[1], this.radiusForConnectionLineTurn, (this.endAngle + this.startAngle)/2);
 
-    var isLeft = false;
+    let isLeft = false;
     if(sliceDataLabelConnectorPosition[0] < this.center[0]){
         isLeft = true;
     }
 
     //test start
-//    var circle = draw.createCircle(sliceDataLabelConnectorPosition[0], sliceDataLabelConnectorPosition[1], 2);
+//    let circle = draw.createCircle(sliceDataLabelConnectorPosition[0], sliceDataLabelConnectorPosition[1], 2);
 //    this.svg.appendChild(circle);
     //test end.
 
@@ -56,15 +76,15 @@ SinglePieSeriesViewer.prototype.getConnectorInfo = function(){
 
 SinglePieSeriesViewer.prototype.enablePieSliceTrigger = function(){
     //slice trigger.
-    var sliceTrigger = draw.createArcOfCircle(this.center[0], this.center[1], this.radiusForPie, this.startAngle, this.endAngle);
+    let sliceTrigger = draw.createArcOfCircle(this.center[0], this.center[1], this.radiusForPie, this.startAngle, this.endAngle);
     draw.setStrokeFill(sliceTrigger, false, false, "white");
     draw.setVisibility(sliceTrigger, false);
     draw.setPointerEvent(sliceTrigger, true, false);
     this.svgTrigger.appendChild(sliceTrigger);
 
     //calculate slice trigger center.
-    var sliceTriggerCenter = util.polarToCartesian(this.center[0], this.center[1], this.radiusForPie/2, (this.endAngle + this.startAngle)/2);
+    let sliceTriggerCenter = util.polarToCartesian(this.center[0], this.center[1], this.radiusForPie/2, (this.endAngle + this.startAngle)/2);
 
-    var pieSliceTriggerControl = new PieSliceTriggerControl();
+    let pieSliceTriggerControl = new PieSliceTriggerControl();
     pieSliceTriggerControl.enablePieSliceTrigger(sliceTrigger, sliceTriggerCenter, this.tipControl, this.seriesName, this.mcColor, this.dataY);
 };
