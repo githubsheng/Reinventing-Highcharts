@@ -1,4 +1,6 @@
 import {TipControl} from "../Sub/Tip/TipControl";
+import {RandomPicker} from "../../Util/RandomPicker";
+import {draw} from "../../Draw/Draw";
 
 /**
  * construct a basic line linear data.

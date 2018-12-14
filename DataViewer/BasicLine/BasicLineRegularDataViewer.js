@@ -1,4 +1,6 @@
 import {TipControl} from "../Sub/Tip/TipControl";
+import {draw} from "../../Draw/Draw";
+import {RandomPicker} from "../../Util/RandomPicker";
 
 /**
  * construct a basic line linear data. the data must be regular (ie. the data intervals between data points need to be the same)
