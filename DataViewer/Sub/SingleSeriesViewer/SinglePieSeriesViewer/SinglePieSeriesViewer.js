@@ -74,6 +74,9 @@ SinglePieSeriesViewer.prototype.getConnectorInfo = function(){
     };
 };
 
+/**
+ * if the labels are already shown we probably do not need to show tooltip.
+ */
 SinglePieSeriesViewer.prototype.enablePieSliceTrigger = function(){
     //slice trigger.
     let sliceTrigger = draw.createArcOfCircle(this.center[0], this.center[1], this.radiusForPie, this.startAngle, this.endAngle);
