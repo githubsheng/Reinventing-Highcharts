@@ -8,7 +8,9 @@
  * @param rightPadding      the right padding of the axis
  * @constructor
  */
-function X_CategoryAxis(svg, length, originPosition, categoriesNames, leftPadding, rightPadding){
+import {X_Axis} from "../Axis";
+
+export function X_CategoryAxis(svg, length, originPosition, categoriesNames, leftPadding, rightPadding){
     this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;

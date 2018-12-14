@@ -11,7 +11,7 @@
  *
  * @constructor
  */
-function Axis(){
+export function Axis(){
     this.preferredMarkDataIntervals = [1, 2, 2.5, 5, 10];
 }
 
@@ -52,7 +52,7 @@ Axis.prototype.adjustMarkInterval = function(){
  * Construct an X axis. The default implementation is for linear axis, that is, X_LinearAxis. I chose this implementation because
  * most other types of axises are similar to linear axis.
  */
-function X_Axis(){}
+export function X_Axis(){}
 
 X_Axis.prototype = new Axis();
 X_Axis.prototype.constructor = X_Axis;
@@ -148,7 +148,7 @@ X_Axis.prototype.calculateLabelPositions = function(){
  * most other types of axises are similar to linear axis.
  * @constructor
  */
-function Y_Axis(){}
+export function Y_Axis(){}
 
 //extends the Axis class
 Y_Axis.prototype = new Axis();

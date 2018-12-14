@@ -5,7 +5,9 @@
  *                              we will display a continual line, otherwise we will display a node for each of the data point
  * @constructor
  */
-function BasicLineRegularDataAnalyst(input, xAxisDataAreaLength){
+import {dataAnalystCommons} from "../DataAnalystCommons";
+
+export function BasicLineRegularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;
 }

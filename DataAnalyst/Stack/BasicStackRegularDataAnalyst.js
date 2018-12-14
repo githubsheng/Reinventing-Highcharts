@@ -5,7 +5,9 @@
  *                              a node for each single data point.
  * @constructor
  */
-function BasicStackRegularDataAnalyst(input, xAxisDataAreaLength){
+import {dataAnalystCommons} from "../DataAnalystCommons";
+
+export function BasicStackRegularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;
 }
@@ -18,15 +20,15 @@ BasicStackRegularDataAnalyst.prototype.analyze = function(){
     //initialize the minY and maxY to be 0, so that if all other values are positive, the minY is set to be 0 no matter
     //what the smallest value is. If all other values are negative, the maxY is set to be 0 no matter what the biggest value
     //is
-    var minY = 0;
-    var maxY = 0;
+    let minY = 0;
+    let maxY = 0;
 
-    var singleSeriesLength = this.input.series[0][1].length;
+    let singleSeriesLength = this.input.series[0][1].length;
 
 
-    for(var s = 0; s < singleSeriesLength; s++){
-        var stackedData = 0;
-        for(var i = 0; i < this.input.series.length; i++){
+    for(let s = 0; s < singleSeriesLength; s++){
+        let stackedData = 0;
+        for(let i = 0; i < this.input.series.length; i++){
             stackedData = stackedData +  this.input.series[i][1][s];
 
             //compare the minY and maxY with data ever stacked (does not need to be final stacked value)/
@@ -40,9 +42,9 @@ BasicStackRegularDataAnalyst.prototype.analyze = function(){
         }
     }
 
-    var isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, singleSeriesLength);
+    let isContinual = dataAnalystCommons.isContinual(this.xAxisDataAreaLength, singleSeriesLength);
 
-    var maxX = util.chooseBetween(this.input.start === undefined, 0, this.input.start) + (singleSeriesLength - 1) * this.input.interval;
+    let maxX = util.chooseBetween(this.input.start === undefined, 0, this.input.start) + (singleSeriesLength - 1) * this.input.interval;
 
     return  {
         minX: this.input.start,

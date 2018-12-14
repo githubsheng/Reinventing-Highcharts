@@ -3,7 +3,7 @@
  * @param input     input data of a basic category chart
  * @constructor
  */
-function BasicCategoryDataAnalyst(input){
+export function BasicCategoryDataAnalyst(input){
     this.input = input;
     this.results = null;
 }

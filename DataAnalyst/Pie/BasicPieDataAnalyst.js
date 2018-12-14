@@ -3,7 +3,7 @@
  * @param input     input data of a pie chart
  * @constructor
  */
-function BasicPieDataAnalyst(input){
+export function BasicPieDataAnalyst(input){
     this.input = input;
 }
 

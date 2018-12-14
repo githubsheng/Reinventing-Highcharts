@@ -9,7 +9,9 @@
  * @param rightPadding      right padding of the x axis
  * @constructor
  */
-function X_LinearAxis(svg, length, min, max, originPosition, leftPadding, rightPadding){
+import {X_Axis, Y_Axis} from "../Axis";
+
+export function X_LinearAxis(svg, length, min, max, originPosition, leftPadding, rightPadding){
     this.leftPadding = leftPadding;
     this.rightPadding = rightPadding;
     this.svg = svg;
@@ -42,7 +44,7 @@ X_LinearAxis.prototype.constructor = X_LinearAxis;
  * @param doNotExpandMax    if true, it will not make the max value to look pretty.
  * @constructor
  */
-function Y_LinearAxis(svg, length, min, max, originPosition, x_axis, doNotExpandMin, doNotExpandMax){
+export function Y_LinearAxis(svg, length, min, max, originPosition, x_axis, doNotExpandMin, doNotExpandMax){
     this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;

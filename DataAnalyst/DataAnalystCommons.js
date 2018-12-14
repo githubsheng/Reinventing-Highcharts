@@ -1,8 +1,7 @@
 /**
- *
- * @type {{isContinual: dataAnalystCommons.isContinual}}
+ * a utility class for other data analyst
  */
-var dataAnalystCommons = {
+export const dataAnalystCommons = {
 
     /**
      * check if the space is big enough for drawing a node for each data point

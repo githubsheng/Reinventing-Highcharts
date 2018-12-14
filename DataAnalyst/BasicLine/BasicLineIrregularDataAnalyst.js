@@ -5,7 +5,9 @@
  *                              we will display a continual line, otherwise we will display a node for each of the data point
  * @constructor
  */
-function BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength){
+import {dataAnalystCommons} from "../DataAnalystCommons";
+
+export function BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;
 }

@@ -29,7 +29,9 @@
  * @param interval          the time interval, if interval is 5 and unit is M, then it means there is 5 minutes between each data point.
  * @constructor
  */
-function TimeAxis(svg, length, max, originPosition, unit, interval){
+import {X_Axis} from "../Axis";
+
+export function TimeAxis(svg, length, max, originPosition, unit, interval){
     this.svg = svg;
     this.originPosition = originPosition;
     this.length = length;
