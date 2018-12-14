@@ -1,8 +1,4 @@
-/**
- * Created by wangsheng on 5/6/14.
- */
-
-function RandomPicker(){
+export function RandomPicker(){
     this.seriesColors = ["blue", "green", "red", "lightBlue", "darkGreen", "yellow", "purple"]; //TODO: add these "purple", "gray"
     this.currentSeriesColorIndex = 0;
     this.nodeShape = ["circle", "rectangular", "triangle", "reverse-triangle"];
