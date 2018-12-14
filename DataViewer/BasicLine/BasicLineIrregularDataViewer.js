@@ -1,3 +1,5 @@
+import {TipControl} from "../Sub/Tip/TipControl";
+
 /**
  * construct a basic line linear data.
  * @param htmlContainer     the html container (html layer) is needed as we need to append the tooltip to it.
@@ -9,8 +11,6 @@
  * @param isContinual       draw nodes / lines
  * @constructor
  */
-import {TipControl} from "../Sub/Tip/TipControl";
-
 export function BasicLineIrregularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual) {
     this.htmlContainer = htmlContainer;
     this.svg = svg;
