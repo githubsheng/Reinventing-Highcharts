@@ -2,7 +2,7 @@
  * Created by wangsheng on 4/6/14.
  */
 
-var colors = {
+export const colors = {
     blue: {
         strokeColor: "rgb(0, 122, 204)",
         fillColor: "rgb(0, 153, 255)",
