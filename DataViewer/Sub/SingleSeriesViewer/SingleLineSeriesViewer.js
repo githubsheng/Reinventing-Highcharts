@@ -7,7 +7,7 @@
  * @param nodeShape                 node shape
  * @param mcColor                   color
  * @param isContinual               if not enough space, we will draw a continous line to represent the data of this seris
- * @param constantInterval          whether its regular data or irregular data
+ * @param constantInterval          if not regular is should be false, otherwise it should be the interval value
  * @param seriesName                name of the series
  * @param tipControl                tool tip control
  * @param xDrawInfo                 extra info about x axis
