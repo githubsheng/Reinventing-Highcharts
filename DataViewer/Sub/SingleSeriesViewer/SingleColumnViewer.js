@@ -8,18 +8,18 @@ export function SingleColumnViewer(){}
 
 /**
  * draw a single column
- * @param columnBasePositionX
- * @param columnBasePositionY
- * @param columnWidth
- * @param seriesName
- * @param seriesData
- * @param mcColor
- * @param nodes
- * @param svg
- * @param svgTrigger
- * @param tipControl
- * @param htmlContainer
- * @param yDrawInfo
+ * @param columnBasePositionX       the position of the column (the column base, not the center of the column)
+ * @param columnBasePositionY       the position of the column (the column base, not the center of the column)
+ * @param columnWidth               width of the column
+ * @param seriesName                name of the series
+ * @param seriesData                data of the series
+ * @param mcColor                   color the series, used both for the tooltip and column
+ * @param nodes                     nodes
+ * @param svg                       svg container to which we will append the svg elements
+ * @param svgTrigger                tooltip trigger
+ * @param tipControl                tooltip control, used for tool tip related stuffs
+ * @param htmlContainer             html container, we append the tool tips (html elements) to it
+ * @param yDrawInfo                 extra info for drawing the column
  */
 SingleColumnViewer.prototype.draw = function(columnBasePositionX, columnBasePositionY, columnWidth, seriesName,
                                              seriesData, mcColor, nodes, svg, svgTrigger, tipControl, htmlContainer, yDrawInfo) {
@@ -36,17 +36,17 @@ SingleColumnViewer.prototype.draw = function(columnBasePositionX, columnBasePosi
 
 /**
  * enable the tooltip for a column
- * @param columnBasePositionX
- * @param columnBasePositionY
- * @param columnWidth
- * @param columnHeight
- * @param seriesName
- * @param columnData
- * @param mcColor
- * @param nodes
- * @param svgTrigger
- * @param tipControl
- * @param htmlContainer
+ * @param columnBasePositionX       the position of the column (the column base, not the center of the column)
+ * @param columnBasePositionY       the position of the column (the column base, not the center of the column)
+ * @param columnWidth               width of the column
+ * @param columnHeight              height of the column
+ * @param seriesName                name of the series
+ * @param columnData                data of the series / column
+ * @param mcColor                   color the series, used both for the tooltip and column
+ * @param nodes                     nodes
+ * @param svgTrigger                tooltip trigger
+ * @param tipControl                tooltip control, used for tool tip related stuffs
+ * @param htmlContainer             html container, we append the tool tips (html elements) to it
  */
 SingleColumnViewer.prototype.enableColumnTip = function(columnBasePositionX, columnBasePositionY, columnWidth, columnHeight,
                                                         seriesName, columnData, mcColor, nodes, svgTrigger, tipControl, htmlContainer){
