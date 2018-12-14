@@ -52,7 +52,7 @@ SingleStackSeriesViewer.prototype.draw = function(){
     this.drawLine();
     this.drawNodes();
     //call 'enable routine trance' before calling 'enable node trigger' so that the nodes trigger is laid above the routine trigger.
-    var highlightedNode = this.drawHighlightNode();
+    let highlightedNode = this.drawHighlightNode();
     this.enableRoutineTrace(highlightedNode);
     this.enableNodeTrigger(highlightedNode);
     this.svg.appendChild(this.svgLayerGroup);
@@ -60,16 +60,16 @@ SingleStackSeriesViewer.prototype.draw = function(){
 };
 
 SingleStackSeriesViewer.prototype.drawLine = function(){
-    var lines = draw.createStraightLines(this.nodes, 4, 0);
+    let lines = draw.createStraightLines(this.nodes, 4, 0);
     draw.setStrokeFill(lines, this.mcColor.strokeColor, this.lineWidth, "none");
     return lines;
 };
 
 SingleStackSeriesViewer.prototype.drawStack = function(){
     //draw the stack, minus 0.5 so that i does not cover up the x axis.
-    var rightBottom = [this.xDrawInfo.startPoint + this.xDrawInfo.length, this.yDrawInfo.startPoint - 0.5];
-    var leftBottom = [this.xDrawInfo.startPoint, this.yDrawInfo.startPoint - 0.5];
-    var stack = draw.createStackWithStraightLines(this.nodes, 4, 0, rightBottom, leftBottom);
+    let rightBottom = [this.xDrawInfo.startPoint + this.xDrawInfo.length, this.yDrawInfo.startPoint - 0.5];
+    let leftBottom = [this.xDrawInfo.startPoint, this.yDrawInfo.startPoint - 0.5];
+    let stack = draw.createStackWithStraightLines(this.nodes, 4, 0, rightBottom, leftBottom);
     if(this.isLinearGradient){
         draw.setStrokeFill(stack, false, false, this.mcColor.linearGradientFill);
     } else {
@@ -80,42 +80,36 @@ SingleStackSeriesViewer.prototype.drawStack = function(){
 };
 
 SingleStackSeriesViewer.prototype.enableNodeTrigger = function(){
-    if(this.isContinual){
-        return;
-    }
+    if(this.isContinual) return;
 
     //draw the highlighted node.
-    var highlightedNode = nodeDrawer.drawHighlightedNode(this.nodeShape, this.mcColor);
+    let highlightedNode = nodeDrawer.drawHighlightedNode(this.nodeShape, this.mcColor);
     draw.setVisibility(highlightedNode, false);
     this.svgLayerGroup.appendChild(highlightedNode);
 
     //draw all those node trigger zones.
-    var nodeMouseOverSectionGroup = draw.createGroup();
-    for (var i = 0; i < this.nodes.length; i = i + 4) {
-        var nodeMouseOverSection = nodeDrawer.drawTrigger(this.nodes[i], this.nodes[i + 1], i/4);
+    let nodeMouseOverSectionGroup = draw.createGroup();
+    for (let i = 0; i < this.nodes.length; i = i + 4) {
+        let nodeMouseOverSection = nodeDrawer.drawTrigger(this.nodes[i], this.nodes[i + 1], i/4);
         nodeMouseOverSectionGroup.appendChild(nodeMouseOverSection);
     }
     this.svgTriggerGroup.appendChild(nodeMouseOverSectionGroup);
 
     //actually add listeners.
-    var triggerControl = new TriggerControl(this.tipControl, this.seriesName, this.mcColor);
+    let triggerControl = new TriggerControl(this.tipControl, this.seriesName, this.mcColor);
     triggerControl.enableNodeTrigger(nodeMouseOverSectionGroup, this.seriesName, this.mcColor, highlightedNode, this.nodes);
 
-}
+};
 
 
 SingleStackSeriesViewer.prototype.enableRoutineTrace = function(){
-//    if(!this.isContinual){
-//        return;
-//    }
-
-    var stackTrigger = this.drawStack();
+    let stackTrigger = this.drawStack();
     draw.setStrokeFill(stackTrigger, false, false, "rgb(0,0,0)");
     draw.setVisibility(stackTrigger, false);
     stackTrigger.setAttributeNS(null, "pointer-events", "fill");
     this.svgTriggerGroup.appendChild(stackTrigger);
 
     //actually add listeners.
-    var triggerControl = new TriggerControl(this.tipControl, this.seriesName, this.mcColor);
+    let triggerControl = new TriggerControl(this.tipControl, this.seriesName, this.mcColor);
     triggerControl.enableRoutineTrace(this.htmlContainer, this.seriesName, this.mcColor, this.nodes, stackTrigger, this.constantInterval, this.xDrawInfo);
 };
