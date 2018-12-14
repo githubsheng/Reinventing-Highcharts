@@ -1,11 +1,19 @@
 /**
- * Created by wangsheng on 4/7/14.
+ * this class manages the slots, texts in the slots and the connection lines that connect the slot to the pie circle.
+ * @constructor
  */
 function PieDataLabelSlotsController(){
     this.leftSlots = [];
     this.rightSlots = [];
 }
 
+/**
+ * generate the empty slots
+ * @param dataLabelHeight           the height of a single data label, this is usually decided by the font size and the size of the pie
+ * @param centerOfCircleForLabel    center of the invisible circle, along which we draw the labels.
+ * @param radiusOfCircleForLabel    radius of the above circle.
+ * @param svg                       we will append the new elements to this svg.
+ */
 PieDataLabelSlotsController.prototype.generateEmptySlots = function(dataLabelHeight, centerOfCircleForLabel, radiusOfCircleForLabel, svg/*debug purpose only*/){
     //the slots array format: [slotIdx, slotPixelX, slotPixelY, isTaken, slotIdx, slotPixelX, slotPixelY, isTaken.....]
     this.leftSlots = generateSlotsOnTheOneSide(true);
@@ -60,7 +68,8 @@ PieDataLabelSlotsController.prototype.generateEmptySlots = function(dataLabelHei
 
 /**
  * process connectors on the circleForPie edge.
- * @param connectorsInfo
+ * @param connectorsInfo    information about the connection lines
+ * @param isLeft            whether the line is drawn on the left side of the pie.
  */
 PieDataLabelSlotsController.prototype.processConnectorInfo = function(connectorsInfo, isLeft){
     //  --head-- [slot1(taken, connector1), slot2(taken, connector2), slot3(free), slot4(taken, connector3), slot5(taken, connector4), slot6(taken, connector5)] --tail--
@@ -123,6 +132,13 @@ PieDataLabelSlotsController.prototype.processConnectorInfo = function(connectors
     }
 };
 
+/**
+ * find the nearest available slot, to a target
+ * @param pixelX        position of the target
+ * @param pixelY        position of the target.
+ * @param slots         all the slots
+ * @returns {number}    the index of the nearest slot.
+ */
 PieDataLabelSlotsController.prototype.findNearestAvailableSlotIdx = function(pixelX, pixelY, slots/*left or right*/){
     var nearestIdx = -1;
     var nearestDistance = 10000;
@@ -153,6 +169,11 @@ PieDataLabelSlotsController.prototype.findNearestAvailableSlotIdx = function(pix
     }
 };
 
+/**
+ * draw the connection line
+ * @param connectorInfo     info needed for the drawing
+ * @returns {*}
+ */
 PieDataLabelSlotsController.prototype.createConnectionLine = function(connectorInfo){
     var slots;
     if(connectorInfo.isLeft){
@@ -168,6 +189,13 @@ PieDataLabelSlotsController.prototype.createConnectionLine = function(connectorI
     return curve;
 };
 
+/**
+ *
+ * @param textString            draw the text in the slot
+ * @param slotIdx               slot index
+ * @param isLeft                whether its on the left, or on the right.
+ * @returns {SVGTextElement} the text element (the label)
+ */
 PieDataLabelSlotsController.prototype.createTextInSlot = function(textString, slotIdx, isLeft){
     var slots;
     if(isLeft){
