@@ -1,19 +1,19 @@
 /**
- * Created by wangsheng on 16/6/14.
- */
-
-/**
- * .....
- * @param htmlContainer
- * @param svg
- * @param svgTrigger
- * @param input
- * @param xDrawInfo
- * @param yDrawInfo
- * @param isContinual
+ * draw the time based data (using a single line)
+ * @param htmlContainer     the html container (html layer) is needed as we need to append the tooltip to it.
+ * @param svg               to which we will append the svg elements
+ * @param svgTrigger        tooltip trigger
+ * @param input             the data points
+ * @param xDrawInfo         the analysis of x axis, we need to draw the lines / nodes according to the axis (of course)
+ * @param yDrawInfo         the analysis of y axis
+ * @param isContinual       draw nodes / lines
  * @constructor
  */
-function BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
+import {draw} from "../../Draw/Draw";
+import {RandomPicker} from "../../Util/RandomPicker";
+import {TipControl} from "../Sub/Tip/TipControl";
+
+export function BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
     this.htmlContainer = htmlContainer;
     this.svg = svg;
     this.svgTrigger = svgTrigger;
@@ -30,16 +30,16 @@ function BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, y
  * Since this method will only be called once it is ok to define some functions inside this method.
  */
 BasicSingleTimeData.prototype.draw = function(){
-    var seriesName = this.input.series[0][0];
-    var nodes = this.analyzeSingleSeriesData(this.input.series[0][1]);
+    let seriesName = this.input.series[0][0];
+    let nodes = this.analyzeSingleSeriesData(this.input.series[0][1]);
 
-    var svgDrawGroup = draw.createGroup();
-    var svgTriggerGroup = draw.createGroup();
-    var randomPicker = new RandomPicker();
-    var tipControl = new TipControl(this.htmlContainer, 7, false);
+    let svgDrawGroup = draw.createGroup();
+    let svgTriggerGroup = draw.createGroup();
+    let randomPicker = new RandomPicker();
+    let tipControl = new TipControl(this.htmlContainer, 7, false);
     tipControl.createTip();
 
-    var sssv = new SingleTimeSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
+    let sssv = new SingleTimeSeriesViewer(this.htmlContainer, svgDrawGroup, svgTriggerGroup, nodes,
         randomPicker.pickNodeShape(), randomPicker.pickSeriesColor(), this.isContinual, this.input.interval, seriesName,
         tipControl, this.xDrawInfo, this.yDrawInfo, 1, true);
 
@@ -56,15 +56,15 @@ BasicSingleTimeData.prototype.draw = function(){
  * @returns {Array}
  */
 BasicSingleTimeData.prototype.analyzeSingleSeriesData = function(singleSeriesData){
-    var nodes = [];
-    var interval = this.input.interval;
-    var startTime = this.input.startTime;
+    let nodes = [];
+    let interval = this.input.interval;
+    let startTime = this.input.startTime;
 
-    var parseTime = assembleParseTimeFunction(this.input.unit);
+    let parseTime = assembleParseTimeFunction(this.input.unit);
 
-    for(var i = 0; i < singleSeriesData.length; i++){
-        var pixelX = this.xDrawInfo.startPoint + i * interval * this.xDrawInfo.pixelPerData;
-        var pixelY = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
+    for(let i = 0; i < singleSeriesData.length; i++){
+        let pixelX = this.xDrawInfo.startPoint + i * interval * this.xDrawInfo.pixelPerData;
+        let pixelY = this.yDrawInfo.startPoint - (singleSeriesData[i] - this.yDrawInfo.min) * this.yDrawInfo.pixelPerData;
         nodes.push(pixelX);
         nodes.push(pixelY);
         nodes.push(parseTime(i));
@@ -78,7 +78,7 @@ BasicSingleTimeData.prototype.analyzeSingleSeriesData = function(singleSeriesDat
                 return null;//TODO
             case "m":
                 return function(idx){
-                    var date = new Date(startTime + interval * idx * 60000);
+                    let date = new Date(startTime + interval * idx * 60000);
                     return "(" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + " " + (date.getHours()+1)
                     + ":" + (date.getMinutes()+1) + ")";
                 };
