@@ -13,7 +13,7 @@
 import {draw} from "../../Draw/Draw";
 import {RandomPicker} from "../../Util/RandomPicker";
 
-function BasicStackRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
+export function BasicStackRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
     this.htmlContainer = htmlContainer;
     this.svg = svg;
     this.svgTrigger = svgTrigger;
