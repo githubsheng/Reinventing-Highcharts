@@ -1,8 +1,4 @@
-/**
- * Created by wangsheng on 22/7/14.
- */
-
-var canvasLabelGenerator = {
+export const canvasLabelGenerator = {
 
     ctx : null,
     width: 1500,
@@ -25,7 +21,7 @@ var canvasLabelGenerator = {
         this.ctx.textAlign = "center";
         this.ctx.textBaseline = "middle";
 
-        var textWidth = this.ctx.measureText(text).width + 10;//plus 10 to allow some buffer...
+        let textWidth = this.ctx.measureText(text).width + 10;//plus 10 to allow some buffer...
         this.ctx.fillText(text, textWidth/2, this.height/2);
 
         return {

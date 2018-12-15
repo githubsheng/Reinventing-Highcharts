@@ -2325,7 +2325,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
  * @name mat3
  */
 
-var mat3 = {};
+export const mat3 = {};
 
 /**
  * Creates a new identity mat3

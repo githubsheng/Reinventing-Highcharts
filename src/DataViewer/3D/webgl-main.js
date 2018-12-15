@@ -1,42 +1,48 @@
-var threeDgridWebgl = {
+import {webglUtil} from "./webgl-util";
+import {threeModels} from "./three-model";
+import {mat4, vec3, mat3, vec4} from "./gl-matrix";
+import {convertToCuboidModels, createLabelPlanes} from "./webgl-parse-data";
+import {TipControl} from "../Sub/Tip/TipControl";
+
+export const threeDgridWebgl = {
     draw: function(input, canvas, offScreenCanvas, canvasTrigger, tipContainer){
         //glContext and program that are used everywhere.
-        var gl;
-        var normalProgram;
-        var simpleProgram;
-        var labelProgram;
-        var frameBuffer;
+        let gl;
+        let normalProgram;
+        let simpleProgram;
+        let labelProgram;
+        let frameBuffer;
 
         //variable and statics used for calculating rotation.
 
-        var angleYStart = 0;
-        var angleY = input.startAngle; //for demonstration purpose
+        let angleYStart = 0;
+        let angleY = input.startAngle; //for demonstration purpose
 
         //all kinds of matrices.
-        var projectionMatrix = mat4.create();
-        var viewMatrix = mat4.create();
-        var VPMatrix = mat4.create(); //this is static
+        let projectionMatrix = mat4.create();
+        let viewMatrix = mat4.create();
+        let VPMatrix = mat4.create(); //this is static
 
         //the universal vertices/indices buffers that all objects in this application use
-        var buffers;
+        let buffers;
 
         //holds the cuboids to be drawn.
-        var cuboidList = [];
+        let cuboidList = [];
         //holds the planes to be drawn.
-        var planeList = [];
+        let planeList = [];
 
         //flags to controls
-        var isStopAnimation = false;
+        let isStopAnimation = false;
 
         //for mouse interaction.
-        var mouseStartX = 0;
-        var mouseStartY = 0; //I will need this for vertical angle adjust and therefore I will keep it for now.
-        var mouseX = 0;
-        var mouseY = 0;
-        var maxAngelPerDrag = Math.PI / 2;
+        let mouseStartX = 0;
+        let mouseStartY = 0; //I will need this for vertical angle adjust and therefore I will keep it for now.
+        let mouseX = 0;
+        let mouseY = 0;
+        let maxAngelPerDrag = Math.PI / 2;
 
         //tip
-        var tipControl = new TipControl(tipContainer, 7, false);
+        let tipControl = new TipControl(tipContainer, 7, false);
         tipControl.createTip();
 
         //convert input to the old day format the webgl main uses.
@@ -92,10 +98,10 @@ var threeDgridWebgl = {
             gl.useProgram(normalProgram);
 
             //feed the buffers to the shaders
-            var aPositionIdx = gl.getAttribLocation(normalProgram, "MCVertex");
+            let aPositionIdx = gl.getAttribLocation(normalProgram, "MCVertex");
             normalProgram.aPositionIdx = aPositionIdx;
 
-            var aNormalIdx = gl.getAttribLocation(normalProgram, "MCNormal");
+            let aNormalIdx = gl.getAttribLocation(normalProgram, "MCNormal");
             normalProgram.aNormalIdx = aNormalIdx;
 
             //get the matrix indices in the shaders.
@@ -109,15 +115,15 @@ var threeDgridWebgl = {
             mat4.multiply(VPMatrix, projectionMatrix, viewMatrix);
 
             //directional light. I only include directional light here for the sake of simplicity. TODO: adjust the light position
-            var ecDirectionalLightOneIdx = gl.getUniformLocation(normalProgram, "ecDirectionalLightPositionOne");
-            var wcDirectionalLightPositionOne = vec3.fromValues(-100, 100, 100);
-            var ecDirectionalLightPositionOne = vec3.create();
+            let ecDirectionalLightOneIdx = gl.getUniformLocation(normalProgram, "ecDirectionalLightPositionOne");
+            let wcDirectionalLightPositionOne = vec3.fromValues(-100, 100, 100);
+            let ecDirectionalLightPositionOne = vec3.create();
             vec3.transformMat4(ecDirectionalLightPositionOne, wcDirectionalLightPositionOne, viewMatrix);
             gl.uniform3fv(ecDirectionalLightOneIdx, ecDirectionalLightPositionOne);
 
-            var ecDirectionalLightTwoIdx = gl.getUniformLocation(normalProgram, "ecDirectionalLightPositionTwo");
-            var wcDirectionalLightPositionTwo = vec3.fromValues(100, -100, 0);
-            var ecDirectionalLightPositionTwo = vec3.create();
+            let ecDirectionalLightTwoIdx = gl.getUniformLocation(normalProgram, "ecDirectionalLightPositionTwo");
+            let wcDirectionalLightPositionTwo = vec3.fromValues(100, -100, 0);
+            let ecDirectionalLightPositionTwo = vec3.create();
             vec3.transformMat4(ecDirectionalLightPositionTwo, wcDirectionalLightPositionTwo, viewMatrix);
             gl.uniform3fv(ecDirectionalLightTwoIdx, ecDirectionalLightPositionTwo);
 
@@ -200,13 +206,13 @@ var threeDgridWebgl = {
             gl.uniform1i(normalProgram.uIsTranslucentIdx, 0);
 
             if(threeModels.isAnythingFocused()){
-                for(var modelIdx in cuboidList) {
+                for(let modelIdx in cuboidList) {
                     if(cuboidList[modelIdx].isFocus){
                         drawSingleCuboid(cuboidList[modelIdx], false);
                     }
                 }
             } else {
-                for(var modelIdx in cuboidList) {
+                for(let modelIdx in cuboidList) {
                     drawSingleCuboid(cuboidList[modelIdx], false);
                 }
             }
@@ -220,7 +226,7 @@ var threeDgridWebgl = {
                 gl.blendFunc(gl.ZERO, gl.SRC_COLOR);
                 gl.uniform1i(normalProgram.uIsTranslucentIdx, 1);
 
-                for(var modelIdx in cuboidList) {
+                for(let modelIdx in cuboidList) {
                     drawSingleCuboid(cuboidList[modelIdx], true);
                 }
 
@@ -239,7 +245,7 @@ var threeDgridWebgl = {
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.cubeWireFrameIndicesBuffer);
 
-            for(var modelIdx in cuboidList) {
+            for(let modelIdx in cuboidList) {
                 drawSingleOutline(cuboidList[modelIdx]);
             }
         }
@@ -261,7 +267,7 @@ var threeDgridWebgl = {
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.planeIndicesBuffer);
 
-            for(var modelIdx in planeList){
+            for(let modelIdx in planeList){
                 drawSinglePlane(planeList[modelIdx]);
             }
         }
@@ -282,11 +288,11 @@ var threeDgridWebgl = {
             //upload the object color
             if(!isSemiTransparent){
                 //console.log("draw focused");
-                var fillColorArray = model.fillColorArray;
-                var fillColor = vec3.fromValues(fillColorArray[0], fillColorArray[1], fillColorArray[2]);
+                let fillColorArray = model.fillColorArray;
+                let fillColor = vec3.fromValues(fillColorArray[0], fillColorArray[1], fillColorArray[2]);
                 gl.uniform3fv(normalProgram.uMaterialColorIdx, fillColor);
             }  else {
-                var fillColor = vec3.fromValues(1.0, 1.0, 1.0);
+                let fillColor = vec3.fromValues(1.0, 1.0, 1.0);
                 gl.uniform3fv(normalProgram.uMaterialColorIdx, fillColor);
             }
 
@@ -297,7 +303,7 @@ var threeDgridWebgl = {
         function drawSingleOutline(model){
             //now lets start to draw the wire frame.
             //make use of the mvp matrix that has been calculated.
-            var strokeColor;
+            let strokeColor;
             if(!model.isFocus && threeModels.isAnythingFocused()){
                 strokeColor = vec3.fromValues(0.6, 0.6, 0.6);
             } else {
@@ -331,8 +337,8 @@ var threeDgridWebgl = {
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indicesBuffer);
 
-            var selectedModelIdx = -1;
-            for (var modelIdx in cuboidList) {
+            let selectedModelIdx = -1;
+            for (let modelIdx in cuboidList) {
                 if(testSingleObject(modelIdx, canvasX, gl.viewportHeight-canvasY/*uv origin is left bottom*/)){
                     selectedModelIdx = modelIdx;
                     break;
@@ -354,19 +360,19 @@ var threeDgridWebgl = {
             //frame buffer does not automatically clear itself, do it manually.
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-            var pixels = new Uint8Array(4); // Array for storing the pixel value
+            let pixels = new Uint8Array(4); // Array for storing the pixel value
 
             //draw the target object as red object and everything else black.
-            for(var modelIdx in cuboidList){
-                var model = cuboidList[modelIdx];
+            for(let modelIdx in cuboidList){
+                let model = cuboidList[modelIdx];
                 //directly use the current MVPmatrix
                 gl.uniformMatrix4fv(simpleProgram.uMVPMatrixIdx, false, model.MVPMatrix);
 
                 if(modelIdx === idxOfModelToBeTested){
-                    var testColor = vec3.fromValues(1.0, 0.0, 0.0); //red.
+                    let testColor = vec3.fromValues(1.0, 0.0, 0.0); //red.
                     gl.uniform3fv(simpleProgram.uMaterialColorIdx, testColor);
                 } else {
-                    var testColor = vec3.fromValues(0.0, 0.0, 0.0); //black.
+                    let testColor = vec3.fromValues(0.0, 0.0, 0.0); //black.
                     gl.uniform3fv(simpleProgram.uMaterialColorIdx, testColor);
                 }
 
@@ -381,21 +387,21 @@ var threeDgridWebgl = {
         }
 
         function showTip(MVPMatrix, mcColor, viewPortWidth, viewPortHeight, label, dataY, tipControl){
-            var tipPosition = vec4.fromValues(0, 1, 0, 1);
+            let tipPosition = vec4.fromValues(0, 1, 0, 1);
             vec4.transformMat4(tipPosition, tipPosition, MVPMatrix);
             //do perspective division and get normalized device coordinates.
             //the depth value (third) is discarded since I don't need it here.
-            var ndc = [tipPosition[0]/tipPosition[3], tipPosition[1]/tipPosition[3]];
+            let ndc = [tipPosition[0]/tipPosition[3], tipPosition[1]/tipPosition[3]];
             //convert ndc to dom position.
-            var domX = ndc[0] * (viewPortWidth / 2) + viewPortWidth / 2;
-            var domY = viewPortHeight / 2 -  ndc[1] *  (viewPortHeight / 2);
+            let domX = ndc[0] * (viewPortWidth / 2) + viewPortWidth / 2;
+            let domY = viewPortHeight / 2 -  ndc[1] *  (viewPortHeight / 2);
 
             tipControl.genericShowDoubleLineTipDataYOnly(domX, domY, label, mcColor, dataY);
         }
 
         function showAllStaticTip(){
-            for(var i = 0; i < cuboidList.length; i ++){
-                var model = cuboidList[i];
+            for(let i = 0; i < cuboidList.length; i ++){
+                let model = cuboidList[i];
                 if(model.isFocus){
                     showTip(model.MVPMatrix, model.mcColor,  gl.viewportWidth, gl.viewportHeight, model.label, model.dataY, model.staticTipControl);
                 }
@@ -405,12 +411,12 @@ var threeDgridWebgl = {
 
         function enableMouseInteraction(trigger){
 
-            var dragging = false;
+            let dragging = false;
 
             function getSelectedCuboidIdx(){
-                var bb = canvas.getBoundingClientRect();
-                var canvasX = mouseX - bb.left;
-                var canvasY = mouseY - bb.top;
+                let bb = canvas.getBoundingClientRect();
+                let canvasX = mouseX - bb.left;
+                let canvasY = mouseY - bb.top;
 
                 return pickObject(canvasX, canvasY);
             }
@@ -423,8 +429,8 @@ var threeDgridWebgl = {
             }
 
             function enableMouseOverTip(trigger){
-                var showTipTimerIdx = -1;
-                var lastModelIdx = -1;
+                let showTipTimerIdx = -1;
+                let lastModelIdx = -1;
                 trigger.addEventListener("mouseover", function(event){
                     showTipTimerIdx = window.setInterval(function(){
                         if(dragging){
@@ -432,7 +438,7 @@ var threeDgridWebgl = {
                             return;
                         }
 
-                        var selectedModelIdx = getSelectedCuboidIdx();
+                        let selectedModelIdx = getSelectedCuboidIdx();
                         if(selectedModelIdx !== -1 && cuboidList[selectedModelIdx].isFocus){
                             //如果对象已经被设置focus了，那么就当没选中任何东西
                             selectedModelIdx = -1;
@@ -442,7 +448,7 @@ var threeDgridWebgl = {
                             tipControl.hideTip();
                             lastModelIdx = selectedModelIdx;
                         } else if(lastModelIdx !== selectedModelIdx){
-                            var model = cuboidList[selectedModelIdx];
+                            let model = cuboidList[selectedModelIdx];
                             showTip(model.MVPMatrix, model.mcColor,  gl.viewportWidth, gl.viewportHeight, model.label, model.dataY, tipControl);
                             lastModelIdx = selectedModelIdx;
                         }
@@ -484,9 +490,9 @@ var threeDgridWebgl = {
                         dragging = false; //this is turned on anyway when mousedown, so turn it off first.
                         stopAnimation();
 
-                        var selectedModelIdx = getSelectedCuboidIdx();
+                        let selectedModelIdx = getSelectedCuboidIdx();
                         if(selectedModelIdx !== -1){
-                            var model = cuboidList[selectedModelIdx];
+                            let model = cuboidList[selectedModelIdx];
                             if(model.toggleFocus()){
                                 showTip(model.MVPMatrix, model.mcColor,  gl.viewportWidth, gl.viewportHeight, model.label, model.dataY, model.staticTipControl);
                             } else {

@@ -1,14 +1,14 @@
-var webglUtil = {
+export const webglUtil = {
     createGLContext: function(canvas){
-        var gl = canvas.getContext("webgl");
+        let gl = canvas.getContext("webgl");
         gl.viewportWidth = canvas.width;
         gl.viewportHeight = canvas.height;
         return gl;
     },
 
     createProgram: function(vertexShaderId, fragmentShaderId, gl){
-        var program = gl.createProgram();
-        var shaders = this.loadShadersFromHTML(vertexShaderId, fragmentShaderId, gl);
+        let program = gl.createProgram();
+        let shaders = this.loadShadersFromHTML(vertexShaderId, fragmentShaderId, gl);
         gl.attachShader(program, shaders.vertexShader);
         gl.attachShader(program, shaders.fragmentShader);
         gl.linkProgram(program);
@@ -16,23 +16,23 @@ var webglUtil = {
     },
 
     loadShadersFromHTML: function(vertexShaderId, fragmentShaderId, gl){
-        var vertexShaderSource = document.getElementById(vertexShaderId).innerHTML.trim();
-        var fragmentShaderSource = document.getElementById(fragmentShaderId).innerHTML.trim();
+        let vertexShaderSource = document.getElementById(vertexShaderId).innerHTML.trim();
+        let fragmentShaderSource = document.getElementById(fragmentShaderId).innerHTML.trim();
 
-        var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+        let vertexShader = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vertexShader, vertexShaderSource);
         gl.compileShader(vertexShader);
 
-        var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+        let fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
         gl.shaderSource(fragmentShader, fragmentShaderSource);
         gl.compileShader(fragmentShader);
 
-        var compiled = gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS);
+        let compiled = gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS);
         if (!compiled) {
             console.log("Failed to compile vertex shader");
         }
 
-        var compiled = gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS);
+        compiled = gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS);
         if (!compiled) {
             console.log("Failed to compile fragment shader");
         }
@@ -44,7 +44,7 @@ var webglUtil = {
     },
 
     prepareElementBuffer: function(modelIndices, gl){
-        var buffer = gl.createBuffer();
+        let buffer = gl.createBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, modelIndices, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
@@ -54,7 +54,7 @@ var webglUtil = {
 
     prepareArrayBuffer: function(data, gl){
         // Create a buffer object
-        var buffer = gl.createBuffer();
+        let buffer = gl.createBuffer();
         // Write date into the buffer object
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
         gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
@@ -63,7 +63,7 @@ var webglUtil = {
     },
 
     prepareLabelTexture: function(imageData, gl) {
-        var texture = gl.createTexture();
+        let texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 
@@ -81,7 +81,7 @@ var webglUtil = {
     },
 
     prepareModelBuffers: function(gl){
-        var cubeVertices = new Float32Array([
+        let cubeVertices = new Float32Array([
             1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0,
             1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0,
             1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0,
@@ -89,7 +89,7 @@ var webglUtil = {
             -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0,
             1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0 ]);
 
-        var cubeNormals = new Float32Array([
+        let cubeNormals = new Float32Array([
             0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,
             0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
@@ -97,7 +97,7 @@ var webglUtil = {
             0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0,
             0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0 ]);
 
-        var cubeIndices = new Uint8Array([
+        let cubeIndices = new Uint8Array([
             0, 1, 2, 0, 2, 3,
             4, 5, 6, 4, 6, 7,
             8, 9, 10, 8, 10, 11,
@@ -114,7 +114,7 @@ var webglUtil = {
         //  | |v7---|-|v4
         //  |/      |/
         //  v2------v3
-        var cubeWireFrameVertices = new Float32Array([
+        let cubeWireFrameVertices = new Float32Array([
             1.001,  1.001,  1.001, // v0
             -1.001,  1.001,  1.001,// v1
             -1.001, -1.001,  1.001,// v2
@@ -125,7 +125,7 @@ var webglUtil = {
             -1.001, -1.001, -1.001// v7
         ]);
 
-        var cubeWireFrameIndices = new Uint8Array([
+        let cubeWireFrameIndices = new Uint8Array([
             0, 1, 1, 6, 6, 5, 5, 0, //top wire frame lines
             1, 2, 6, 7, 5, 4, 0, 3, //four vertical wire frame lines
             3, 2, 2, 7, 7, 4, 4, 3 //bottom wire frame lines.
@@ -136,7 +136,7 @@ var webglUtil = {
         //   /        /
         //  v1------v2
 
-        var planeVertices = new Float32Array([
+        let planeVertices = new Float32Array([
             -1.0, 0.0, 1.0, //v1
             1.0, 0.0, 1.0, //v2
             1.0, 0.0, -1.0, //v3
@@ -144,12 +144,12 @@ var webglUtil = {
         ]);
 
         //counter clock wise
-        var planeIndices = new Uint8Array([
+        let planeIndices = new Uint8Array([
             0, 1, 2,
             2, 3, 0
         ]);
 
-        var planeTextureCoordinates = new Float32Array([
+        let planeTextureCoordinates = new Float32Array([
             0.0, 0.0, //for v1
             1.0, 0.1, //for v2
             1.0, 1.0, //for v3
@@ -157,14 +157,14 @@ var webglUtil = {
         ]);
 
 
-        var verticesBuffer = this.prepareArrayBuffer(cubeVertices, gl);
-        var normalsBuffer = this.prepareArrayBuffer(cubeNormals, gl);
-        var indicesBuffer = this.prepareElementBuffer(cubeIndices, gl);
-        var wireFrameVerticesBuffer = this.prepareArrayBuffer(cubeWireFrameVertices, gl);
-        var cubeWireFrameIndicesBuffer = this.prepareElementBuffer(cubeWireFrameIndices, gl);
-        var planeVerticesBuffer = this.prepareArrayBuffer(planeVertices, gl);
-        var planeIndecesBuffer = this.prepareElementBuffer(planeIndices, gl);
-        var planeTextureCoordinatesBuffer = this.prepareArrayBuffer(planeTextureCoordinates, gl);
+        let verticesBuffer = this.prepareArrayBuffer(cubeVertices, gl);
+        let normalsBuffer = this.prepareArrayBuffer(cubeNormals, gl);
+        let indicesBuffer = this.prepareElementBuffer(cubeIndices, gl);
+        let wireFrameVerticesBuffer = this.prepareArrayBuffer(cubeWireFrameVertices, gl);
+        let cubeWireFrameIndicesBuffer = this.prepareElementBuffer(cubeWireFrameIndices, gl);
+        let planeVerticesBuffer = this.prepareArrayBuffer(planeVertices, gl);
+        let planeIndecesBuffer = this.prepareElementBuffer(planeIndices, gl);
+        let planeTextureCoordinatesBuffer = this.prepareArrayBuffer(planeTextureCoordinates, gl);
 
         return {
             verticesBuffer: verticesBuffer,
@@ -179,10 +179,10 @@ var webglUtil = {
     },
 
     createFrameBufferObject: function(gl) {
-        var frameBuffer = gl.createFramebuffer();
+        let frameBuffer = gl.createFramebuffer();
 
         //create and configure texture.
-        var texture = gl.createTexture();
+        let texture = gl.createTexture();
         //gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, texture);
         //it seems that this texture needs to be a square. Thats why width here equals to height.
@@ -197,7 +197,7 @@ var webglUtil = {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); //Prevents t-coordinate wrapping (repeating).
         
         //create and configure render buffer
-        var depthBuffer = gl.createRenderbuffer();
+        let depthBuffer = gl.createRenderbuffer();
         gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
         gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, gl.viewportWidth, gl.viewportHeight);
 

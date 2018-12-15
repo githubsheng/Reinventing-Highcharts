@@ -1,8 +1,8 @@
 //basic irregular discrete data
 (function () {
     //this serves as the discrete irregular data demo
-    var seriesName1 = "Pencil sales";
-    var data1 = [
+    let seriesName1 = "Pencil sales";
+    let data1 = [
         [2, 3],
         [10, 50],
         [12, 65],
@@ -13,8 +13,8 @@
         [87, 77]
     ];
 
-    var seriesName2 = "Pen sales";
-    var data2 = [
+    let seriesName2 = "Pen sales";
+    let data2 = [
         [2, 32],
         [10, 21],
         [12, 42],
@@ -25,8 +25,8 @@
         [87, 72]
     ];
 
-    var seriesName3 = "Eraser sales";
-    var data3 = [
+    let seriesName3 = "Eraser sales";
+    let data3 = [
         [2, 22],
         [10, 29],
         [12, 53],
@@ -37,8 +37,8 @@
         [87, 65]
     ];
 
-    var seriesName4 = "Ruler sales";
-    var data4 = [
+    let seriesName4 = "Ruler sales";
+    let data4 = [
         [2, 12],
         [10, 23],
         [12, 46],
@@ -49,7 +49,7 @@
         [87, 88]
     ];
 
-    var input = {
+    let input = {
         mainTitle: "Sales of our company in 2013 (Irregular intervals)",
         subTitle: "The data set is small and is displayed as discrete nodes.",
         yAxisTitle: "number of items sold",
@@ -68,8 +68,8 @@
 //basic irregular continual data.
 (function () {
     //this serves as the continual irregular data demo
-    var seriesName1 = "Pencil sales";
-    var data1 = [
+    let seriesName1 = "Pencil sales";
+    let data1 = [
         [0, -3],
         [2, -1],
         [4, -9],
@@ -142,8 +142,8 @@
 
     ];
 
-    var seriesName2 = "Pen sales";
-    var data2 = [
+    let seriesName2 = "Pen sales";
+    let data2 = [
         [0, 19],
         [1, 14],
         [3, 16],
@@ -215,7 +215,7 @@
         [99, 115]
     ];
 
-    var input = {
+    let input = {
         mainTitle: "Sales of our company in 2013 (Irregular intervals)",
         subTitle: "The quantity of the data set is large and displayed as stream",
         yAxisTitle: "number of items sold",
@@ -231,8 +231,8 @@
 
 //basic regular continual data.
 (function(){
-    var seriesName1 = "A Company";
-    var data1 = [
+    let seriesName1 = "A Company";
+    let data1 = [
         0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
         0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
         0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
@@ -250,8 +250,8 @@
         0.7829, 0.783, 0.7829, 0.7781, 0.7811, 0.7831, 0.7826, 0.7855, 0.7855, 0.7845
     ];
 
-    var seriesName2 = "B Company";
-    var data2 = [
+    let seriesName2 = "B Company";
+    let data2 = [
         0.7798, 0.7777, 0.7822, 0.7785, 0.7744, 0.7743, 0.7726, 0.7766, 0.7806, 0.785,
         0.7907, 0.7912, 0.7913, 0.7931, 0.7952, 0.7951, 0.7928, 0.791, 0.7913, 0.7912,
         0.7941, 0.7953, 0.7921, 0.7919, 0.7968, 0.7999, 0.7999, 0.7974, 0.7942, 0.796,
@@ -269,7 +269,7 @@
         0.7976, 0.7977, 0.796, 0.7922, 0.7928, 0.7929, 0.7948, 0.797, 0.7953, 0.7907
     ];
 
-    var input = {
+    let input = {
         mainTitle: "Stock Prices Comparison (Regular interval)",
         subTitle: "Regular data set allows for a lot of optimization",
         yAxisTitle: "Stock Price",
@@ -288,8 +288,8 @@
 
 //single time series.
 (function(){
-    var seriesName = "Total Sales";
-    var data = [
+    let seriesName = "Total Sales";
+    let data = [
         0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
         0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
         0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
@@ -325,7 +325,7 @@
         0.7803, 0.7817
     ];
 
-    var input = {
+    let input = {
         mainTitle: "Sales of our company in 2013",
         subTitle: "Time series adjusts the axis and tip presentation",
         yAxisTitle: "number of items sold",
@@ -344,19 +344,19 @@
 
 
 (function(){
-    var seriesName1 = "Pencil sales";
-    var data1 = -2;
+    let seriesName1 = "Pencil sales";
+    let data1 = -2;
 
-    var seriesName2 = "Pen sales";
-    var data2 = 3;
+    let seriesName2 = "Pen sales";
+    let data2 = 3;
 
-    var seriesName3 = "Eraser sales";
-    var data3 = 4.5;
+    let seriesName3 = "Eraser sales";
+    let data3 = 4.5;
 
-    var seriesName4 = "Ruler sales";
-    var data4 = 3;
+    let seriesName4 = "Ruler sales";
+    let data4 = 3;
 
-    var input = {
+    let input = {
         mainTitle: "Sales of our company in 2013",
         subTitle: "Data from sales department",
         yAxisTitle: "number of items sold",
@@ -374,19 +374,19 @@
 })();
 
 (function(){
-    var seriesName1 = "A Company";
-    var data1 = [23, 43, 87, 212, 413, 757, 1292];
+    let seriesName1 = "A Company";
+    let data1 = [23, 43, 87, 212, 413, 757, 1292];
 
-    var seriesName2 = "B Company";
-    var data2 = [16, 35, 73, 134, 254, 432, 932];
+    let seriesName2 = "B Company";
+    let data2 = [16, 35, 73, 134, 254, 432, 932];
 
-    var seriesName3 = "C Company";
-    var data3 = [20, 38, 65, 142, 253, 432, 831];
+    let seriesName3 = "C Company";
+    let data3 = [20, 38, 65, 142, 253, 432, 831];
 
-    var seriesName4 = "D Company";
-    var data4 = [12, 27, 54, 122, 287, 532, 1032];
+    let seriesName4 = "D Company";
+    let data4 = [12, 27, 54, 122, 287, 532, 1032];
 
-    var input = {
+    let input = {
         mainTitle: "Stock Prices Comparison (Regular interval)",
         subTitle: "Regular data set allows for a lot of optimization",
         yAxisTitle: "Stock Price",
@@ -406,25 +406,25 @@
 })();
 
 (function(){
-    var seriesName1 = "A Company";
-    var data1 = 23;
+    let seriesName1 = "A Company";
+    let data1 = 23;
 
-    var seriesName2 = "B Company";
-    var data2 = 42;
+    let seriesName2 = "B Company";
+    let data2 = 42;
 
-    var seriesName3 = "C Company";
-    var data3 = 1;
+    let seriesName3 = "C Company";
+    let data3 = 1;
 
-    var seriesName4 = "D Company";
-    var data4 = 11;
+    let seriesName4 = "D Company";
+    let data4 = 11;
 
-    var seriesName5 = "E Company";
-    var data5 = 19;
+    let seriesName5 = "E Company";
+    let data5 = 19;
 
-    var seriesName6 = "F Company";
-    var data6 = 3;
+    let seriesName6 = "F Company";
+    let data6 = 3;
 
-    var input = {
+    let input = {
         mainTitle: "Market Share in Mars",
         subTitle: "This chart does not display the data label",
         series: [
@@ -443,40 +443,40 @@
 })();
 
 (function(){
-    var seriesName1 = "A Company";
-    var data1 = 45;
+    let seriesName1 = "A Company";
+    let data1 = 45;
 
-    var seriesName2 = "B Company";
-    var data2 = 1;
+    let seriesName2 = "B Company";
+    let data2 = 1;
 
-    var seriesName3 = "C Company";
-    var data3 = 1;
+    let seriesName3 = "C Company";
+    let data3 = 1;
 
-    var seriesName4 = "D Company";
-    var data4 = 1;
+    let seriesName4 = "D Company";
+    let data4 = 1;
 
-    var seriesName5 = "E Company";
-    var data5 = 1;
+    let seriesName5 = "E Company";
+    let data5 = 1;
 
-    var seriesName6 = "F Company";
-    var data6 = 1;
+    let seriesName6 = "F Company";
+    let data6 = 1;
 
-    var seriesName7 = "G Company";
-    var data7 = 22;
+    let seriesName7 = "G Company";
+    let data7 = 22;
 
-    var seriesName8 = "H Company";
-    var data8 = 1;
+    let seriesName8 = "H Company";
+    let data8 = 1;
 
-    var seriesName9 = "I Company";
-    var data9 = 1;
+    let seriesName9 = "I Company";
+    let data9 = 1;
 
-    var seriesName10 = "J Company";
-    var data10 = 1;
+    let seriesName10 = "J Company";
+    let data10 = 1;
 
-    var seriesName11 = "K Company";
-    var data11 = 1;
+    let seriesName11 = "K Company";
+    let data11 = 1;
 
-    var input = {
+    let input = {
         mainTitle: "Market Share in Mars",
         subTitle: "This chart displays the data label",
         series: [
@@ -500,7 +500,7 @@
 })();
 
 (function(){
-    var input = {
+    let input = {
         series : {
             rows : [ "Apple", "Orange", "Plum", "Pineapple"],
             columns : [ "Frequently", "occasionally", "Never" ],

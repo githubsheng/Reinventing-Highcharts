@@ -17,6 +17,7 @@ import {BasicPieDataAnalyst} from "./DataAnalyst/Pie/BasicPieDataAnalyst";
 import {BasicStackRegularDataAnalyst} from "./DataAnalyst/Stack/BasicStackRegularDataAnalyst";
 import {BasicPieDataViewer} from "./DataViewer/Pie/BasicPieDataViewer";
 import {MultipleLegendLayout} from "./Layout/Sub/MultipleLegendLayout";
+import {threeDgridWebgl} from "./DataViewer/3D/webgl-main";
 
 /**
  * reads the user config and data input and constructs various types of charts
