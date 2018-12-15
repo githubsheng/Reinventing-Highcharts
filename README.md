@@ -111,3 +111,14 @@ let input = {
 
 weaver.weave("basicStackRegular", input, document.getElementById("container"));
 ```
+
+For a complete list of possible charts, please refer to the live demo
+
+## To develop this library
+
+You would need `webpack` to further develop this library
+
+There are a few things I would want to do:
+1. replace the underlying SVG draw methods with canvas methods
+2. add apis to realtime update the charts
+3. add some animation, when data changes
