@@ -145,7 +145,7 @@
         series : {
             rows : [ "Apple", "Orange", "Plum", "Pineapple"],
             columns : [ "Frequently", "occasionally", "Never" ],
-            data : [ [ 101, 122, 143 ], [ 111, 122, 143 ], [ 91, 112, 153 ], [ 34, 78, 26 ] ],
+            data : [[101, 122, 143], [111, 122, 143], [91, 112, 153], [34, 78, 26]],
             focus: [[0, 0], [2, 0], [3, 2], [1, 2]]
         },
         rowLegend: "top",
@@ -158,6 +158,7 @@
     weaver.weave("3dGrid", input, document.getElementById("container9"));
     </code>
 </pre>
+
 <div id="container8" style="width:900px; height:500px;"></div>
 <pre class="code-block">
     <code class="js code-block">
@@ -172,33 +173,148 @@
     weaver.weave("basicPieChart", input, document.getElementById("container8"));
     </code>
 </pre>
+
 <div id="container1" style="width:900px; height:500px;"></div>
 <pre class="code-block">
     <code class="js code-block">
-    let data1 = [/*omitted for brevity. this is a series of data points, for example, [0,19], [1,14]...*/];
-
-    let data2 = [/*omitted for brevity. this is a series of data points, for example, [0,19], [1,14]...*/];
-
     let input = {
         mainTitle: "Sales of our company in 2019 (Irregular intervals)",
         subTitle: "The quantity of the data set is large and displayed as stream",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
         series: [
-            ["Pencil sales", data1],
-            ["Pen sales", data2]
+            ["Pencil sales", [[0, 19], [2,22] /* rest of data omitted */],
+            ["Pen sales", [0, 23], [2, 14] /* rest of data omitted */]
         ],
         legend: "top"
     };
     weaver.weave("basicLineIrregular", input, document.getElementById("container2"));
     </code>
 </pre>
+
 <div id="container2" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    //this serves as the continual irregular data demo
+    let input = {
+        mainTitle: "Sales of our company in 2019 (Irregular intervals)",
+        subTitle: "The quantity of the data set is large and displayed as stream",
+        yAxisTitle: "number of items sold",
+        xAxisTitle: "now I can't find a title for this axis",
+        series: [
+            ["Pencil sales", [[0, -3],[2, -1] /* rest of data omitted */]],
+            ["Pen sales", [[0, 19],[1, 14] /* rest of data omitted */]]
+        ],
+        legend: "top"
+    };
+    weaver.weave("basicLineIrregular", input, document.getElementById("container2"));
+    </code>
+</pre>
+
 <div id="container3" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        mainTitle: "Stock Prices Comparison (Regular interval)",
+        subTitle: "Regular data set allows for a lot of optimization",
+        yAxisTitle: "Stock Price",
+        xAxisTitle: "Company Sales",
+        start: 201,
+        interval: 5,
+        series: [
+            ["A Company", [0.8446, 0.8445, 0.8444, 0.8451 /* rest of data omitted */]],
+            ["B Company", [0.7798, 0.7777, 0.7822, 0.7785 /* rest of data omitted */]]
+        ],
+        legend: "right"
+    };
+
+    weaver.weave("basicLineRegular", input, document.getElementById("container3"));
+    </code>
+</pre>
 <div id="container4" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        mainTitle: "Sales of our company in 2019",
+        subTitle: "Time series adjusts the axis and tip presentation",
+        yAxisTitle: "number of items sold",
+        xAxisTitle: "now I can't find a title for this axis",
+        startTime: Date.UTC(2014, 5, 21, 13, 5),
+        interval: 5,
+        unit: "m",
+        series: [["Total Sales", [0.8446, 0.8445, 0.8444, 0.8451 /* rest of data omitted */]]],
+        legend: "none"
+    };
+
+    weaver.weave("singleTime", input, document.getElementById("container4")
+    </code>
+</pre>
+
 <div id="container5" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        mainTitle: "Sales of our company in 2019",
+        subTitle: "Data from sales department",
+        yAxisTitle: "number of items sold",
+        xAxisTitle: "now I can't find a title for this axis",
+        series: [
+            ["Pencil sales", -2],
+            ["Pen sales", 3],
+            ["Eraser sales", 4.5],
+            ["Ruler sales", 3]
+        ],
+        legend: "bottom"
+    };
+
+    weaver.weave("basicCategory", input, document.getElementById("container5"));
+    </code>
+</pre>
+
 <div id="container6" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        mainTitle: "Stock Prices Comparison (Regular interval)",
+        subTitle: "Regular data set allows for a lot of optimization",
+        yAxisTitle: "Stock Price",
+        xAxisTitle: "Company Sales",
+        start: 201,
+        interval: 5,
+        series: [
+            ["A Company", [23, 43, 87, 212, 413, 757, 1292]],
+            ["B Company", [16, 35, 73, 134, 254, 432, 932]],
+            ["C Company", [20, 38, 65, 142, 253, 432, 831]],
+            ["D Company", [12, 27, 54, 122, 287, 532, 1032]]
+        ],
+        legend: "right"
+    };
+
+    weaver.weave("basicStackRegular", input, document.getElementById("container6"));
+    </code>
+</pre>
+
 <div id="container7" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        mainTitle: "Market Share in Mars",
+        subTitle: "This chart does not display the data label",
+        series: [
+            ["A Company", 23],
+            ["B Company", 42],
+            ["C Company", 1],
+            ["D Company", 1],
+            ["E Company", 19],
+            ["F Company", 3]
+        ],
+        legend: "bottom",
+        noDataLabel: true
+    };
+
+    weaver.weave("basicPieChart", input, document.getElementById("container7"));
+    </code>
+</pre>
 
 <script type="text/javascript" src="dist/bundle.js"></script>
 <script type="text/javascript" src="index.js"></script>

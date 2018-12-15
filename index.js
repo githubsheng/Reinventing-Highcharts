@@ -413,18 +413,6 @@
 })();
 
 (function(){
-    let seriesName1 = "A Company";
-    let data1 = [23, 43, 87, 212, 413, 757, 1292];
-
-    let seriesName2 = "B Company";
-    let data2 = [16, 35, 73, 134, 254, 432, 932];
-
-    let seriesName3 = "C Company";
-    let data3 = [20, 38, 65, 142, 253, 432, 831];
-
-    let seriesName4 = "D Company";
-    let data4 = [12, 27, 54, 122, 287, 532, 1032];
-
     let input = {
         mainTitle: "Stock Prices Comparison (Regular interval)",
         subTitle: "Regular data set allows for a lot of optimization",
@@ -433,10 +421,10 @@
         start: 201,
         interval: 5,
         series: [
-            [seriesName1, data1],
-            [seriesName2, data2],
-            [seriesName3, data3],
-            [seriesName4, data4]
+            ["A Company", [23, 43, 87, 212, 413, 757, 1292]],
+            ["B Company", [16, 35, 73, 134, 254, 432, 932]],
+            ["C Company", [20, 38, 65, 142, 253, 432, 831]],
+            ["D Company", [12, 27, 54, 122, 287, 532, 1032]]
         ],
         legend: "right"
     };
@@ -445,34 +433,16 @@
 })();
 
 (function(){
-    let seriesName1 = "A Company";
-    let data1 = 23;
-
-    let seriesName2 = "B Company";
-    let data2 = 42;
-
-    let seriesName3 = "C Company";
-    let data3 = 1;
-
-    let seriesName4 = "D Company";
-    let data4 = 11;
-
-    let seriesName5 = "E Company";
-    let data5 = 19;
-
-    let seriesName6 = "F Company";
-    let data6 = 3;
-
     let input = {
         mainTitle: "Market Share in Mars",
         subTitle: "This chart does not display the data label",
         series: [
-            [seriesName1, data1],
-            [seriesName2, data2],
-            [seriesName3, data3],
-            [seriesName4, data4],
-            [seriesName5, data5],
-            [seriesName6, data6]
+            ["A Company", 23],
+            ["B Company", 42],
+            ["C Company", 1],
+            ["D Company", 1],
+            ["E Company", 19],
+            ["F Company", 3]
         ],
         legend: "bottom",
         noDataLabel: true
