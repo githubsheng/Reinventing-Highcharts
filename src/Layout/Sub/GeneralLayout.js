@@ -1,8 +1,14 @@
 /**
- * Created by wangsheng on 4/6/14.
+ * general layout with 2 axis and 1 legend
+ * @param svg           svg container
+ * @param mainTitle     main title
+ * @param subTitle      sub title
+ * @param yAxisTitle    title of y axis
+ * @param xAxisTitle    title of x axis
+ * @param legend        legend
+ * @constructor
  */
-
-function GeneralLayout(svg, mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
+export function GeneralLayout(svg, mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
     this.svg = svg;
     this.mainTitle = mainTitle;
     this.subTitle = subTitle;
