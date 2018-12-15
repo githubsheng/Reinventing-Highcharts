@@ -2,23 +2,23 @@
  * reads the user config and data input and constructs various types of charts
  * the is the entry point of the lib
  */
-import {colors} from "./src/Draw/Color";
-import {Legend} from "./src/Legend/Legend";
-import {GeneralLayout} from "./src/Layout/Sub/GeneralLayout";
-import {X_LinearAxis, Y_LinearAxis} from "./src/Axis/Sub/LinearAxis";
-import {BasicLineRegularDataViewer} from "./src/DataViewer/BasicLine/BasicLineRegularDataViewer";
-import {X_CategoryAxis} from "./src/Axis/Sub/CategoryAxis";
-import {BasicCategoryDataViewer} from "./src/DataViewer/Category/BasicCategoryDataViewer";
-import {TimeAxis} from "./src/Axis/Sub/TimeAxis";
-import {BasicSingleTimeData} from "./src/DataViewer/Stack/BasicSingleTimeDataViewer";
-import {BasicStackRegularDataViewer} from "./src/DataViewer/Stack/BasicStackRegularDataViewer";
-import {BasicLineIrregularDataViewer} from "./src/DataViewer/BasicLine/BasicLineIrregularDataViewer";
-import {LayoutNoAxes} from "./src/Layout/Sub/LayoutNoAxes";
-import {BasicPieDataAnalyst} from "./src/DataAnalyst/Pie/BasicPieDataAnalyst";
-import {BasicPieDataViewer} from "./src/DataViewer/Pie/BasicPieDataViewer";
-import {MultipleLegendLayout} from "./src/Layout/Sub/MultipleLegendLayout";
+import {colors} from "./Draw/Color";
+import {Legend} from "./Legend/Legend";
+import {GeneralLayout} from "./Layout/Sub/GeneralLayout";
+import {X_LinearAxis, Y_LinearAxis} from "./Axis/Sub/LinearAxis";
+import {BasicLineRegularDataViewer} from "./DataViewer/BasicLine/BasicLineRegularDataViewer";
+import {X_CategoryAxis} from "./Axis/Sub/CategoryAxis";
+import {BasicCategoryDataViewer} from "./DataViewer/Category/BasicCategoryDataViewer";
+import {TimeAxis} from "./Axis/Sub/TimeAxis";
+import {BasicSingleTimeData} from "./DataViewer/Stack/BasicSingleTimeDataViewer";
+import {BasicStackRegularDataViewer} from "./DataViewer/Stack/BasicStackRegularDataViewer";
+import {BasicLineIrregularDataViewer} from "./DataViewer/BasicLine/BasicLineIrregularDataViewer";
+import {LayoutNoAxes} from "./Layout/Sub/LayoutNoAxes";
+import {BasicPieDataAnalyst} from "./DataAnalyst/Pie/BasicPieDataAnalyst";
+import {BasicPieDataViewer} from "./DataViewer/Pie/BasicPieDataViewer";
+import {MultipleLegendLayout} from "./Layout/Sub/MultipleLegendLayout";
 
-const weaver = {
+window.weaver = {
     createContainers: function(container, options){
         container.setAttribute("class", "mc-container");
         let bcr = container.getBoundingClientRect();

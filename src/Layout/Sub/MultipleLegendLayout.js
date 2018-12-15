@@ -6,6 +6,8 @@
  * @param legendList        the list of legends
  * @constructor
  */
+import {Layout} from "../Layout";
+
 export function MultipleLegendLayout(svg, mainTitle, subTitle, legendList){
     this.svg = svg;
     this.mainTitle = mainTitle;

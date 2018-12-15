@@ -12,6 +12,7 @@
  * @constructor
  */
 import {draw} from "../Draw/Draw";
+import {util} from "../Util/Util";
 
 export function Axis(){
     this.preferredMarkDataIntervals = [1, 2, 2.5, 5, 10];

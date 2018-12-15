@@ -8,6 +8,8 @@
  * @param legend        legend
  * @constructor
  */
+import {Layout} from "../Layout";
+
 export function GeneralLayout(svg, mainTitle, subTitle, yAxisTitle, xAxisTitle, legend){
     this.svg = svg;
     this.mainTitle = mainTitle;

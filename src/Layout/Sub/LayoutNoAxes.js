@@ -6,6 +6,8 @@
  * @param legend        legend
  * @constructor
  */
+import {Layout} from "../Layout";
+
 export function LayoutNoAxes(svg, mainTitle, subTitle, legend){
     this.svg = svg;
     this.mainTitle = mainTitle;

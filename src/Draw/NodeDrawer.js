@@ -74,8 +74,8 @@ export const nodeDrawer = {
      * @returns {SVGRectElement}    returns a svg rectangular with the above settings.
      */
     drawRectangularNode: function (mcColor, x, y, width, height, strokeWidth) {
-        let x = x - width/2;
-        let y = y - height/2;
+        x = x - width/2;
+        y = y - height/2;
         let d = "M" + x + " " + y + " " + (x + width) + " " + y + " " + (x + width) + " " + (y + height) + " " + x + " " + (y + height) + "Z";
         let vn = draw.createPath(d);
         draw.setStrokeFill(vn, mcColor.strokeColor, strokeWidth, mcColor.fillColor);

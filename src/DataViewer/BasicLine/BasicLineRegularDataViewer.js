@@ -13,7 +13,7 @@ import {RandomPicker} from "../../Util/RandomPicker";
  * @param isContinual       draw nodes / lines
  * @constructor
  */
-function BasicLineRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
+export function BasicLineRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
     this.htmlContainer = htmlContainer;
     this.svg = svg;
     this.svgTrigger = svgTrigger;

@@ -1,11 +1,7 @@
 /**
- * Created by wangsheng on 28/5/14.
- */
-
-/**
  * For more details refer to the design blueprint. This class implements the layout of a typical 'Basic Line' chart.
  */
-function Layout(){
+export function Layout(){
     this.smallMargin = 10;
     this.mediumMargin = 20;
     this.bigMargin = 50;
