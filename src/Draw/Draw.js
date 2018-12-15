@@ -1,21 +1,18 @@
 /**
- * Created by wangsheng on 26/5/14.
- */
-
-/**
- * TODO: organize all these methods into different types.
- * creates all kinds of paths, lines, and shapes
+ * offer fundamental methods to create svg elements, including groups, defs, shapes(like circles)
+ * offer fundamental methods to style an svg element
  */
 export const draw = {
     xml_namespace: "http://www.w3.org/2000/svg",
 
-    /*----create tags-----*/
-
+    /*
+    ####### create tags ########
+    */
     /**
-     * Creates an path.
+     * Creates an path a path svg element
      *
      * @param coordinatesAndCommands    the d attribute value.
-     * @returns {SVGElement}   the path that is created
+     * @returns {SVGPathElement}   the path created
      */
     createPath: function(coordinatesAndCommands){
         //path sample: <path d="M150 0 L75 200 L225 200 Z" />
@@ -28,10 +25,10 @@ export const draw = {
      * create a path composed by only straight lines.
      *
      * @param coordinates       an array that contains information of coordinates. However, this array may also contain information of other stuffs.
-     * @param stride            stride....
+     * @param stride            stride....see offset for more explanation.
      * @param offset            Example: if the stride is 4 and the offset is 1, then it means in each 4 elements, the 2nd element will be x, and the 3rd
      *                          will be y.
-     * @returns {SVGElement}   the path that is created
+     * @returns {SVGPathElement}   the path created.
      */
     createStraightLines: function(coordinates, stride, offset){
         var d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
@@ -42,10 +39,23 @@ export const draw = {
     },
 
     /**
-     * see create straight lines.
-     * @param coordinates
-     * @param stride
-     * @param offset
+     * this creates something like this. the coordinates creates the the line that sits on the top.
+     * this is mainly useful for stack charts.
+     *
+     *       __    /|
+     *      /  \__/ |
+     *      |       |
+     *      |_______|
+     * left bottom  right bottom
+     * corner       corner
+     *
+     * @param coordinates   we use the coordinates to draw the top line
+     * @param stride        see `createStraightLines` for more explanation
+     * @param offset        see `createStraightLines` for more explanation
+     * @param leftBottomCorner  the left bottom corner of the stack
+     * @param rightBottomCorner the right bottom corner of the stack
+     *
+     * @return {SVGPathElement} the stack created.
      */
     createStackWithStraightLines: function(coordinates, stride, offset, rightBottomCorner, leftBottomCorner){
         var d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
@@ -57,24 +67,12 @@ export const draw = {
     },
 
     /**
-     * create a single line
+     * creates a quadratic bezier curve
+     * @param coordinates the coordinates of the bezier curve. the first coordinate is the start, the second one is the "curve point",
+     * the last one specifies the end of the curve
      *
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @returns {SVGELement} the line that is created.
+     * @returns {SVGPathElement} the curve created.
      */
-    createStraightLine: function(x1, y1, x2, y2){
-        var line = document.createElementNS(this.xml_namespace, "line");
-        line.setAttributeNS(null, "x1", x1);
-        line.setAttributeNS(null, "y1", y1);
-        line.setAttributeNS(null, "x2", x2);
-        line.setAttributeNS(null, "y2", y2);
-        line.setAttributeNS(null, "stroke", "black");
-        return line;
-    },
-
     createQuadraticBezierCurve: function(coordinates){
         var d = "M" + coordinates[0] + " " + coordinates[1] + " Q " + coordinates[2] + " " + coordinates[3] + " " + coordinates[4] + " " + coordinates[5];
         return this.createPath(d);
@@ -83,13 +81,13 @@ export const draw = {
     /**
      * create a svg text element.
      *
-     * @param x
-     * @param y
-     * @param text
-     * @param fontSize
-     * @param align should be either "start", "middle" or "end"
-     * @param vertical align should be "middle", or null if you just want default.
-     * @returns {SVGELement}
+     * @param x             the coordinate of the text
+     * @param y             the coordinate of the text
+     * @param text          content
+     * @param fontSize      font size
+     * @param align         means horizontal alignment, should be either "start", "middle" or "end"
+     * @param verticalAlign means vertical alignment, should be "middle", or null if you just want default.
+     * @returns {SVGTextElement} the text created
      */
     createText: function(x, y, text, fontSize, align, verticalAlign){
         var t = document.createElementNS(this.xml_namespace, "text");
@@ -117,48 +115,13 @@ export const draw = {
     },
 
     /**
-     * create a text span
-     * @param x
-     * @param y
-     * @param text
-     * @param fontSize
-     * @param align
-     * @param verticalAlign
-     */
-    createTextSpan: function(x, y, text, fontSize, align, verticalAlign){
-        var t = document.createElementNS(this.xml_namespace, "tspan");
-        if(x !== false) {
-            t.setAttributeNS(null, "x", x);
-        }
-
-        if(y !== false){
-            t.setAttributeNS(null, "y", y);
-        }
-
-        if(fontSize){
-            t.setAttributeNS(null, "font-size", fontSize);
-        } else {
-            t.setAttributeNS(null, "font-size", "11");
-        }
-
-        if(align){
-            t.setAttributeNS(null, "text-anchor", align);
-        }
-        if(verticalAlign){
-            t.setAttributeNS(null, "dominant-baseline", verticalAlign);
-        }
-
-        return t;
-    },
-
-    /**
      * create a rectangular.
      *
-     * @param x
-     * @param y
-     * @param width
-     * @param height
-     * @returns {SVGELement}
+     * @param x         top left of the rectangular
+     * @param y         top left of the rectangular
+     * @param width     width
+     * @param height    height
+     * @returns {SVGRectElement} the rectangular created
      */
     createRectangular: function(x, y, width, height){
         var r = document.createElementNS(this.xml_namespace, "rect");
@@ -170,14 +133,12 @@ export const draw = {
     },
 
     /**
+     * create a circle
      *
-     * @param x
-     * @param y
-     * @param radius
-     * @param stroke
-     * @param strokeWidth
-     * @param fill
-     * @returns {SVGELement}
+     * @param x             the center of the circle
+     * @param y             the center of the circle
+     * @param radius        radius of the circle
+     * @returns {SVGCircleElement} the circle created
      */
     createCircle: function(x, y, radius){
         //<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
@@ -189,13 +150,14 @@ export const draw = {
     },
 
     /**
+     * create an arc of circle, that is, creates an "incomplete" circle.
      *
-     * @param x
-     * @param y
-     * @param radius
-     * @param startAngle
-     * @param endAngle
-     * @returns {SVGElement}
+     * @param x             the center of the circle
+     * @param y             the center of the circle
+     * @param radius        radius of the circle
+     * @param startAngle    where does the arc starts
+     * @param endAngle      where does the arc ends
+     * @returns {SVGPathElement}    the arc represented as a svg element.
      */
     createArcOfCircle: function (x, y, radius, startAngle, endAngle){
         var start = util.polarToCartesian(x, y, radius, endAngle);
@@ -213,12 +175,13 @@ export const draw = {
         return this.createPath(d);
     },
 
-    /*create structures*/
+    /*
+    ######## create structures ########
+    */
 
     /**
-     * create a group with the given id
-     * @param id
-     * @returns {SVGELement}
+     * create a svg group with the given id
+     * @returns {SVGGElement} the "group" svg element.
      */
     createGroup: function(){
         var g = document.createElementNS(this.xml_namespace, "g");
@@ -227,6 +190,7 @@ export const draw = {
 
     /**
      * create a <defs> tag.
+     * @return {SVGDefsElement} the "defs" svg element
      */
     createDefs: function(){
         var d = document.createElementNS(this.xml_namespace, "defs");
@@ -237,11 +201,12 @@ export const draw = {
     /*-----transforms-----*/
 
     /**
-     * rotate a svg element.
-     * @param x
-     * @param y
-     * @param angle
-     * @param svgElement
+     * rotate a svg element. you can also apply this to an svg element that already has a transform attribute.
+     * existing transform attribute such as translate wont be overridden.
+     * @param x     center of the rotation
+     * @param y     center of the rotation
+     * @param angle angle of the rotation
+     * @param svgElement    the svg element being rotated.
      */
     rotate: function(svgElement, x, y, angle){
         var transform = svgElement.getAttributeNS(null, "transform");
@@ -261,10 +226,12 @@ export const draw = {
     },
 
     /**
+     * translate an svg element. you can even apply this function to an svg element that already
+     * has transform attribute. other transform attribute such as rotate will not be overridden.
      *
-     * @param svgElement
-     * @param x
-     * @param y
+     * @param svgElement    the svg element being translated.
+     * @param x             distance to translate in x axis
+     * @param y             distance to translate in y axis
      */
     translate: function(svgElement, x, y){
         var translate = "translate(" + x + "px, " + y + "px)";
@@ -275,9 +242,11 @@ export const draw = {
     },
 
     /**
-     * as the name tells...
-     * @param svgElement
-     * @param scaleFactor
+     * scale an svg element. you can even apply this function to an svg element that already
+     * has transform attribute. other transform attribute such as rotate will not be overridden.
+     *
+     * @param svgElement    the svg element being scaled.
+     * @param scaleFactor   the scale
      */
     scale: function(svgElement, scaleFactor){
         var transform = svgElement.getAttributeNS(null, "transform");
@@ -296,14 +265,16 @@ export const draw = {
         svgElement.setAttributeNS(null, "transform", transform);
     },
 
-    /*----presentation attributes----*/
+    /*
+    ######## presentation attributes ########
+    */
 
     /**
      * set the stroke, stroke-width and fill
-     * @param svgElement
-     * @param stroke
-     * @param strokeWidth
-     * @param fill
+     * @param svgElement    the svg element to which we are setting style.
+     * @param stroke        stroke color
+     * @param strokeWidth   stroke width
+     * @param fill          fill color
      */
     setStrokeFill: function(svgElement, stroke, strokeWidth, fill){
         if(stroke){
@@ -321,6 +292,7 @@ export const draw = {
      * this function creates a svg linear gradient. it should be used together with addLinearGradientStop
      * @param startPosition     needs to be [percentage, percentage]
      * @param endPosition       needs to be [percentage, percentage]
+     * @returns {SVGLinearGradientElement}  the linear gradient svg element created.
      */
     createLinearGradient: function(startPosition, endPosition){
         var linearGraident = document.createElementNS(this.xml_namespace, "linearGradient");
@@ -332,11 +304,11 @@ export const draw = {
     },
 
     /**
-     * add a linear stop color.
-     * @param linearGradient
-     * @param stopPosition
-     * @param stopRawColor
-     * @param stopOpacity
+     * add a linear stop color to a linear gradient svg element
+     * @param linearGradient    linearGradient
+     * @param stopPosition      stopPosition
+     * @param stopRawColor      stopRawColor
+     * @param stopOpacity       stopOpacity
      */
     addLinearGradientStop: function(linearGradient, stopPosition, stopRawColor, stopOpacity){
         //<stop offset=".8" stop-color="black" stop-opacity="0.5"/>
@@ -352,8 +324,8 @@ export const draw = {
 
     /**
      * configure the visibility of an element.
-     * @param svgElement
-     * @param isVisible
+     * @param svgElement        target svg element
+     * @param isVisible         visible or hidden
      */
     setVisibility: function(svgElement, isVisible){
         if(isVisible){
@@ -363,6 +335,14 @@ export const draw = {
         }
     },
 
+    /**
+     * configure pointer events. https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/pointer-events
+     * basically, if fill, then when mouse over filled area, registered call back will be invoked
+     * if stroke, then when mouse over the stroke area, registered call back will be invoked.
+     * @param svgElement        target svg element
+     * @param fill              sets pointer-events to fill
+     * @param stroke            sets pointer0events to stroke.
+     */
     setPointerEvent: function(svgElement, fill, stroke){
         if(fill){
             svgElement.setAttributeNS(null, "pointer-events", "fill");
@@ -373,11 +353,13 @@ export const draw = {
         }
     },
 
-    /*-----other attributes-----*/
+    /*
+    ######## other attributes ########
+    */
     /**
      * set an id for an element
-     * @param id
-     * @param svgElement
+     * @param id            the new id
+     * @param svgElement    target svg element
      */
     setId: function(svgElement, id){
         svgElement.setAttribute("id", id);
