@@ -10,11 +10,15 @@
         }
 
         body > div {
-            margin-bottom: 30px;
             margin-left: auto;
             margin-right: auto;
             background: white;
             box-shadow: 2px 2px 2px 0px grey;
+        }
+
+        body > .code-block {
+            width: 900px;
+            margin: auto;
         }
     </style>
 
@@ -128,17 +132,73 @@
                 gl_FragColor = texture2D(uSampler, vTexCoord);
             }
         </script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
+<div id="container9" style="width:900px; height:700px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        series : {
+            rows : [ "Apple", "Orange", "Plum", "Pineapple"],
+            columns : [ "Frequently", "occasionally", "Never" ],
+            data : [ [ 101, 122, 143 ], [ 111, 122, 143 ], [ 91, 112, 153 ], [ 34, 78, 26 ] ],
+            focus: [[0, 0], [2, 0], [3, 2], [1, 2]]
+        },
+        rowLegend: "top",
+        columnLegend: "bottom",
+        mainTitle: "How Often Do Normal People Eat These Kinds Of Fruits",
+        subTitle: "The data is collected from somewhere",
+        startAngle : -0.6283185307179586
+    };
+
+    weaver.weave("3dGrid", input, document.getElementById("container9"));
+    </code>
+</pre>
+<div id="container8" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let input = {
+        mainTitle: "Market Share in Mars",
+        subTitle: "This chart displays the data label",
+        series: [["A Company", 45], ["B Company", 1], ["C Company", 1], ["D Company", 1], ["E Company", 1], ["F Company", 1], ["G Company", 22], ["H Company", 1], ["I Company", 1], ["J Company", 1], ["K Company", 1]],
+        legend: "right",
+        noDataLabel: false
+    };
+
+    weaver.weave("basicPieChart", input, document.getElementById("container8"));
+    </code>
+</pre>
 <div id="container1" style="width:900px; height:500px;"></div>
+<pre class="code-block">
+    <code class="js code-block">
+    let data1 = [/*omitted for brevity. this is a series of data points, for example, [0,19], [1,14]...*/];
+
+    let data2 = [/*omitted for brevity. this is a series of data points, for example, [0,19], [1,14]...*/];
+
+    let input = {
+        mainTitle: "Sales of our company in 2019 (Irregular intervals)",
+        subTitle: "The quantity of the data set is large and displayed as stream",
+        yAxisTitle: "number of items sold",
+        xAxisTitle: "now I can't find a title for this axis",
+        series: [
+            ["Pencil sales", data1],
+            ["Pen sales", data2]
+        ],
+        legend: "top"
+    };
+    weaver.weave("basicLineIrregular", input, document.getElementById("container2"));
+    </code>
+</pre>
 <div id="container2" style="width:900px; height:500px;"></div>
 <div id="container3" style="width:900px; height:500px;"></div>
 <div id="container4" style="width:900px; height:500px;"></div>
 <div id="container5" style="width:900px; height:500px;"></div>
 <div id="container6" style="width:900px; height:500px;"></div>
 <div id="container7" style="width:900px; height:500px;"></div>
-<div id="container8" style="width:900px; height:500px;"></div>
-<div id="container9" style="width:900px; height:700px;"></div>
 
 <script type="text/javascript" src="dist/bundle.js"></script>
 <script type="text/javascript" src="index.js"></script>

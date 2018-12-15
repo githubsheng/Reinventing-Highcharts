@@ -1,3 +1,45 @@
+(function(){
+    let input = {
+        series : {
+            rows : [ "Apple", "Orange", "Plum", "Pineapple"],
+            columns : [ "Frequently", "occasionally", "Never" ],
+            data : [ [ 101, 122, 143 ], [ 111, 122, 143 ], [ 91, 112, 153 ], [ 34, 78, 26 ] ],
+            focus: [[0, 0], [2, 0], [3, 2], [1, 2]]
+        },
+        rowLegend: "top",
+        columnLegend: "bottom",
+        mainTitle: "How Often Do Normal People Eat These Kinds Of Fruits",
+        subTitle: "The data is collected from somewhere",
+        startAngle : -0.6283185307179586
+    };
+
+    weaver.weave("3dGrid", input, document.getElementById("container9"));
+})();
+
+(function(){
+    let input = {
+        mainTitle: "Market Share in Mars",
+        subTitle: "This chart displays the data label",
+        series: [
+            ["A Company", 45],
+            ["B Company", 1],
+            ["C Company", 1],
+            ["D Company", 1],
+            ["E Company", 1],
+            ["F Company", 1],
+            ["G Company", 22],
+            ["H Company", 1],
+            ["I Company", 1],
+            ["J Company", 1],
+            ["K Company", 1]
+        ],
+        legend: "right",
+        noDataLabel: false
+    };
+
+    weaver.weave("basicPieChart", input, document.getElementById("container8"));
+})();
+
 //basic irregular discrete data
 (function () {
     //this serves as the discrete irregular data demo
@@ -50,7 +92,7 @@
     ];
 
     let input = {
-        mainTitle: "Sales of our company in 2013 (Irregular intervals)",
+        mainTitle: "Sales of our company in 2019 (Irregular intervals)",
         subTitle: "The data set is small and is displayed as discrete nodes.",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
@@ -68,7 +110,6 @@
 //basic irregular continual data.
 (function () {
     //this serves as the continual irregular data demo
-    let seriesName1 = "Pencil sales";
     let data1 = [
         [0, -3],
         [2, -1],
@@ -142,7 +183,6 @@
 
     ];
 
-    let seriesName2 = "Pen sales";
     let data2 = [
         [0, 19],
         [1, 14],
@@ -216,13 +256,13 @@
     ];
 
     let input = {
-        mainTitle: "Sales of our company in 2013 (Irregular intervals)",
+        mainTitle: "Sales of our company in 2019 (Irregular intervals)",
         subTitle: "The quantity of the data set is large and displayed as stream",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
         series: [
-            [seriesName1, data1],
-            [seriesName2, data2]
+            ["Pencil sales", data1],
+            ["Pen sales", data2]
         ],
         legend: "top"
     };
@@ -326,7 +366,7 @@
     ];
 
     let input = {
-        mainTitle: "Sales of our company in 2013",
+        mainTitle: "Sales of our company in 2019",
         subTitle: "Time series adjusts the axis and tip presentation",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
@@ -342,7 +382,6 @@
     weaver.weave("singleTime", input, document.getElementById("container4"));
 })();
 
-
 (function(){
     let seriesName1 = "Pencil sales";
     let data1 = -2;
@@ -357,7 +396,7 @@
     let data4 = 3;
 
     let input = {
-        mainTitle: "Sales of our company in 2013",
+        mainTitle: "Sales of our company in 2019",
         subTitle: "Data from sales department",
         yAxisTitle: "number of items sold",
         xAxisTitle: "now I can't find a title for this axis",
@@ -440,79 +479,4 @@
     };
 
     weaver.weave("basicPieChart", input, document.getElementById("container7"));
-})();
-
-(function(){
-    let seriesName1 = "A Company";
-    let data1 = 45;
-
-    let seriesName2 = "B Company";
-    let data2 = 1;
-
-    let seriesName3 = "C Company";
-    let data3 = 1;
-
-    let seriesName4 = "D Company";
-    let data4 = 1;
-
-    let seriesName5 = "E Company";
-    let data5 = 1;
-
-    let seriesName6 = "F Company";
-    let data6 = 1;
-
-    let seriesName7 = "G Company";
-    let data7 = 22;
-
-    let seriesName8 = "H Company";
-    let data8 = 1;
-
-    let seriesName9 = "I Company";
-    let data9 = 1;
-
-    let seriesName10 = "J Company";
-    let data10 = 1;
-
-    let seriesName11 = "K Company";
-    let data11 = 1;
-
-    let input = {
-        mainTitle: "Market Share in Mars",
-        subTitle: "This chart displays the data label",
-        series: [
-            [seriesName1, data1],
-            [seriesName2, data2],
-            [seriesName3, data3],
-            [seriesName4, data4],
-            [seriesName5, data5],
-            [seriesName6, data6],
-            [seriesName7, data7],
-            [seriesName8, data8],
-            [seriesName9, data9],
-            [seriesName10, data10],
-            [seriesName11, data11]
-        ],
-        legend: "right",
-        noDataLabel: false
-    };
-
-    weaver.weave("basicPieChart", input, document.getElementById("container8"));
-})();
-
-(function(){
-    let input = {
-        series : {
-            rows : [ "Apple", "Orange", "Plum", "Pineapple"],
-            columns : [ "Frequently", "occasionally", "Never" ],
-            data : [ [ 101, 122, 143 ], [ 111, 122, 143 ], [ 91, 112, 153 ], [ 34, 78, 26 ] ],
-            focus: [[0, 0], [2, 0], [3, 2], [1, 2]]
-        },
-        rowLegend: "top",
-        columnLegend: "bottom",
-        mainTitle: "How Often Do Normal People Eat These Kinds Of Fruits",
-        subTitle: "The data is collected from somewhere",
-        startAngle : -0.6283185307179586
-    };
-
-    weaver.weave("3dGrid", input, document.getElementById("container9"));
 })();
