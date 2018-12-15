@@ -1,5 +1,10 @@
 /**
- * Created by wangsheng on 3/7/14.
+ * this layout assumes there is no axis, mainly used for 3d chart.
+ * @param svg           svg container
+ * @param mainTitle     main title
+ * @param subTitle      sub title
+ * @param legend        legend
+ * @constructor
  */
 function LayoutNoAxes(svg, mainTitle, subTitle, legend){
     this.svg = svg;
@@ -18,12 +23,12 @@ LayoutNoAxes.prototype = new Layout();
 LayoutNoAxes.prototype.constructor = LayoutNoAxes;
 
 LayoutNoAxes.prototype.analyze = function(){
-    var layout = this;
-    var outerAreas = this.calculateOuterAreasSizes();
-    var origin = calculateOriginPosition(outerAreas);
-    var dataDrawAreaY = outerAreas.leftArea.height;
-    var dataDrawAreaX = outerAreas.topArea.width - this.yAxisWidth;
-    var radii = calculateSuggestedRadius();
+    let layout = this;
+    let outerAreas = this.calculateOuterAreasSizes();
+    let origin = calculateOriginPosition(outerAreas);
+    let dataDrawAreaY = outerAreas.leftArea.height;
+    let dataDrawAreaX = outerAreas.topArea.width - this.yAxisWidth;
+    let radii = calculateSuggestedRadius();
 
     return {
         dataDrawAreaX: dataDrawAreaX,
@@ -35,15 +40,15 @@ LayoutNoAxes.prototype.analyze = function(){
     };
 
     function calculateOriginPosition(outerAreas){
-        var originX = outerAreas.leftArea.width + layout.yAxisWidth;
-        var originY = outerAreas.topArea.height + outerAreas.leftArea.height;
+        let originX = outerAreas.leftArea.width + layout.yAxisWidth;
+        let originY = outerAreas.topArea.height + outerAreas.leftArea.height;
         return [originX, originY];
     }
 
     function calculateSuggestedRadius(){
-        var suggestedDataLabelHeight = 19;
+        let suggestedDataLabelHeight = 19;
 
-        var d;
+        let d;
         if(dataDrawAreaX < dataDrawAreaY){
             d = dataDrawAreaX/2;
         } else {
@@ -52,9 +57,9 @@ LayoutNoAxes.prototype.analyze = function(){
 
         //the data label position is really the position of the connector of the data label.
         //that's why i need to divide suggestedDataLabelHeight by 2.
-        var radiusOfCircleForPositioningLabels = d - suggestedDataLabelHeight / 2;
-        var radiusOfPie = radiusOfCircleForPositioningLabels - 30;
-        var radiusOfCircleForConnectionLineTurn = radiusOfCircleForPositioningLabels - 20;
+        let radiusOfCircleForPositioningLabels = d - suggestedDataLabelHeight / 2;
+        let radiusOfPie = radiusOfCircleForPositioningLabels - 30;
+        let radiusOfCircleForConnectionLineTurn = radiusOfCircleForPositioningLabels - 20;
         //draw these hateful circle to see what they do if you forget about them.
 
         return [radiusOfCircleForPositioningLabels, radiusOfPie, radiusOfCircleForConnectionLineTurn];
