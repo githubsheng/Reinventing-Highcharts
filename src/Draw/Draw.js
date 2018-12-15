@@ -16,7 +16,7 @@ export const draw = {
      */
     createPath: function(coordinatesAndCommands){
         //path sample: <path d="M150 0 L75 200 L225 200 Z" />
-        var path = document.createElementNS(this.xml_namespace, "path");
+        let path = document.createElementNS(this.xml_namespace, "path");
         path.setAttributeNS(null, "d", coordinatesAndCommands);
         return path;
     },
@@ -31,8 +31,8 @@ export const draw = {
      * @returns {SVGPathElement}   the path created.
      */
     createStraightLines: function(coordinates, stride, offset){
-        var d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
-        for(var i = stride; i < coordinates.length; i = i + stride){
+        let d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
+        for(let i = stride; i < coordinates.length; i = i + stride){
             d = d + " " + coordinates[i] + " " + coordinates[i + 1];
         }
         return this.createPath(d);
@@ -58,8 +58,8 @@ export const draw = {
      * @return {SVGPathElement} the stack created.
      */
     createStackWithStraightLines: function(coordinates, stride, offset, rightBottomCorner, leftBottomCorner){
-        var d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
-        for(var i = stride; i < coordinates.length; i = i + stride){
+        let d = "M" + coordinates[offset] + " " + coordinates[offset + 1];
+        for(let i = stride; i < coordinates.length; i = i + stride){
             d = d + " " + coordinates[i] + " " + coordinates[i + 1];
         }
         d = d + " " + rightBottomCorner[0] + " " + rightBottomCorner[1] + " " + leftBottomCorner[0] + " " + leftBottomCorner[1] + " " + "Z";
@@ -74,7 +74,7 @@ export const draw = {
      * @returns {SVGPathElement} the curve created.
      */
     createQuadraticBezierCurve: function(coordinates){
-        var d = "M" + coordinates[0] + " " + coordinates[1] + " Q " + coordinates[2] + " " + coordinates[3] + " " + coordinates[4] + " " + coordinates[5];
+        let d = "M" + coordinates[0] + " " + coordinates[1] + " Q " + coordinates[2] + " " + coordinates[3] + " " + coordinates[4] + " " + coordinates[5];
         return this.createPath(d);
     },
 
@@ -90,7 +90,7 @@ export const draw = {
      * @returns {SVGTextElement} the text created
      */
     createText: function(x, y, text, fontSize, align, verticalAlign){
-        var t = document.createElementNS(this.xml_namespace, "text");
+        let t = document.createElementNS(this.xml_namespace, "text");
         t.setAttributeNS(null, "x", x);
         t.setAttributeNS(null, "y", y);
 
@@ -124,7 +124,7 @@ export const draw = {
      * @returns {SVGRectElement} the rectangular created
      */
     createRectangular: function(x, y, width, height){
-        var r = document.createElementNS(this.xml_namespace, "rect");
+        let r = document.createElementNS(this.xml_namespace, "rect");
         r.setAttributeNS(null, "x", x);
         r.setAttributeNS(null, "y", y);
         r.setAttributeNS(null, "width", width);
@@ -142,7 +142,7 @@ export const draw = {
      */
     createCircle: function(x, y, radius){
         //<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
-        var c = document.createElementNS(this.xml_namespace, "circle");
+        let c = document.createElementNS(this.xml_namespace, "circle");
         c.setAttributeNS(null, "cx", x);
         c.setAttributeNS(null, "cy", y);
         c.setAttributeNS(null, "r", radius);
@@ -160,12 +160,12 @@ export const draw = {
      * @returns {SVGPathElement}    the arc represented as a svg element.
      */
     createArcOfCircle: function (x, y, radius, startAngle, endAngle){
-        var start = util.polarToCartesian(x, y, radius, endAngle);
-        var end = util.polarToCartesian(x, y, radius, startAngle);
+        let start = util.polarToCartesian(x, y, radius, endAngle);
+        let end = util.polarToCartesian(x, y, radius, startAngle);
 
-        var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+        let arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
 
-        var d = [
+        let d = [
             "M", x, y,
             "", start[0], start[1],
             "A", radius, radius, 0, arcSweep, 0, end[0], end[1],
@@ -184,7 +184,7 @@ export const draw = {
      * @returns {SVGGElement} the "group" svg element.
      */
     createGroup: function(){
-        var g = document.createElementNS(this.xml_namespace, "g");
+        let g = document.createElementNS(this.xml_namespace, "g");
         return g;
     },
 
@@ -193,7 +193,7 @@ export const draw = {
      * @return {SVGDefsElement} the "defs" svg element
      */
     createDefs: function(){
-        var d = document.createElementNS(this.xml_namespace, "defs");
+        let d = document.createElementNS(this.xml_namespace, "defs");
         return d;
     },
 
@@ -209,10 +209,10 @@ export const draw = {
      * @param svgElement    the svg element being rotated.
      */
     rotate: function(svgElement, x, y, angle){
-        var transform = svgElement.getAttributeNS(null, "transform");
+        let transform = svgElement.getAttributeNS(null, "transform");
         if(transform){
-            var transforms = transform.split(") ");
-            for(var i = 0; i < transforms.length; i++){
+            let transforms = transform.split(") ");
+            for(let i = 0; i < transforms.length; i++){
                 if(transforms[i].substr(0, 6) === "rotate") {
                     transforms[i] = "rotate(" + angle + " " + x + " " + y + ")";
                 }
@@ -234,7 +234,7 @@ export const draw = {
      * @param y             distance to translate in y axis
      */
     translate: function(svgElement, x, y){
-        var translate = "translate(" + x + "px, " + y + "px)";
+        let translate = "translate(" + x + "px, " + y + "px)";
         svgElement.style.MozTransform = translate;
         svgElement.style.webkitTransform = translate;
         svgElement.style.msTransform = translate;
@@ -249,10 +249,10 @@ export const draw = {
      * @param scaleFactor   the scale
      */
     scale: function(svgElement, scaleFactor){
-        var transform = svgElement.getAttributeNS(null, "transform");
+        let transform = svgElement.getAttributeNS(null, "transform");
         if(transform){
-            var transforms = transform.split(") ");
-            for(var i = 0; i < transforms.length; i++){
+            let transforms = transform.split(") ");
+            for(let i = 0; i < transforms.length; i++){
                 if(transforms[i].substr(0, 5) === "scale") {
                     transforms[i] = "scale(" +  scaleFactor + ")";
                 }
@@ -295,7 +295,7 @@ export const draw = {
      * @returns {SVGLinearGradientElement}  the linear gradient svg element created.
      */
     createLinearGradient: function(startPosition, endPosition){
-        var linearGraident = document.createElementNS(this.xml_namespace, "linearGradient");
+        let linearGraident = document.createElementNS(this.xml_namespace, "linearGradient");
         linearGraident.setAttributeNS(null, "x1", startPosition[0]);
         linearGraident.setAttributeNS(null, "y1", startPosition[1]);
         linearGraident.setAttributeNS(null, "x2", endPosition[0]);
@@ -312,7 +312,7 @@ export const draw = {
      */
     addLinearGradientStop: function(linearGradient, stopPosition, stopRawColor, stopOpacity){
         //<stop offset=".8" stop-color="black" stop-opacity="0.5"/>
-        var stop = document.createElementNS(this.xml_namespace, "stop");
+        let stop = document.createElementNS(this.xml_namespace, "stop");
         stop.setAttributeNS(null, "offset", stopPosition);
         stop.setAttributeNS(null, "stop-color", stopRawColor);
         if(stopOpacity){
