@@ -1,5 +1,6 @@
 /**
- * Created by wangsheng on 2/7/14.
+ * this class is mainly used by `SharedTipControl`, it contains necessary information to draw a shared tool tip.
+ * @constructor
  */
 function SharedSeriesInfo(){
     this.multipleSeries = [];

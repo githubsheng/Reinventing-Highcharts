@@ -1,7 +1,11 @@
 /**
- * Created by wangsheng on 2/7/14.
+ * a tool tip shared by multiple series. mainly used in stack chart.
+ * please reference `TipControl` for the meaning of the parameters
+ * @param htmlContainer
+ * @param topShift
+ * @constructor
  */
-function SharedTipControl(htmlContainer, topShift){
+export function SharedTipControl(htmlContainer, topShift){
     this.htmlContainer = htmlContainer;
     this.topShift = topShift;
     this.isSingleLine = false; //since it is shared, there are multiple series that need to display themselves.

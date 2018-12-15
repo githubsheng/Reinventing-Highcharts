@@ -1,8 +1,11 @@
 /**
- * Created by wangsheng on 21/7/14.
+ * manages static tool tips. please reference `TipControl` for the meaning of the parameters
+ * @param htmlContainer
+ * @param topShift
+ * @param isSingleLine
+ * @constructor
  */
-
-function StaticTipControl(htmlContainer, topShift, isSingleLine){
+export function StaticTipControl(htmlContainer, topShift, isSingleLine){
     this.htmlContainer = htmlContainer;
     this.topShift = topShift;
     this.isSingleLine = isSingleLine;
@@ -13,18 +16,18 @@ StaticTipControl.prototype.constructor = StaticTipControl;
 
 StaticTipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStructure, funcCreateHtmlMultipleLineTipStructure) {
     //draw the tip at origin 0 0 and do the top shift.
-    var tip = document.createElement("div");
+    let tip = document.createElement("div");
     this.tip = tip;
 
     if(this.isSingleLine){
         if(funcCreateHtmlSingleLineTipStructure !== null && funcCreateHtmlSingleLineTipStructure !== undefined){
             funcCreateHtmlSingleLineTipStructure(tip);
         } else {
-            var seriesNameSpan = document.createElement("span");
+            let seriesNameSpan = document.createElement("span");
             tip.appendChild(seriesNameSpan);
             seriesNameSpan.appendChild(document.createTextNode("null"));
             tip.appendChild(document.createTextNode(" -- "));
-            var dataSpan = document.createElement("span");
+            let dataSpan = document.createElement("span");
             tip.appendChild(dataSpan);
             dataSpan.appendChild(document.createTextNode("null"));
         }
@@ -43,7 +46,7 @@ StaticTipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStru
 
     //after appending the div to document I can then safely call getBoundingClientRect
     this.htmlContainer.appendChild(tip);
-    var bcr = tip.getBoundingClientRect();
+    let bcr = tip.getBoundingClientRect();
     tip.style.marginTop = (-bcr.height - 2 - this.topShift) + "px";
     tip.style.borderColor = "black";
     tip.style.display = "none";
@@ -55,8 +58,8 @@ StaticTipControl.prototype.createTip = function (funcCreateHtmlSingleLineTipStru
 StaticTipControl.prototype.applyTranslationAndColor = function(pixelX, pixelY, mcColor){
     this.tip.style.display = "inline-block";
 
-    var bcr = this.tip.getBoundingClientRect();
-    var translate = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
+    let bcr = this.tip.getBoundingClientRect();
+    let translate = "translate(" + (pixelX - bcr.width/2) + "px, " + pixelY + "px)";
     this.tip.style.MozTransform = translate;
     this.tip.style.webkitTransform = translate;
     this.tip.style.msTransform = translate;

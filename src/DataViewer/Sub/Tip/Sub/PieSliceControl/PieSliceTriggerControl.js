@@ -1,5 +1,6 @@
 /**
- * Created by wangsheng on 8/7/14.
+ * this tool tip control manages the tool tip for a series in a pie chart.
+ * @constructor
  */
 function PieSliceTriggerControl(){}
 
@@ -12,12 +13,3 @@ PieSliceTriggerControl.prototype.enablePieSliceTrigger = function(trigger, trigg
         tipControl.hideTip();
     });
 };
-
-/*
- function TriggerControl(tipControl, seriesName, mcColor){
- this.tipControl = tipControl;
- this.seriesName = seriesName;
- this.mcColor = mcColor;
- this.sharedSeriesInfo = this.tipControl.sharedSeriesInfo;
- }
- */
