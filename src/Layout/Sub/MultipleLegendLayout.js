@@ -1,7 +1,12 @@
 /**
- * Created by wangsheng on 24/7/14.
+ * this layout allows for multiple legends
+ * @param svg               to which we will append all the created svg element
+ * @param mainTitle         main title
+ * @param subTitle          sub title
+ * @param legendList        the list of legends
+ * @constructor
  */
-function MultipleLegendLayout(svg, mainTitle, subTitle, legendList){
+export function MultipleLegendLayout(svg, mainTitle, subTitle, legendList){
     this.svg = svg;
     this.mainTitle = mainTitle;
     this.subTitle = subTitle;
@@ -28,7 +33,7 @@ MultipleLegendLayout.prototype.calculateHeightOfFixedTopMargin = function(){
 };
 
 MultipleLegendLayout.prototype.calculateHeightOfTopLegendComponent = function(){
-    for(var i = 0; i < this.legendList.length; i++){
+    for(let i = 0; i < this.legendList.length; i++){
         if(this.legendList[i].positionRelativeToLayout === "top"){
             return this.legendList[i].height + this.mediumMargin;
         }
@@ -37,7 +42,7 @@ MultipleLegendLayout.prototype.calculateHeightOfTopLegendComponent = function(){
 };
 
 MultipleLegendLayout.prototype.calculateWidthOfLeftLegendComponent = function(){
-    for(var i = 0; i < this.legendList.length; i++){
+    for(let i = 0; i < this.legendList.length; i++){
         if(this.legendList[i].positionRelativeToLayout === "left"){
             return this.legendList[i].width + this.smallMargin;
         }
@@ -46,7 +51,7 @@ MultipleLegendLayout.prototype.calculateWidthOfLeftLegendComponent = function(){
 };
 
 MultipleLegendLayout.prototype.calculateHeightOfBottomLegendComponent = function(){
-    for(var i = 0; i < this.legendList.length; i++){
+    for(let i = 0; i < this.legendList.length; i++){
         if(this.legendList[i].positionRelativeToLayout === "bottom") {
             return this.legendList[i].height + this.smallMargin;
         }
@@ -55,7 +60,7 @@ MultipleLegendLayout.prototype.calculateHeightOfBottomLegendComponent = function
 };
 
 MultipleLegendLayout.prototype.calculateWidthOfRightLegendComponent = function(){
-    for(var i = 0; i < this.legendList.length; i++){
+    for(let i = 0; i < this.legendList.length; i++){
         if(this.legendList[i].positionRelativeToLayout === "right"){
             console.log(this.legendList[i].width + this.smallMargin);
             return this.legendList[i].width + this.smallMargin;
@@ -65,11 +70,11 @@ MultipleLegendLayout.prototype.calculateWidthOfRightLegendComponent = function()
 };
 
 MultipleLegendLayout.prototype.analyze = function(){
-    var layout = this;
-    var outerAreas = this.calculateOuterAreasSizes();
-    var origin = calculateOriginPosition(outerAreas);
-    var dataDrawAreaY = outerAreas.leftArea.height;
-    var dataDrawAreaX = outerAreas.topArea.width - this.yAxisWidth;
+    let layout = this;
+    let outerAreas = this.calculateOuterAreasSizes();
+    let origin = calculateOriginPosition(outerAreas);
+    let dataDrawAreaY = outerAreas.leftArea.height;
+    let dataDrawAreaX = outerAreas.topArea.width - this.yAxisWidth;
 
     return {
         originPosition: origin,
@@ -78,15 +83,15 @@ MultipleLegendLayout.prototype.analyze = function(){
     };
 
     function calculateOriginPosition(outerAreas){
-        var originX = outerAreas.leftArea.width + layout.yAxisWidth;
-        var originY = outerAreas.topArea.height + outerAreas.leftArea.height;
+        let originX = outerAreas.leftArea.width + layout.yAxisWidth;
+        let originY = outerAreas.topArea.height + outerAreas.leftArea.height;
         return [originX, originY];
     }
 };
 
 MultipleLegendLayout.prototype.drawLegend = function(){
-    var areas = this.calculateOuterAreasSizes();
-    for(var i = 0; i < this.legendList.length; i++){
+    let areas = this.calculateOuterAreasSizes();
+    for(let i = 0; i < this.legendList.length; i++){
         //center of the left legend
         if(this.legendList[i].positionRelativeToLayout === "left"){
             this.legendList[i].draw(areas.leftArea.origin[0] + this.legendList[i].width / 2,
@@ -99,15 +104,15 @@ MultipleLegendLayout.prototype.drawLegend = function(){
         }
         //center of the top legend
         if(this.legendList[i].positionRelativeToLayout === "top"){
-            var x = areas.topArea.origin[0] + areas.topArea.width / 2;
-            var y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent()
+            let x = areas.topArea.origin[0] + areas.topArea.width / 2;
+            let y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent()
                 + this.calculateHeightOfSubTitleComponent() + this.legendList[i].height / 2;
             this.legendList[i].draw(x, y);
         }
         //center of the bottom legend
         if(this.legendList[i].positionRelativeToLayout === "bottom"){
-            var x = areas.bottomArea.origin[0] + areas.bottomArea.width / 2;
-            var y = areas.bottomArea.origin[1] + this.calculateHeightOfXAxisTitleComponent()
+            let x = areas.bottomArea.origin[0] + areas.bottomArea.width / 2;
+            let y = areas.bottomArea.origin[1] + this.calculateHeightOfXAxisTitleComponent()
                 + this.smallMargin + this.legendList[i].height / 2;
             this.legendList[i].draw(x, y);
         }
