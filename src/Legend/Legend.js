@@ -1,7 +1,14 @@
+import {RandomPicker} from "../Util/RandomPicker";
+import {draw} from "../Draw/Draw";
+import {util} from "../Util/Util";
+import {nodeDrawer} from "../Draw/NodeDrawer";
+
 /**
- * Created by wangsheng on 29/5/14.
+ * creates a legend. the legend created is highly customizable..and hence the amount of parameters we need to consider.
+ * after an instance of legend is created, we first need to provide data and run `analyze` method, to determine the width
+ * , height and other information dynamically, before we can draw the legend.
  */
-function Legend(svg, multipleSeries, positionRelativeToLayout, shape, color){
+export function Legend(svg, multipleSeries, positionRelativeToLayout, shape, color){
     this.svg = svg;
     this.height = 0;
     this.width = 0;
@@ -18,46 +25,50 @@ Legend.prototype.analyze = function(directMultipleSeriesName, includeNodeShape){
     if(this.positionRelativeToLayout === "none") return;
 
     this.svg.appendChild(this.legendSVG_Group);
-    var randomPicker = new RandomPicker();
+    let randomPicker = new RandomPicker();
 
-    var multipleSeriesNames;
+    let multipleSeriesNames;
     if(!directMultipleSeriesName){
         multipleSeriesNames = [];
-        for(var i = 0; i < this.multipleSeries.length; i++){
+        for(let i = 0; i < this.multipleSeries.length; i++){
             multipleSeriesNames.push(this.multipleSeries[i][0]);
         }
     } else {
         multipleSeriesNames = directMultipleSeriesName;
     }
 
-    //垂直排列
+    //vertical
     if(this.positionRelativeToLayout === "left" || this.positionRelativeToLayout === "right"){
-        for(var i = 0; i < multipleSeriesNames.length; i++){
-            var singleSeriesName = multipleSeriesNames[i];
-            var legendText = draw.createText(20, this.rowHeight * i + this.rowHeight/2, singleSeriesName, this.fontSize, "start", "middle");
+        for(let i = 0; i < multipleSeriesNames.length; i++){
+            let singleSeriesName = multipleSeriesNames[i];
+            let legendText = draw.createText(20, this.rowHeight * i + this.rowHeight/2, singleSeriesName, this.fontSize, "start", "middle");
 
             this.legendSVG_Group.appendChild(legendText);
             if(includeNodeShape === undefined /*not specified, by default we include it.*/ || includeNodeShape === true){
-                var singleSeriesNode = nodeDrawer.draw(util.pickFirstAvailable(this.shape, randomPicker.pickNodeShape()),
+                let singleSeriesNode = nodeDrawer.draw(
+                    util.pickFirstAvailable(this.shape, randomPicker.pickNodeShape()),
                     util.pickFirstAvailable(this.color, randomPicker.pickSeriesColor()),
-                    10, this.rowHeight * i + this.rowHeight/2);
+                    10,
+                    this.rowHeight * i + this.rowHeight/2);
                 this.legendSVG_Group.appendChild(singleSeriesNode);
             }
         }
     }
 
-    //横向排列
+    //horizontal
     if(this.positionRelativeToLayout === "top" || this.positionRelativeToLayout === "bottom"){
-        var columnWidth = 0;
-        for(var i = 0; i < multipleSeriesNames.length; i++){
-            var singleSeriesName = multipleSeriesNames[i];
-            var legendText = draw.createText(10 + columnWidth, this.rowHeight/2, singleSeriesName, this.fontSize, "start", "middle");
+        let columnWidth = 0;
+        for(let i = 0; i < multipleSeriesNames.length; i++){
+            let singleSeriesName = multipleSeriesNames[i];
+            let legendText = draw.createText(10 + columnWidth, this.rowHeight/2, singleSeriesName, this.fontSize, "start", "middle");
             this.legendSVG_Group.appendChild(legendText);
 
             if(includeNodeShape === undefined /*not specified, by default we include it.*/ || includeNodeShape === true){
-                var singleSeriesNode = nodeDrawer.draw(util.pickFirstAvailable(this.shape, randomPicker.pickNodeShape()),
+                let singleSeriesNode = nodeDrawer.draw(
+                    util.pickFirstAvailable(this.shape, randomPicker.pickNodeShape()),
                     util.pickFirstAvailable(this.color, randomPicker.pickSeriesColor()),
-                        0 + columnWidth, this.rowHeight/2);
+                    columnWidth,
+                    this.rowHeight/2);
                 this.legendSVG_Group.appendChild(singleSeriesNode);
             }
 
