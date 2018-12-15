@@ -25,20 +25,20 @@ SharedTipControl.prototype.createTip = function(seriesNames){
     }
 
     function funcCreateHtmlMultipleLineTipStructure(tip){
-        var dataXslot = document.createTextNode("null")
+        let dataXslot = document.createTextNode("null")
         tip.appendChild(dataXslot);//slot for x axis value.
         tip.ws_dataXslot = dataXslot;
         tip.ws_dataYslots = [];
-        for(var i = 0; i < seriesNames.length; i++){
-            var div = document.createElement("div");
+        for(let i = 0; i < seriesNames.length; i++){
+            let div = document.createElement("div");
             tip.appendChild(div);
-            var seriesNameSpan = document.createElement("span");
+            let seriesNameSpan = document.createElement("span");
             div.appendChild(seriesNameSpan);
             seriesNameSpan.appendChild(document.createTextNode(seriesNames[i]));
             div.appendChild(document.createTextNode(" -- "));
-            var dataSpan = document.createElement("span");
+            let dataSpan = document.createElement("span");
             div.appendChild(dataSpan);
-            var dataYslot= document.createTextNode("null");
+            let dataYslot= document.createTextNode("null");
             dataSpan.appendChild(dataYslot);
             tip.ws_dataYslots.push(dataYslot);
         }
@@ -53,12 +53,12 @@ SharedTipControl.prototype.showSingleLineTip = function () {
 
 SharedTipControl.prototype.showDoubleLineTip = function(pixelX, pixelY, sharedSeriesInfoRegisterIdx, nodesStrideIdx){
     //change the text.
-    var mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
-    var dataX = this.sharedSeriesInfo.getDataX(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
+    let mcColor = this.sharedSeriesInfo.getSeriesMCcolor(sharedSeriesInfoRegisterIdx);
+    let dataX = this.sharedSeriesInfo.getDataX(sharedSeriesInfoRegisterIdx, nodesStrideIdx);
 
     this.tip.ws_dataXslot.nodeValue = dataX;
 
-    for (var i = 0; i < this.tip.ws_dataYslots.length; i++){
+    for (let i = 0; i < this.tip.ws_dataYslots.length; i++){
         this.tip.ws_dataYslots[i].nodeValue = this.sharedSeriesInfo.getDataY(i, nodesStrideIdx);
     }
 

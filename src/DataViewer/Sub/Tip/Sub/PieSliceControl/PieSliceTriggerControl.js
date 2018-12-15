@@ -2,7 +2,7 @@
  * this tool tip control manages the tool tip for a series in a pie chart.
  * @constructor
  */
-function PieSliceTriggerControl(){}
+export function PieSliceTriggerControl(){}
 
 PieSliceTriggerControl.prototype.enablePieSliceTrigger = function(trigger, triggerCenter, tipControl, seriesName, mcColor, dataY){
     trigger.addEventListener("mouseover", function(){

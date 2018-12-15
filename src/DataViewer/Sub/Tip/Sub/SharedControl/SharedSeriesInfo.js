@@ -2,12 +2,12 @@
  * this class is mainly used by `SharedTipControl`, it contains necessary information to draw a shared tool tip.
  * @constructor
  */
-function SharedSeriesInfo(){
+export function SharedSeriesInfo(){
     this.multipleSeries = [];
 }
 
 SharedSeriesInfo.prototype.registerSingleSeries = function(seriesName, mcColor, highlightedNode, nodes){
-    var a = new Array(4);
+    let a = new Array(4);
     a[0] = seriesName;
     a[1] = mcColor;
     a[2] = highlightedNode;
