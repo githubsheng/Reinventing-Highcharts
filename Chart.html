@@ -20,6 +20,17 @@
             width: 900px;
             margin: auto;
         }
+
+        .demo-tip {
+            margin: 20px auto;
+            width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            background: lightpink;
+            color: white;
+            font-weight: bold;
+        }
     </style>
 
     <script id="shader-vertex" type="x-shader/x-vertex">
@@ -139,6 +150,9 @@
 </head>
 <body>
 <div id="container9" style="width:900px; height:700px;"></div>
+<div class="demo-tip">
+    You can drag to rotate the chart, or click on one of the columns to highlight it.
+</div>
 <pre class="code-block">
     <code class="js code-block">
     let input = {
