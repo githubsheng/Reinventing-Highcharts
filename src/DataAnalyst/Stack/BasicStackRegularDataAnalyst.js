@@ -6,6 +6,7 @@
  * @constructor
  */
 import {dataAnalystCommons} from "../DataAnalystCommons";
+import {util} from "../../Util/Util";
 
 export function BasicStackRegularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
