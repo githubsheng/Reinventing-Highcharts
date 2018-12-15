@@ -1,7 +1,3 @@
-/**
- * reads the user config and data input and constructs various types of charts
- * the is the entry point of the lib
- */
 import {colors} from "./Draw/Color";
 import {Legend} from "./Legend/Legend";
 import {GeneralLayout} from "./Layout/Sub/GeneralLayout";
@@ -14,10 +10,18 @@ import {BasicSingleTimeData} from "./DataViewer/Stack/BasicSingleTimeDataViewer"
 import {BasicStackRegularDataViewer} from "./DataViewer/Stack/BasicStackRegularDataViewer";
 import {BasicLineIrregularDataViewer} from "./DataViewer/BasicLine/BasicLineIrregularDataViewer";
 import {LayoutNoAxes} from "./Layout/Sub/LayoutNoAxes";
+import {BasicLineRegularDataAnalyst} from "./DataAnalyst/BasicLine/BasicLineRegularDataAnalyst";
+import {BasicLineIrregularDataAnalyst} from "./DataAnalyst/BasicLine/BasicLineIrregularDataAnalyst";
+import {BasicCategoryDataAnalyst} from "./DataAnalyst/Category/BasicCategoryDataAnalyst";
 import {BasicPieDataAnalyst} from "./DataAnalyst/Pie/BasicPieDataAnalyst";
+import {BasicStackRegularDataAnalyst} from "./DataAnalyst/Stack/BasicStackRegularDataAnalyst";
 import {BasicPieDataViewer} from "./DataViewer/Pie/BasicPieDataViewer";
 import {MultipleLegendLayout} from "./Layout/Sub/MultipleLegendLayout";
 
+/**
+ * reads the user config and data input and constructs various types of charts
+ * the is the entry point of the lib
+ */
 window.weaver = {
     createContainers: function(container, options){
         container.setAttribute("class", "mc-container");

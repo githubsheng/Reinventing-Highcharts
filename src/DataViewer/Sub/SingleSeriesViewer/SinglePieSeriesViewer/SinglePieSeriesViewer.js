@@ -19,6 +19,7 @@
  */
 import {draw} from "../../../../Draw/Draw";
 import {util} from "../../../../Util/Util";
+import {PieSliceTriggerControl} from "../../Tip/Sub/PieSliceControl/PieSliceTriggerControl";
 
 export function SinglePieSeriesViewer(svg, htmlContainer, tipControl, svgTrigger, startAngle, endAngle, radiusForLabel, radiusForPie, radiusForConnectionLineTurn, center, seriesName, mcColor, dataY, slotsController){
     this.svg = svg;

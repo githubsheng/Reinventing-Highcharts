@@ -16,6 +16,7 @@
  */
 import {nodeDrawer} from "../../../Draw/NodeDrawer";
 import {draw} from "../../../Draw/Draw";
+import {TriggerControl} from "../Tip/TriggerControl";
 
 export function SingleLineSeriesViewer(htmlContainer, svg, svgTrigger, nodes, nodeShape, mcColor,
                                        isContinual, constantInterval/*if not regular is should be false, otherwise it should be the interval value*/,

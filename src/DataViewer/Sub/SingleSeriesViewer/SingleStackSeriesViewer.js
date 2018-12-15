@@ -20,6 +20,7 @@
 import {draw} from "../../../Draw/Draw";
 import {SingleLineSeriesViewer} from "./SingleLineSeriesViewer";
 import {nodeDrawer} from "../../../Draw/NodeDrawer";
+import {TriggerControl} from "../Tip/TriggerControl";
 
 export function SingleStackSeriesViewer(htmlContainer, svg, svgTrigger, nodes, nodeShape, mcColor,
                                         isContinual, constantInterval/*if not regular is should be false, otherwise it should be the interval value*/,

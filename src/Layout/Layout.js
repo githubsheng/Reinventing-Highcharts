@@ -1,6 +1,9 @@
 /**
  * For more details refer to the design blueprint. This class implements the layout of a typical 'Basic Line' chart.
  */
+import {util} from "../Util/Util";
+import {draw} from "../Draw/Draw";
+
 export function Layout(){
     this.smallMargin = 10;
     this.mediumMargin = 20;
@@ -77,35 +80,35 @@ Layout.prototype.calculateOuterAreasSizes = function(){
         return this.areas;
     }
 
-    var layout = this;
+    let layout = this;
 
-    var topOuterHeight = calculateTopOuterHeight();
-    var leftOuterWidth = calculateLeftOuterWidth();
-    var bottomOuterHeight = calculateBottomOuterHeight();
-    var rightOuterWidth = calculateRightOuterWidth();
+    let topOuterHeight = calculateTopOuterHeight();
+    let leftOuterWidth = calculateLeftOuterWidth();
+    let bottomOuterHeight = calculateBottomOuterHeight();
+    let rightOuterWidth = calculateRightOuterWidth();
 
-    var svgWidth = +(this.svg.getAttribute("width"));
-    var svgHeight = +(this.svg.getAttribute("height"));
+    let svgWidth = +(this.svg.getAttribute("width"));
+    let svgHeight = +(this.svg.getAttribute("height"));
 
-    var topArea = {
+    let topArea = {
         origin : [leftOuterWidth, 0],
         width : svgWidth - leftOuterWidth - rightOuterWidth,
         height: topOuterHeight
     };
 
-    var leftArea = {
+    let leftArea = {
         origin : [0, topOuterHeight],
         width : leftOuterWidth,
         height : svgHeight - topOuterHeight - bottomOuterHeight - this.xAxisHeight
     };
 
-    var rightArea = {
+    let rightArea = {
         origin : [svgWidth - rightOuterWidth, topOuterHeight],
         width: rightOuterWidth,
         height: leftArea.height
     };
 
-    var bottomArea = {
+    let bottomArea = {
         origin : [leftOuterWidth, svgHeight - bottomOuterHeight],
         width : topArea.width,
         height: bottomOuterHeight
@@ -147,11 +150,11 @@ Layout.prototype.calculateOuterAreasSizes = function(){
  * @returns {{origin: *, xAxisLength: number, yAxisLength: *}}
  */
 Layout.prototype.analyze = function(){
-    var layout = this;
-    var outerAreas = this.calculateOuterAreasSizes();
-    var origin = calculateOriginPosition(outerAreas);
-    var yAxisLength = outerAreas.leftArea.height;
-    var xAxisLength = outerAreas.topArea.width - this.yAxisWidth;
+    let layout = this;
+    let outerAreas = this.calculateOuterAreasSizes();
+    let origin = calculateOriginPosition(outerAreas);
+    let yAxisLength = outerAreas.leftArea.height;
+    let xAxisLength = outerAreas.topArea.width - this.yAxisWidth;
 
     return {
         originPosition: origin,
@@ -161,55 +164,56 @@ Layout.prototype.analyze = function(){
 
 
     function calculateOriginPosition(outerAreas){
-        var originX = outerAreas.leftArea.width + layout.yAxisWidth;
-        var originY = outerAreas.topArea.height + outerAreas.leftArea.height;
+        let originX = outerAreas.leftArea.width + layout.yAxisWidth;
+        let originY = outerAreas.topArea.height + outerAreas.leftArea.height;
         return [originX, originY];
     }
 };
 
 
 Layout.prototype.drawTitles = function(){
-    var outerAreas = this.calculateOuterAreasSizes();
-    var top = outerAreas.topArea;
-    var left = outerAreas.leftArea;
-    var right = outerAreas.rightArea;
-    var bottom = outerAreas.bottomArea;
+    let outerAreas = this.calculateOuterAreasSizes();
+    let top = outerAreas.topArea;
+    let left = outerAreas.leftArea;
+    let right = outerAreas.rightArea;
+    let bottom = outerAreas.bottomArea;
 
     if(this.mainTitle){
-        var x = top.origin[0] + top.width / 2;
-        var y = this.calculateHeightOfFixedTopMargin() + this.mainTitleHeight / 2;
+        let x = top.origin[0] + top.width / 2;
+        let y = this.calculateHeightOfFixedTopMargin() + this.mainTitleHeight / 2;
         this.svg.appendChild(draw.createText(x, y, this.mainTitle, this.mainTitleFontSize, "middle", "middle"));
     }
 
     if(this.subTitle){
-        var x = top.origin[0] + top.width / 2;
-        var y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent() + this.subTitleHeight/2;
-        var subTitle = draw.createText(x, y, this.subTitle, this.subTitleFontSize, "middle", "middle");
+        let x = top.origin[0] + top.width / 2;
+        let y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent() + this.subTitleHeight/2;
+        let subTitle = draw.createText(x, y, this.subTitle, this.subTitleFontSize, "middle", "middle");
         draw.setStrokeFill(subTitle, "none", false, "#6E6F6F");
         this.svg.appendChild(subTitle);
     }
 
     if(this.yAxisTitle){
-        var x = left.origin[0] + this.calculateWidthOfLeftFixedMargin() + this.calculateWidthOfLeftLegendComponent()
+        let x = left.origin[0] + this.calculateWidthOfLeftFixedMargin() + this.calculateWidthOfLeftLegendComponent()
             + this.yAxisTitleWidth / 2;
-        var y = top.height + left.height / 2;
-        var yAxisTitle = draw.createText(x, y, this.yAxisTitle, this.yAxisTitleFontSize, "middle", "middle");
+        let y = top.height + left.
+            height / 2;
+        let yAxisTitle = draw.createText(x, y, this.yAxisTitle, this.yAxisTitleFontSize, "middle", "middle");
         draw.setStrokeFill(yAxisTitle, "none", false, "#6E6F6F");
         draw.rotate(yAxisTitle, x, y, -90);
         this.svg.appendChild(yAxisTitle);
     }
 
     if(this.xAxisTitle){
-        var x = bottom.origin[0] + bottom.width / 2;
-        var y = bottom.origin[1] + this.smallMargin + this.xAxisTitleHeight / 2;
-        var xAxisTtile = draw.createText(x, y, this.xAxisTitle, this.xAxisTitleFontSize, "middle", "middle");
+        let x = bottom.origin[0] + bottom.width / 2;
+        let y = bottom.origin[1] + this.smallMargin + this.xAxisTitleHeight / 2;
+        let xAxisTtile = draw.createText(x, y, this.xAxisTitle, this.xAxisTitleFontSize, "middle", "middle");
         draw.setStrokeFill(xAxisTtile, "none", false, "#6E6F6F");
         this.svg.appendChild(xAxisTtile);
     }
 };
 
 Layout.prototype.drawLegend = function(){
-    var areas = this.calculateOuterAreasSizes();
+    let areas = this.calculateOuterAreasSizes();
     //center of the left legend
     if(this.legend.positionRelativeToLayout === "left"){
         this.legend.draw(areas.leftArea.origin[0] + this.legend.width / 2,
@@ -222,15 +226,15 @@ Layout.prototype.drawLegend = function(){
     }
     //center of the top legend
     if(this.legend.positionRelativeToLayout === "top"){
-        var x = areas.topArea.origin[0] + areas.topArea.width / 2;
-        var y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent()
+        let x = areas.topArea.origin[0] + areas.topArea.width / 2;
+        let y = this.calculateHeightOfFixedTopMargin() + this.calculateHeightOfMainTitleComponent()
             + this.calculateHeightOfSubTitleComponent() + this.legend.height / 2;
         this.legend.draw(x, y);
     }
     //center of the bottom legend
     if(this.legend.positionRelativeToLayout === "bottom"){
-        var x = areas.bottomArea.origin[0] + areas.bottomArea.width / 2;
-        var y = areas.bottomArea.origin[1] + this.calculateHeightOfXAxisTitleComponent()
+        let x = areas.bottomArea.origin[0] + areas.bottomArea.width / 2;
+        let y = areas.bottomArea.origin[1] + this.calculateHeightOfXAxisTitleComponent()
             + this.smallMargin + this.legend.height / 2;
         this.legend.draw(x, y);
     }

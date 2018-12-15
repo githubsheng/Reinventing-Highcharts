@@ -1,4 +1,5 @@
 import {draw} from "../../../Draw/Draw";
+import {TriggerControl} from "../Tip/TriggerControl";
 
 /**
  * this class is used to draw a single column

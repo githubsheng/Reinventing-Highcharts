@@ -1,3 +1,5 @@
+import {dataAnalystCommons} from "../DataAnalystCommons";
+
 /**
  * this implementation analyzes the data for a basic line chart that has both linear data y axis and linear data x axis.
  * @param input                 the input that carries data belonging to different series.
@@ -5,8 +7,6 @@
  *                              we will display a continual line, otherwise we will display a node for each of the data point
  * @constructor
  */
-import {dataAnalystCommons} from "../DataAnalystCommons";
-
 export function BasicLineIrregularDataAnalyst(input, xAxisDataAreaLength){
     this.input = input;
     this.xAxisDataAreaLength = xAxisDataAreaLength;

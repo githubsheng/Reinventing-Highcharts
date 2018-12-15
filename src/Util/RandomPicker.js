@@ -1,6 +1,8 @@
 /**
  * offers methods to return the next not so random colors / or shapes.
  */
+import {colors} from "../Draw/Color";
+
 export function RandomPicker(){
     this.seriesColors = ["blue", "green", "red", "lightBlue", "darkGreen", "yellow", "purple"]; //TODO: add these "purple", "gray"
     this.currentSeriesColorIndex = 0;

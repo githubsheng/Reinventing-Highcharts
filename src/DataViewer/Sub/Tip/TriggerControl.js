@@ -9,7 +9,7 @@
 import {draw} from "../../../Draw/Draw";
 import {util} from "../../../Util/Util";
 
-function TriggerControl(tipControl, seriesName, mcColor){
+export function TriggerControl(tipControl, seriesName, mcColor){
     this.tipControl = tipControl;
     this.seriesName = seriesName;
     this.mcColor = mcColor;

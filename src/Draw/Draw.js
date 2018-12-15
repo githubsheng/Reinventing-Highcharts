@@ -2,6 +2,8 @@
  * offer fundamental methods to create svg elements, including groups, defs, shapes(like circles)
  * offer fundamental methods to style an svg element
  */
+import {util} from "../Util/Util";
+
 export const draw = {
     xml_namespace: "http://www.w3.org/2000/svg",
 

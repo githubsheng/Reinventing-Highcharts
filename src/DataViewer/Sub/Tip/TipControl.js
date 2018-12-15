@@ -5,6 +5,8 @@
  * @param isSingleLine      if tool tip content contains only a single line.
  * @constructor
  */
+import {SharedSeriesInfo} from "./Sub/SharedControl/SharedSeriesInfo";
+
 export function TipControl(htmlContainer, topShift, isSingleLine){
     this.tip = null;
     this.hideTipTimeout = 0;
