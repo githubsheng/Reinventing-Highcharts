@@ -1,7 +1,7 @@
 /**
- * Created by wangsheng on 4/6/14.
+ * utility class for colors. we will be only using certain colors in this library, and all of them should be defined
+ * here.
  */
-
 export const colors = {
     blue: {
         strokeColor: "rgb(0, 122, 204)",
@@ -52,8 +52,14 @@ export const colors = {
         linearGradientFill: "url(#linear-gradient-yellow)"
     },
 
+    /**
+     * creates all the gradients, which we will be using extensively in drawing all kinds of charts
+     * @param svg   the svg element. all the gradients definitions will be appended to this svg element.
+     */
     initLinearGradients: function(svg){
         /**
+         * well, here is an sample. here is basically the transition of colors starts (using the target element as coordinate system)
+         * at 0,0 and goes to 0,1. This means its a vertical transition
          * <linearGradient x1="0" y1="0" x2="0" y2="1" id="highcharts-4">
          *     <stop offset="0" stop-color="#7cb5ec" stop-opacity="1"></stop>
          *     <stop offset="1" stop-color="rgb(124,181,236)" stop-opacity="0"></stop>
@@ -80,6 +86,12 @@ export const colors = {
         }
     },
 
+    /**
+     * converts a rgb color like rgb(213, 231, 100) to an webgl format, which is basically an array
+     * of three elements: red, green and blue.
+     * @param rgb
+     * @returns {string[]}      the webgl color format
+     */
     convertToWebGLcolorArray: function(rgb){
         var rgbComponents = rgb.substring(4, rgb.length-1)
             .replace(/ /g, '')
