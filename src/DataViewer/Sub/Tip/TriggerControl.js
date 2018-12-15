@@ -25,14 +25,14 @@ function TriggerControl(tipControl, seriesName, mcColor){
  * @param nodes
  */
 TriggerControl.prototype.enableColumnTrigger = function(columnTrigger, htmlContainer, seriesName, mcColor, nodes){
-    var _this = this;
+    let _this = this;
     //register this thing first.
-    var sharedSeriesInfo = this.sharedSeriesInfo;
-    var sharedSeriesInfoRegisterIdx = sharedSeriesInfo.registerSingleSeries(seriesName, mcColor, null, nodes);
+    let sharedSeriesInfo = this.sharedSeriesInfo;
+    let sharedSeriesInfoRegisterIdx = sharedSeriesInfo.registerSingleSeries(seriesName, mcColor, null, nodes);
 
     columnTrigger.addEventListener("mouseover", function(event){
-        var pixelX = _this.sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, 0);
-        var pixelY = event.clientY - htmlContainer.getBoundingClientRect().top;
+        let pixelX = _this.sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, 0);
+        let pixelY = event.clientY - htmlContainer.getBoundingClientRect().top;
         _this.tipControl.showTip(pixelX, pixelY, sharedSeriesInfoRegisterIdx, 0);
         event.stopPropagation();
     });
@@ -54,11 +54,11 @@ TriggerControl.prototype.enableColumnTrigger = function(columnTrigger, htmlConta
  */
 TriggerControl.prototype.enableNodeTrigger = function(nodeMouseOverSectionGroup, seriesName, mcColor, highlightedNode, nodes){
     //register this thing first.
-    var sharedSeriesInfo = this.sharedSeriesInfo;
-    var sharedSeriesInfoRegisterIdx = sharedSeriesInfo.registerSingleSeries(seriesName, mcColor, highlightedNode, nodes);
-    var _this = this;
+    let sharedSeriesInfo = this.sharedSeriesInfo;
+    let sharedSeriesInfoRegisterIdx = sharedSeriesInfo.registerSingleSeries(seriesName, mcColor, highlightedNode, nodes);
+    let _this = this;
 
-    var isShown = false; //set the flag yeah.
+    let isShown = false; //set the flag yeah.
     function highlightNode(pixelX, pixelY) {
         if (!isShown) {
             draw.setVisibility(highlightedNode, true);
@@ -74,8 +74,8 @@ TriggerControl.prototype.enableNodeTrigger = function(nodeMouseOverSectionGroup,
        }
     }
     nodeMouseOverSectionGroup.addEventListener("mouseover", function (event) {
-        var pixelX = sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, event.target.ws_nodesStrideIdx);
-        var pixelY = sharedSeriesInfo.getPixelY(sharedSeriesInfoRegisterIdx, event.target.ws_nodesStrideIdx);
+        let pixelX = sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, event.target.ws_nodesStrideIdx);
+        let pixelY = sharedSeriesInfo.getPixelY(sharedSeriesInfoRegisterIdx, event.target.ws_nodesStrideIdx);
         highlightNode(pixelX, pixelY);
         _this.tipControl.showTip(pixelX, pixelY, sharedSeriesInfoRegisterIdx, event.target.ws_nodesStrideIdx);
         event.stopPropagation();
@@ -101,47 +101,47 @@ TriggerControl.prototype.enableNodeTrigger = function(nodeMouseOverSectionGroup,
  */
 TriggerControl.prototype.enableRoutineTrace = function(htmlContainer, seriesName, mcColor, nodes, routineGroup, constantInterval, xDrawInfo){
     //register this thing first.
-    var sharedSeriesInfo = this.sharedSeriesInfo;
-    var sharedSeriesInfoRegisterIdx = sharedSeriesInfo.registerSingleSeries(seriesName, mcColor, null, nodes);
+    let sharedSeriesInfo = this.sharedSeriesInfo;
+    let sharedSeriesInfoRegisterIdx = sharedSeriesInfo.registerSingleSeries(seriesName, mcColor, null, nodes);
 
-    var _this = this;
-    var previousIdx = -1; //this idex is the stride idx. and stride idx happens to be the same of dataXarray idx.
-    var mouseX = 0;
-    var traceIntervalId = 0;
+    let _this = this;
+    let previousIdx = -1; //this idex is the stride idx. and stride idx happens to be the same of dataXarray idx.
+    let mouseX = 0;
+    let traceIntervalId = 0;
 
     //this handler has different definitions based on whether the data has constant data interval or irregular data interval
-    var findAndHighLight;
+    let findAndHighLight;
 
     if(constantInterval !== false){
         findAndHighLight = function(){
-            var mouseXinSVGcoordinates = mouseX - htmlContainer.getBoundingClientRect().left;
-            var estimatedDataX = (mouseXinSVGcoordinates - xDrawInfo.startPoint)/xDrawInfo.pixelPerData + xDrawInfo.min;
-            var strideIdx = Math.round((estimatedDataX - xDrawInfo.min)/constantInterval);
+            let mouseXinSVGcoordinates = mouseX - htmlContainer.getBoundingClientRect().left;
+            let estimatedDataX = (mouseXinSVGcoordinates - xDrawInfo.startPoint)/xDrawInfo.pixelPerData + xDrawInfo.min;
+            let strideIdx = Math.round((estimatedDataX - xDrawInfo.min)/constantInterval);
             if(strideIdx!==previousIdx){
                 previousIdx = strideIdx;
-                var pixelX = _this.sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, strideIdx);
-                var pixelY = _this.sharedSeriesInfo.getPixelY(sharedSeriesInfoRegisterIdx, strideIdx);
+                let pixelX = _this.sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, strideIdx);
+                let pixelY = _this.sharedSeriesInfo.getPixelY(sharedSeriesInfoRegisterIdx, strideIdx);
 //                highlightNode(pixelX, pixelY);
                 _this.tipControl.showTip(pixelX, pixelY, sharedSeriesInfoRegisterIdx, strideIdx);
             }
         };
     } else {
         //extract the dataX and make it a standalone array where stride is 1 and offset is 0.
-        var dataXarray = [];
-        for(var i = 0; i < nodes.length; i = i + 4){
+        let dataXarray = [];
+        for(let i = 0; i < nodes.length; i = i + 4){
             dataXarray.push(nodes[i + 2]); //offset is 2.
         }
 
         findAndHighLight = function(){
-            var mouseXinSVGcoordinates = mouseX - htmlContainer.getBoundingClientRect().left;
-            var estimatedDataX = (mouseXinSVGcoordinates - xDrawInfo.startPoint)/xDrawInfo.pixelPerData + xDrawInfo.min;
+            let mouseXinSVGcoordinates = mouseX - htmlContainer.getBoundingClientRect().left;
+            let estimatedDataX = (mouseXinSVGcoordinates - xDrawInfo.startPoint)/xDrawInfo.pixelPerData + xDrawInfo.min;
 
             //binary search, find the nearest node.
-            var strideIdx = util.findElementIdxUsingBinarySearch(dataXarray, estimatedDataX); //the returned strideIdx is of dataXarray
+            let strideIdx = util.findElementIdxUsingBinarySearch(dataXarray, estimatedDataX); //the returned strideIdx is of dataXarray
             if(strideIdx !== previousIdx) {
                 previousIdx = strideIdx;
-                var pixelX = _this.sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, strideIdx);
-                var pixelY = _this.sharedSeriesInfo.getPixelY(sharedSeriesInfoRegisterIdx, strideIdx);
+                let pixelX = _this.sharedSeriesInfo.getPixelX(sharedSeriesInfoRegisterIdx, strideIdx);
+                let pixelY = _this.sharedSeriesInfo.getPixelY(sharedSeriesInfoRegisterIdx, strideIdx);
 //                highlightedNode(pixelX, pixelY);
                 _this.tipControl.showTip(pixelX, pixelY, sharedSeriesInfoRegisterIdx, strideIdx);
             }
