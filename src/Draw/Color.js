@@ -2,6 +2,8 @@
  * utility class for colors. we will be only using certain colors in this library, and all of them should be defined
  * here.
  */
+import {draw} from "./Draw";
+
 export const colors = {
     blue: {
         strokeColor: "rgb(0, 122, 204)",
@@ -65,7 +67,7 @@ export const colors = {
          *     <stop offset="1" stop-color="rgb(124,181,236)" stop-opacity="0"></stop>
          * </linearGradient>
          */
-        var defs = draw.createDefs();
+        let defs = draw.createDefs();
 
         createLinearGradient(this.blue);
         createLinearGradient(this.purple);
@@ -78,7 +80,7 @@ export const colors = {
         svg.appendChild(defs);
 
         function createLinearGradient(mcColor){
-            var lg = draw.createLinearGradient(["0%", "0%"], ["0%", "100%"]);
+            let lg = draw.createLinearGradient(["0%", "0%"], ["0%", "100%"]);
             draw.addLinearGradientStop(lg, "0", mcColor.fillColor, "1");
             draw.addLinearGradientStop(lg, "1", mcColor.fillColor, "0");
             draw.setId(lg, mcColor.linearGradientId);
@@ -93,7 +95,7 @@ export const colors = {
      * @returns {string[]}      the webgl color format
      */
     convertToWebGLcolorArray: function(rgb){
-        var rgbComponents = rgb.substring(4, rgb.length-1)
+        let rgbComponents = rgb.substring(4, rgb.length-1)
             .replace(/ /g, '')
             .split(',');
         rgbComponents[0] = +(rgbComponents[0]) / 255;
