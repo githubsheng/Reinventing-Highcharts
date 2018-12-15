@@ -18,6 +18,7 @@
  * @constructor
  */
 import {draw} from "../../../../Draw/Draw";
+import {util} from "../../../../Util/Util";
 
 export function SinglePieSeriesViewer(svg, htmlContainer, tipControl, svgTrigger, startAngle, endAngle, radiusForLabel, radiusForPie, radiusForConnectionLineTurn, center, seriesName, mcColor, dataY, slotsController){
     this.svg = svg;

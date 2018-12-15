@@ -12,6 +12,7 @@
 import {draw} from "../../Draw/Draw";
 import {RandomPicker} from "../../Util/RandomPicker";
 import {TipControl} from "../Sub/Tip/TipControl";
+import {SingleTimeSeriesViewer} from "../Sub/SingleSeriesViewer/SingleTimeSeriesViewer";
 
 export function BasicSingleTimeData(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
     this.htmlContainer = htmlContainer;

@@ -5,6 +5,9 @@
  * @param topShift
  * @constructor
  */
+import {SharedSeriesInfo} from "./SharedSeriesInfo";
+import {TipControl} from "../../TipControl";
+
 export function SharedTipControl(htmlContainer, topShift){
     this.htmlContainer = htmlContainer;
     this.topShift = topShift;

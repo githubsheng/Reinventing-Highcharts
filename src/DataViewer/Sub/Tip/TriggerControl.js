@@ -6,6 +6,9 @@
  * @param mcColor           color of the tool tip
  * @constructor
  */
+import {draw} from "../../../Draw/Draw";
+import {util} from "../../../Util/Util";
+
 function TriggerControl(tipControl, seriesName, mcColor){
     this.tipControl = tipControl;
     this.seriesName = seriesName;

@@ -1,6 +1,7 @@
 import {TipControl} from "../Sub/Tip/TipControl";
 import {RandomPicker} from "../../Util/RandomPicker";
 import {draw} from "../../Draw/Draw";
+import {SingleLineSeriesViewer} from "../Sub/SingleSeriesViewer/SingleLineSeriesViewer";
 
 /**
  * construct a basic line linear data.

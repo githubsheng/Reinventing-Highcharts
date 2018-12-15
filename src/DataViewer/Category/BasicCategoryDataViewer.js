@@ -5,6 +5,7 @@
 import {RandomPicker} from "../../Util/RandomPicker";
 import {draw} from "../../Draw/Draw";
 import {TipControl} from "../Sub/Tip/TipControl";
+import {SingleColumnViewer} from "../Sub/SingleSeriesViewer/SingleColumnViewer";
 
 /**
  * this class is used to draw category columns

@@ -1,6 +1,8 @@
 import {RandomPicker} from "../../Util/RandomPicker";
 import {TipControl} from "../Sub/Tip/TipControl";
 import {draw} from "../../Draw/Draw";
+import {SinglePieSeriesViewer} from "../Sub/SingleSeriesViewer/SinglePieSeriesViewer/SinglePieSeriesViewer";
+import {PieDataLabelSlotsController} from "../Sub/SingleSeriesViewer/SinglePieSeriesViewer/PieDataLabelSlotsController";
 
 /**
  *

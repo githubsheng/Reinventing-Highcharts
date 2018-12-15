@@ -12,6 +12,8 @@
  */
 import {draw} from "../../Draw/Draw";
 import {RandomPicker} from "../../Util/RandomPicker";
+import {SingleStackSeriesViewer} from "../Sub/SingleSeriesViewer/SingleStackSeriesViewer";
+import {SharedTipControl} from "../Sub/Tip/Sub/SharedControl/SharedTipControl";
 
 export function BasicStackRegularDataViewer(htmlContainer, svg, svgTrigger, input, xDrawInfo, yDrawInfo, isContinual){
     this.htmlContainer = htmlContainer;

@@ -5,6 +5,8 @@
  * @param isSingleLine
  * @constructor
  */
+import {TipControl} from "../../TipControl";
+
 export function StaticTipControl(htmlContainer, topShift, isSingleLine){
     this.htmlContainer = htmlContainer;
     this.topShift = topShift;
