@@ -6,7 +6,7 @@
  * @param legend        legend
  * @constructor
  */
-function LayoutNoAxes(svg, mainTitle, subTitle, legend){
+export function LayoutNoAxes(svg, mainTitle, subTitle, legend){
     this.svg = svg;
     this.mainTitle = mainTitle;
     this.subTitle = subTitle;
